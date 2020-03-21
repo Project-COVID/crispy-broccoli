@@ -35,3 +35,15 @@ docker: clean
 .PHONY: docker_run
 docker_run:
 	@./scripts/docker.sh $(env)	$(service_image) $(tag)
+
+
+.PHONY: changelog
+changelog:
+	@git-chglog > CHANGELOG.md
+	@echo "Changelog has been updated."
+
+
+.PHONY: changelog_release
+changelog_release:
+	@git-chglog --next-tag $(tag) > CHANGELOG.md
+	@echo "Changelog has been updated."
