@@ -1,0 +1,22 @@
+{
+    "plugins": ["prettier"],
+    "extends": ["node", "plugin:prettier/recommended"],
+    "env": {
+        "node": true
+    },
+    "parserOptions": {
+        "ecmaVersion": 8,
+        "sourceType": "script",
+        "ecmaFeatures": {
+            "experimentalObjectRestSpread": true
+        }
+    },
+    "rules": {
+        "no-console": "off",
+        "import/no-commonjs": "off",
+        "import/no-nodejs-modules": "off",
+        "strict": ["error", "global"],
+        "curly": "warn",
+        "prettier/prettier": "error"
+    }
+}
