@@ -7,8 +7,6 @@ const pino = require('express-pino-logger')({
     logger,
 });
 
-const Response = require('./response');
-
 const app = express();
 
 // Redirect HTTP to HTTPS in production
