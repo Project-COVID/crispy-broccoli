@@ -1,0 +1,12 @@
+{
+  "name": "crispy-broccoli",
+  "description": "",
+  "homepage": "",
+  "dependencies": {
+    "angular": "^1.7.9",
+    "angular-ui-router": "^1.0.25",
+    "normalize.css": "^8.0.1",
+    "validator-js": "^13.0.0",
+    "lodash": "^4.17.15"
+  }
+}
