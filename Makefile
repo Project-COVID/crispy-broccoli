@@ -11,9 +11,15 @@ clean:
 	@rm -rf ./server/node_modules
 
 
+.PHONY: build_deps
+build_deps:
+	@-docker stop mongo
+	@docker run -d -it --rm --name mongo -p 27017:27017 mongo:3.6
+
+
 # make build
 .PHONY: build
-build:
+build: build_deps
 	@pushd server; yarn; popd
 	@echo "TODO: Julian to build web app here :)"
 
