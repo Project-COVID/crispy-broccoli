@@ -1,5 +1,1 @@
 .env
-node_modules/
-web/src/assets/lib/*/
-# Temp
-Gruntfile.js
