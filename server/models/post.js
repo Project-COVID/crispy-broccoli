@@ -1,4 +1,7 @@
 const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
+var ObjectIdSchema = Schema.ObjectId;
+var ObjectId = mongoose.Types.ObjectId;
 
 module.exports = mongoose.model(
     'Post',
@@ -52,13 +55,5 @@ module.exports = mongoose.model(
             type: String,
             enum: ['unavailable'], // TODO: decide on teardown reasons
         },
-        created: {
-            type: Date,
-            required: true,
-        },
-        updated: {
-            type: Date,
-            required: true,
-        },
-    }),
+    }, { timestamps: true }),
 );
