@@ -1,56 +1,54 @@
 const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
+var ObjectIdSchema = Schema.ObjectId;
+var ObjectId = mongoose.Types.ObjectId;
 
-module.exports = mongoose.model(
-    'Post',
-    new mongoose.Schema({
-        title: {
-            type: String,
-            required: true,
-        },
-        body: {
-            type: String,
-            required: true,
-        },
-        type: {
-            type: String,
-            enum: ['offer', 'request'],
-            required: true,
-        },
-        tags: {
-            type: [String],
-            enum: ['food'], // TODO: decide on tags
-            required: false,
-        },
-        email: {
-            type: String,
-            required: true,
-        },
-        verified: {
-            type: Boolean,
-            default: false,
-            required: true,
-        },
-        status: {
-            type: String,
-            enum: ['active', 'closed'],
-            default: 'active',
-            required: true,
-        },
-        teardownHash: {
-            type: String,
-            required: true,
-        },
-        teardownReason: {
-            type: String,
-            enum: ['unavailable'], // TODO: decide on teardown reasons
-        },
-        created: {
-            type: Date,
-            required: true,
-        },
-        updated: {
-            type: Date,
-            required: true,
-        },
-    }),
-);
+const postSchema = new Schema({
+    _id: ObjectIdSchema,
+    title: {
+        type: String, 
+        required: true
+    },
+    type: {
+        type: String, 
+        enum: ['offer','request'], 
+        required: true
+    },
+    lat: {
+        type: mongoose.Decimal128,
+        required: true
+    },
+    lon: {
+        type: mongoose.Decimal128,
+        required: true
+    },
+    tags: {
+        type: String, 
+        enum: [], // TODO: decide on tags
+        required: false
+    },
+    body: {
+        type: String, 
+        required: true
+    },
+    email: {
+        type: String, 
+        required: true
+    },
+    status: {
+        type: String, 
+        enum: ['active', 'closed'], 
+        default: 'active',
+        required: true
+    },
+    teardownHash: {
+        type: ObjectId,
+        required: true
+    },
+    closeReason: {
+        type: String,
+        enum: [] // TODO: decide on close reasons
+    }
+}, { timestamps: true });
+
+module.exports = mongoose.model('Post', postSchema);

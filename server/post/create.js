@@ -14,6 +14,12 @@ module.exports = async function(req) {
             title: Joi.string()
                 .min(1)
                 .required(),
+            lat: Joi.number()
+                .min(1)
+                .required(),
+            lon: Joi.number()
+                .min(1)
+                .required(),
             body: Joi.string()
                 .min(1)
                 .required(),
@@ -25,12 +31,6 @@ module.exports = async function(req) {
                 .min(1),
             email: Joi.string()
                 .email()
-                .required(),
-            created: Joi.string()
-                .isoDate()
-                .required(),
-            updated: Joi.string()
-                .isoDate()
                 .required(),
         });
 
