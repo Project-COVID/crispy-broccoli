@@ -25,8 +25,6 @@ module.exports = async function (req) {
                 .min(1),
             name: Joi.string().min(1).required(),
             email: Joi.string().email().required(),
-            created: Joi.string().isoDate().required(),
-            updated: Joi.string().isoDate().required(),
         });
 
         await createPost(req.body);
