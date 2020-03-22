@@ -32,6 +32,8 @@ module.exports = async function(req) {
             email: Joi.string()
                 .email()
                 .required(),
+            status: Joi.string()
+                .valid(['active', 'closed']),
         });
 
         await createPost(req.body);

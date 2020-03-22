@@ -4,7 +4,6 @@ var ObjectIdSchema = Schema.ObjectId;
 var ObjectId = mongoose.Types.ObjectId;
 
 const postSchema = new Schema({
-    _id: ObjectIdSchema,
     title: {
         type: String, 
         required: true
@@ -39,10 +38,10 @@ const postSchema = new Schema({
         type: String, 
         enum: ['active', 'closed'], 
         default: 'active',
-        required: true
+        required: false,
     },
     teardownHash: {
-        type: ObjectId,
+        type: String,
         required: true
     },
     closeReason: {
