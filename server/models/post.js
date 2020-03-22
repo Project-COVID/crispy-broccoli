@@ -21,7 +21,15 @@ module.exports = mongoose.model(
             enum: ['food'], // TODO: decide on tags
             required: false,
         },
+        name: {
+            type: String,
+            required: true,
+        },
         email: {
+            type: String,
+            required: true,
+        },
+        verifyHash: {
             type: String,
             required: true,
         },
