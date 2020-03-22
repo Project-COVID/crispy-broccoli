@@ -1,15 +1,17 @@
 const Joi = require('joi');
 const Response = require('../response');
 const Post = require('../models/post');
+const sendTeardownEmail = require('../mailer/teardown');
 
 async function verifyPost(id, hash) {
     const post = await Post.findById(id);
-    if (post.verifyHash === hash) {
-        post.verified = true;
-        await post.save();
-        return true;
+    if (post.verifyHash !== hash) {
+        return false;
     }
-    return false;
+    post.verified = true;
+    await post.save();
+    await sendTeardownEmail(id, post.teardownHash, post.name, post.email);
+    return true;
 }
 
 module.exports = async function(req) {

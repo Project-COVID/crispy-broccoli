@@ -7,6 +7,9 @@ const sendVerifyEmail = require('../mailer/verify');
 async function createPost(data) {
     data.teardownHash = uuidv4();
     data.verifyHash = uuidv4();
+    const now = new Date();
+    data.created = now;
+    data.updated = now;
     const post = await new Post(data).save();
     await sendVerifyEmail(data.type, post.id, data.verifyHash, data.name, data.email);
 }
