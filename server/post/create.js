@@ -2,10 +2,13 @@ const Joi = require('joi');
 const { v4: uuidv4 } = require('uuid');
 const Response = require('../response');
 const Post = require('../models/post');
+const sendVerifyEmail = require('../mailer/verify');
 
 async function createPost(data) {
     data.teardownHash = uuidv4();
-    await new Post(data).save();
+    data.verifyHash = uuidv4();
+    const post = await new Post(data).save();
+    await sendVerifyEmail(data.type, post.id, data.verifyHash, data.name, data.email);
 }
 
 module.exports = async function(req) {
@@ -23,6 +26,9 @@ module.exports = async function(req) {
             tags: Joi.array()
                 .items(Joi.string().valid(['food']))
                 .min(1),
+            name: Joi.string()
+                .min(1)
+                .required(),
             email: Joi.string()
                 .email()
                 .required(),
