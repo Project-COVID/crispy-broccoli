@@ -4,7 +4,8 @@ module.exports = {
   client: {
     lib: {
       css: [
-        'web/src/assets/lib/normalize.css/normalize.css'
+        'web/src/assets/lib/normalize.css/normalize.css',
+        'web/src/assets/lib/bulma/css/bulma.min.css'
       ],
       js: [
         'web/src/assets/lib/angular/angular.min.js',

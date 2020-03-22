@@ -1,0 +1,57 @@
+#home .hero {
+  /*background-image: url('/assets/img/hero-bg.jpg');*/
+  /*background-position: center;*/
+  /*background-size: cover;*/
+}
+
+#home .navbar-item.social {
+  padding-right: 0;
+}
+
+#home form {
+  margin-top: 20px;
+}
+
+#home .search-bar {
+  width: 100%;
+}
+
+#home .social-buttons {
+  margin-top: 80px;
+}
+
+.button.is-facebook {
+  background-color: #3b5998;
+}
+.button.is-facebook:hover {
+  background-color: #2E4C8B;
+}
+
+.button.is-twitter {
+  background-color: #4099ff;
+}
+.button.is-twitter:hover {
+  background-color: #338CF2;
+}
+
+#home .box .post-meta {
+  margin-bottom: 0.5rem;
+}
+
+#home .box .content .title {
+  margin-bottom: 0rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+#home .box .content .subtitle {
+  margin-top: 0.25rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}

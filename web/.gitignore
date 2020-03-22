@@ -1,2 +1,6 @@
-src/assets/lib/*/
-dist
+src/assets/lib/
+dist/
+
+# Temp - reenable when implementing prod build
+Gruntfile.js
+config/

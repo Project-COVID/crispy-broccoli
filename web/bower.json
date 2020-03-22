@@ -1,5 +1,5 @@
 {
-  "name": "crispy-broccoli",
+  "name": "webapp",
   "description": "",
   "homepage": "",
   "dependencies": {
@@ -7,6 +7,8 @@
     "angular-ui-router": "^1.0.25",
     "normalize.css": "^8.0.1",
     "validator-js": "^13.0.0",
-    "lodash": "^4.17.15"
+    "lodash": "^4.17.15",
+    "bulma": "^0.8.0",
+    "components-font-awesome": "^5.12.1"
   }
 }

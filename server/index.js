@@ -60,9 +60,10 @@ const dbinit = require('./models');
     require('./routes/index')(app);
 
     // Fallback everything else to the React application
-    app.use(express.static(path.join(__dirname, '../web/dist')));
+    var appCwd = (process.env.NODE_ENV === 'production') ? 'dist' : 'src';
+    app.use(express.static(path.join(__dirname, '../web/' + appCwd)));
     app.get('*', (req, res) => {
-        res.sendFile(path.join(__dirname, '../web/dist/index.html'));
+        res.sendFile(path.join(__dirname, '../web/' + appCwd + '/index.html'));
     });
 
     if (!process.env.PORT) {
