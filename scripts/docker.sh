@@ -6,4 +6,4 @@
 
 source ./scripts/env.sh $1
 
-docker run -it --rm -p $PORT:$PORT $2:$3
+docker run -it --rm -p $PORT:$PORT --env-file=$1 $2:$3

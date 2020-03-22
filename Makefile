@@ -1,6 +1,6 @@
 SHELL:=/bin/bash
 
-service_image=crispy-broccoli
+service_image=the-kindness-project-webapp
 tag=v0.0.1
 env=.env
 
@@ -11,15 +11,15 @@ clean:
 	@rm -rf ./server/node_modules
 
 
-.PHONY: build_deps
-build_deps:
+.PHONY: mongo
+mongo:
 	@-docker stop mongo
 	@docker run -d -it --rm --name mongo -p 27017:27017 mongo:3.6
 
 
 # make build
 .PHONY: build
-build: build_deps
+build:
 	@pushd server; yarn; popd
 	@echo "TODO: Julian to build web app here :)"
 
@@ -53,3 +53,13 @@ changelog:
 changelog_release:
 	@git-chglog --next-tag $(tag) > CHANGELOG.md
 	@echo "Changelog has been updated."
+
+
+# make release tag={tag}
+.PHONY: release
+release: build docker
+	@heroku login
+	@heroku container:login
+	@docker tag $(service_image):$(tag) registry.heroku.com/$(service_image)/web
+	@docker push registry.heroku.com/$(service_image)/web
+	@heroku container:release web
