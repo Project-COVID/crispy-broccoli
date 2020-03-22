@@ -58,6 +58,8 @@ changelog_release:
 # make release tag={tag}
 .PHONY: release
 release: build docker
+	@git tag -s $(tag) -m "Release $(tag)"
+	@git push --tags
 	@heroku login
 	@heroku container:login
 	@docker tag $(service_image):$(tag) registry.heroku.com/$(service_image)/web
