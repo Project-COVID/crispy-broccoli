@@ -1,25 +1,30 @@
 const Joi = require('joi');
 const Response = require('../response');
-const mongoose = require('mongoose');
 const Post = require('../models/post');
 
-function getPost(req) {
+async function getPost(req, postType) {
     req.log.info('Get post!', req.query);
 
-    // no params - 10 latest for each cat
-    // with lat&long params - 10 latest within 5km radius of that lat/lon
-    return Post.find();
+    // Return the 10 most recent posts for the given type
+    try {
+        return await Post.find({
+            type: postType,
+        }).sort({
+            createdAt: -1
+        }).limit(10);
+    } catch(err) {
+        throw err; 
+    }
 }
 
 module.exports = async function(req) {
     try {
         await Joi.validate(req.query, /* TODO add schema */ {});
 
-        // TODO call controller code here
-        res = getPost(req);
-        console.log(res);
+        let offersList = await getPost(req, 'offer');
+        let requestsList = await getPost(req, 'request');
 
-        return Response.OK({ hello: 'world' });
+        return Response.OK({offers: offersList, requests: requestsList});
     } catch (err) {
         if (err.isJoi) {
             return Response.BadRequest(err.details);
