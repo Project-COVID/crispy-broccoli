@@ -9,6 +9,7 @@ async function getPost(req, postType) {
     try {
         return await Post.find({
             type: postType,
+            verified: true
         }).sort({
             createdAt: -1
         }).limit(10);
