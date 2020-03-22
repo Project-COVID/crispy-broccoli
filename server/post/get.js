@@ -19,7 +19,7 @@ module.exports = async function(req) {
         res = getPost(req);
         console.log(res);
 
-        return Response.OK({response: res});
+        return Response.OK({ hello: 'world' });
     } catch (err) {
         if (err.isJoi) {
             return Response.BadRequest(err.details);
