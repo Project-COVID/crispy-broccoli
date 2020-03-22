@@ -50,7 +50,7 @@ module.exports = function() {
         }
     });
 
-    router.route('/:id/teardown').post(async (req, res) => {
+    router.route('/:id/teardown').get(async (req, res) => {
         try {
             const reply = await teardownPost(req);
             return reply.send(res);

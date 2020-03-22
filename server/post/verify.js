@@ -4,7 +4,6 @@ const Post = require('../models/post');
 
 async function verifyPost(id, hash) {
     const post = await Post.findById(id);
-    console.log('Post', id, hash, post);
     if (post.verifyHash === hash) {
         post.verified = true;
         await post.save();
@@ -24,8 +23,8 @@ module.exports = async function(req) {
                 .required(),
         });
 
-        const verified = await verifyPost(req.params.id, req.query.verifyHash);
-        if (!verified) {
+        const success = await verifyPost(req.params.id, req.query.verifyHash);
+        if (!success) {
             return Response.Forbidden({
                 message: 'failed to verify post',
             });
