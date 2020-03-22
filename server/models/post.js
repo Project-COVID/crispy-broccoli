@@ -1,53 +1,58 @@
 const mongoose = require('mongoose');
-const Schema = mongoose.Schema
+const Schema = mongoose.Schema;
 var ObjectIdSchema = Schema.ObjectId;
 var ObjectId = mongoose.Types.ObjectId;
 
 const postSchema = new Schema({
     _id: ObjectIdSchema,
     title: {
-        type: String, 
-        required: true
+        type: String,
+        required: true,
     },
     type: {
-        type: String, 
-        enum: ['offer','request'], 
-        required: true
+        type: String,
+        enum: ['offer', 'request'],
+        required: true,
     },
     tags: {
-        type: String, 
+        type: String,
         enum: [], // TODO: decide on tags
-        required: false
+        required: false,
     },
     body: {
-        type: String, 
-        required: true
+        type: String,
+        required: true,
     },
     email: {
-        type: String, 
-        required: true
+        type: String,
+        required: true,
+    },
+    verified: {
+        type: Boolean,
+        default: false,
+        required: true,
     },
     status: {
-        type: String, 
-        enum: ['active', 'closed'], 
-        required: true
+        type: String,
+        enum: ['active', 'closed'],
+        required: true,
     },
     teardownHash: {
         type: ObjectId,
-        required: true
+        required: true,
     },
     closeReason: {
         type: String,
-        enum: [] // TODO: decide on close reasons
+        enum: [], // TODO: decide on close reasons
     },
     created: {
         type: Date,
-        required: true
+        required: true,
     },
     updated: {
         type: Date,
-        required: true
-    }
+        required: true,
+    },
 });
 
-module.exports = mongoose.model('Post', postSchema)
+module.exports = mongoose.model('Post', postSchema);
