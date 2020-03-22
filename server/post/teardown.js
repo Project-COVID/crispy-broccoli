@@ -15,8 +15,8 @@ async function teardownPost(id, hash) {
 
 module.exports = async function (req) {
     try {
-        await Joi.validate(req.query, {
-            teardownHash: Joi.string()
+        await Joi.validate(req.body, {
+            hash: Joi.string()
                 .guid({
                     version: ['uuidv4'],
                 })
@@ -24,7 +24,7 @@ module.exports = async function (req) {
                 .required(),
         });
 
-        const success = await teardownPost(req.params.id, req.query.teardownHash);
+        const success = await teardownPost(req.params.id, req.body.hash);
         if (!success) {
             return Response.Forbidden({
                 message: 'failed to teardown post',

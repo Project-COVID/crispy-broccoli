@@ -30,7 +30,7 @@ module.exports = function () {
         }
     });
 
-    router.route('/:id/verify').get(async (req, res) => {
+    router.route('/:id/verify').post(async (req, res) => {
         try {
             const reply = await verifyPost(req);
             return reply.send(res);
@@ -50,7 +50,7 @@ module.exports = function () {
         }
     });
 
-    router.route('/:id/teardown').get(async (req, res) => {
+    router.route('/:id/teardown').post(async (req, res) => {
         try {
             const reply = await teardownPost(req);
             return reply.send(res);
