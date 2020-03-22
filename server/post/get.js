@@ -18,7 +18,7 @@ async function getPost(req, postType, params) {
         if (params.lat !== undefined && params.lon !== undefined) {
             return await Post.find({
                 type: postType,
-                // verified: true,
+                verified: true,
                 status: 'active',
                 location: {
                     $geoWithin: {
@@ -33,7 +33,7 @@ async function getPost(req, postType, params) {
         // By default just return the 10 latest posts regardless of distance
         return await Post.find({
             type: postType,
-            // verified: true,
+            verified: true,
             status: 'active',
         }).sort({
             createdAt: -1
