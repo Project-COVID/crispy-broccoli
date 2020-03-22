@@ -14,7 +14,7 @@ async function verifyPost(id, hash) {
     return true;
 }
 
-module.exports = async function(req) {
+module.exports = async function (req) {
     try {
         await Joi.validate(req.query, {
             verifyHash: Joi.string()
