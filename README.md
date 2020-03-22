@@ -11,10 +11,11 @@
 
 You must provide the following runtime environment variables. You can add them to a `.env` in the project root.
 
-| Variable   | Description                        |
-| ---------- | ---------------------------------- |
-| `NODE_ENV` | One of `development`, `production` |
-| `PORT`     | The port binding for the server    |
+| Variable           | Description                        |
+| ------------------ | ---------------------------------- |
+| `NODE_ENV`         | One of `development`, `production` |
+| `PORT`             | The port binding for the server    |
+| `SENDGRID_API_KEY` | SendGrid API Key                   |
 
 
 ## Development
