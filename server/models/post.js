@@ -1,7 +1,5 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-var ObjectIdSchema = Schema.ObjectId;
-var ObjectId = mongoose.Types.ObjectId;
 
 module.exports = mongoose.model(
     'Post',
