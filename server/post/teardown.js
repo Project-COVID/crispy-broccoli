@@ -1,18 +1,34 @@
 const Joi = require('joi');
 const Response = require('../response');
 
-function doSomething(req) {
-    req.log.info('Teardown post!', req.query);
+async function teardownPost(id, hash) {
+    const post = await Post.findById(id);
+    if (post.teardownHash === hash) {
+        post.status = 'closed';
+        await post.save();
+        return true;
+    }
+    return false;
 }
 
 module.exports = async function(req) {
     try {
-        await Joi.validate(req.query, /* TODO add schema */ {});
+        await Joi.validate(req.query, {
+            teardownHash: Joi.string()
+                .guid({
+                    version: ['uuidv4'],
+                })
+                .min(1)
+                .required(),
+        });
 
-        // TODO call controller code here
-        doSomething(req);
-
-        return Response.OK({ hello: 'world' });
+        const success = await teardownPost(req.params.id, req.query.verifyHash);
+        if (!success) {
+            return Response.Forbidden({
+                message: 'failed to teardown post',
+            });
+        }
+        return Response.OK();
     } catch (err) {
         if (err.isJoi) {
             return Response.BadRequest(err.details);

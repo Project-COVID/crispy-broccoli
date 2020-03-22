@@ -48,10 +48,6 @@ module.exports = mongoose.model(
             type: String,
             required: true,
         },
-        teardownReason: {
-            type: String,
-            enum: ['unavailable'], // TODO: decide on teardown reasons
-        },
         created: {
             type: Date,
             required: true,
