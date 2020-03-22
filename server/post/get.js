@@ -18,7 +18,7 @@ async function getPost(req, postType) {
     }
 }
 
-module.exports = async function(req) {
+module.exports = async function (req) {
     try {
         await Joi.validate(req.query, /* TODO add schema */ {});
 

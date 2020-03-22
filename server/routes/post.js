@@ -7,7 +7,7 @@ const teardownPost = require('../post/teardown');
 
 const Response = require('../response');
 
-module.exports = function() {
+module.exports = function () {
     const router = express.Router();
 
     router.route('/').get(async (req, res) => {
@@ -30,7 +30,7 @@ module.exports = function() {
         }
     });
 
-    router.route('/:id/verify').get(async (req, res) => {
+    router.route('/:id/verify').post(async (req, res) => {
         try {
             const reply = await verifyPost(req);
             return reply.send(res);

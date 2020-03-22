@@ -1,12 +1,11 @@
 const mailer = require('./index');
 
-const offerToHelpTemplateId = 'd-7c8525987520411da6b9acfedeac0a52';
-const requestForHelpTemplateId = 'd-6d40097ec0e94b018176a0ee5b181d7d';
+const templateId = 'd-cf45e42acba34685a5866e0dfe54e79d';
 
-module.exports = function(postType, postId, verifyHash, name, email) {
-    let templateId = offerToHelpTemplateId;
+module.exports = function (postType, postId, verifyHash, name, email) {
+    let isOffer = true;
     if (postType === 'request') {
-        templateId = requestForHelpTemplateId;
+        isOffer = false;
     }
     return mailer.send({
         to: email,
@@ -16,6 +15,7 @@ module.exports = function(postType, postId, verifyHash, name, email) {
             postId,
             verifyHash,
             name,
+            isOffer,
         },
     });
 };

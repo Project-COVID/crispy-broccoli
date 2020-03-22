@@ -5,11 +5,22 @@
 
 
 
+<a name="v0.0.3"></a>
+## [v0.0.3] - 2020-03-22
+
+### Added
+- Add reply to post endpoint and linting ([#10](https://github.com/blokur/bk-catalogue/issues/10))
+- Add teardown email ([#9](https://github.com/blokur/bk-catalogue/issues/9))
+- Add post teardown endpoint ([#8](https://github.com/blokur/bk-catalogue/issues/8))
+
+### Use
+- Use POST over GET ([#11](https://github.com/blokur/bk-catalogue/issues/11))
+
+
 <a name="v0.0.2"></a>
 ## [v0.0.2] - 2020-03-22
 
 ### Added
-- Add verify post endpoint
 - Add create post implementation
 - Add verified field to model
 - Add sendgrid integration
@@ -59,5 +70,6 @@
 
 
 
-[Unreleased]: https://github.com/blokur/bk-catalogue/compare/v0.0.2...HEAD
+[Unreleased]: https://github.com/blokur/bk-catalogue/compare/v0.0.3...HEAD
+[v0.0.3]: https://github.com/blokur/bk-catalogue/compare/v0.0.2...v0.0.3
 [v0.0.2]: https://github.com/blokur/bk-catalogue/compare/v0.0.1...v0.0.2

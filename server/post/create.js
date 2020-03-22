@@ -7,39 +7,24 @@ const sendVerifyEmail = require('../mailer/verify');
 async function createPost(data) {
     data.teardownHash = uuidv4();
     data.verifyHash = uuidv4();
+    const now = new Date();
+    data.created = now;
+    data.updated = now;
     const post = await new Post(data).save();
     await sendVerifyEmail(data.type, post.id, data.verifyHash, data.name, data.email);
 }
 
-module.exports = async function(req) {
+module.exports = async function (req) {
     try {
         await Joi.validate(req.body, {
-            title: Joi.string()
-                .min(1)
-                .required(),
-            lat: Joi.number()
-                .min(1)
-                .required(),
-            lon: Joi.number()
-                .min(1)
-                .required(),
-            body: Joi.string()
-                .min(1)
-                .required(),
-            type: Joi.string()
-                .valid(['offer', 'request'])
-                .required(),
+            title: Joi.string().min(1).required(),
+            body: Joi.string().min(1).required(),
+            type: Joi.string().valid(['offer', 'request']).required(),
             tags: Joi.array()
                 .items(Joi.string().valid(['food']))
                 .min(1),
-            name: Joi.string()
-                .min(1)
-                .required(),
-            email: Joi.string()
-                .email()
-                .required(),
-            status: Joi.string()
-                .valid(['active', 'closed']),
+            name: Joi.string().min(1).required(),
+            email: Joi.string().email().required(),
         });
 
         await createPost(req.body);

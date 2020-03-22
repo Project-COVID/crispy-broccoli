@@ -1,22 +1,23 @@
 const Joi = require('joi');
 const Response = require('../response');
 const Post = require('../models/post');
+const sendTeardownEmail = require('../mailer/teardown');
 
 async function verifyPost(id, hash) {
     const post = await Post.findById(id);
-    console.log('Post', id, hash, post);
-    if (post.verifyHash === hash) {
-        post.verified = true;
-        await post.save();
-        return true;
+    if (post.verifyHash !== hash) {
+        return false;
     }
-    return false;
+    post.verified = true;
+    await post.save();
+    await sendTeardownEmail(id, post.teardownHash, post.name, post.email);
+    return true;
 }
 
-module.exports = async function(req) {
+module.exports = async function (req) {
     try {
-        await Joi.validate(req.query, {
-            verifyHash: Joi.string()
+        await Joi.validate(req.body, {
+            hash: Joi.string()
                 .guid({
                     version: ['uuidv4'],
                 })
@@ -24,8 +25,8 @@ module.exports = async function(req) {
                 .required(),
         });
 
-        const verified = await verifyPost(req.params.id, req.query.verifyHash);
-        if (!verified) {
+        const success = await verifyPost(req.params.id, req.body.hash);
+        if (!success) {
             return Response.Forbidden({
                 message: 'failed to verify post',
             });
