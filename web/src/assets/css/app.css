@@ -1,23 +1,24 @@
-#home .hero {
-  /*background-image: url('/assets/img/hero-bg.jpg');*/
-  /*background-position: center;*/
-  /*background-size: cover;*/
-}
+/* Common styles */
 
-#home .navbar-item.social {
+.navbar-item.social {
   padding-right: 0;
 }
 
-#home form {
-  margin-top: 20px;
+.navbar-item img {
+  max-height: 3.5rem;
 }
 
-#home .search-bar {
+.navbar-item.is-active {
+  font-weight: 600;
+}
+.navbar-item.is-active:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
-}
-
-#home .social-buttons {
-  margin-top: 80px;
+  height: 4px;
+  background-color: #00d1b2;
 }
 
 .button.is-facebook {
@@ -34,24 +35,96 @@
   background-color: #338CF2;
 }
 
-#home .box .post-meta {
+span.is-danger {
+  border-bottom: 4px solid #f14668;
+  font-weight: 600;
+}
+span.is-primary {
+  border-bottom: 4px solid #00d1b2;
+  font-weight: 600;
+}
+
+.social-buttons {
+  /*margin-top: 80px;*/
+}
+
+/* Home styles */
+
+#home .hero {
+  background-image: url('/assets/img/hero-bg.jpg');
+  background-position: center;
+  background-size: cover;
+}
+
+#home .form-container {
+  margin-top: 1rem;
+}
+
+#home .filter-radius button {
+  vertical-align: middle;
+  margin-left: 0.25em;
+}
+
+#home .search-bar {
+  width: 100%;
+}
+
+#home .post-block .author-block {
   margin-bottom: 0.5rem;
 }
 
-#home .box .content .title {
-  margin-bottom: 0rem;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
+#home .post-block .share-options {
+  margin-bottom: -2.25rem;
+}
+#home .post-block .share-options .is-social {
+  opacity: 0;
+}
+#home .post-block:hover .share-options .is-social {
+  opacity: 1;
 }
 
-#home .box .content .subtitle {
-  margin-top: 0.25rem;
+#home .post-block .tag.is-white {
+  padding-left: 0;
+}
+
+.post-block .content .title {
+  margin-bottom: 0rem;
+}
+#home .post-block .content .title {
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
+  -webkit-line-clamp: 1;
+}
+
+.post-block .content .subtitle {
+  margin-top: 0.25rem;
+}
+#home .post-block .content .subtitle {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+}
+
+/* About styles */
+
+/* Post styles */
+
+#post .post-block {
+  margin-top: 4rem;
+}
+
+#post .reply-block {
+  margin-top: 4rem;
+}
+
+#post .reply-block .title {
+  margin-bottom: 2rem;
+}
+
+#post .reply-block .subtitle {
+  margin-bottom: 0.5rem;
 }

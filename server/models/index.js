@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const logger = require('../logger');
 
+
 module.exports = async function () {
     logger.info(`Connecting to Mongo on: ${process.env.MONGODB_URI} ...`);
     mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true });

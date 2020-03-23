@@ -1,0 +1,186 @@
+<main id="post">
+
+  <header class="navbar is-transparent">
+    <div class="container">
+      <div class="navbar-brand">
+        <a class="navbar-item" ui-sref="home">
+          <img src="/assets/img/logo.png" alt="Logo">
+        </a>
+        <span class="navbar-burger burger">
+          <span></span>
+          <span></span>
+          <span></span>
+        </span>
+      </div>
+      <div class="navbar-menu">
+        <div class="navbar-end">
+          <a class="navbar-item" ui-sref="home" ui-sref-active="is-active">Home</a>
+          <a class="navbar-item" ui-sref="about" ui-sref-active="is-active">About</a>
+          <span class="navbar-item social">
+            <a class="button is-rounded is-dark is-facebook">
+              <span class="icon">
+                <i class="fab fa-facebook-f"></i>
+              </span>
+              <span>Share to Facebook</span>
+            </a>
+          </span>
+          <span class="navbar-item social">
+            <a class="button is-rounded is-dark is-twitter">
+              <span class="icon">
+                <i class="fab fa-twitter"></i>
+              </span>
+              <span>Share to Twitter</span>
+            </a>
+          </span>
+          <span class="navbar-item social">
+            <a class="button is-rounded">
+              <span class="icon">
+                <i class="fas fa-envelope"></i>
+              </span>
+              <span>Email a friend</span>
+            </a>
+          </span>
+          <!-- <span class="navbar-item social">
+            <a class="button is-rounded is-danger">
+              <span class="icon">
+                <i class="fas fa-heart"></i>
+              </span>
+              <span>Donate</span>
+            </a>
+          </span> -->
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <section class="section">
+    <div class="container">
+
+      <div class="columns is-mobile">
+        <div class="column is-three-fifths is-offset-one-fifth">
+          
+          <button ng-click="goBack()" class="button is-rounded is-medium">
+            <span class="icon"><i class="fas fa-arrow-left"></i></span>
+            <span>Back</span>
+          </button>
+
+          <div class="post-block">
+
+            <article class="media">
+              <div class="media-content">
+
+                <div class="tags">
+                  <div class="tag is-rounded is-medium">Grocery help</div>
+                  <div class="tag is-rounded is-medium">Medicine pickup</div>
+                  <div class="tag is-rounded is-medium">Friendly chat</div>
+                  <div class="tag is-rounded is-medium">Important errand</div>
+                </div>
+    
+                <div class="content">
+                  <h4 class="title is-4 is-spaced">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aliquam tincidunt mauris eu risus. Vestibulum auctor dapibus neque.</h4>
+                  <p class="subtitle">Aliquam tincidunt mauris eu risus. Vestibulum auctor dapibus neque. Aliquam tincidunt mauris eu risus. Vestibulum auctor dapibus neque. Aliquam tincidunt mauris eu risus. Vestibulum auctor dapibus neque.</p>
+                </div>
+
+                <nav class="level is-mobile author-block">
+                  <div class="level-left">
+                    <div class="level-item subtitle is-grey-light">
+                      <span><strong>Jane</strong></span>&nbsp;in&nbsp;<span>London, UK</span>
+                    </div>
+                  </div>
+                  <div class="level-right">
+                    <div class="level-item">
+                      2 days ago
+                    </div>
+                  </div>
+                </nav>
+
+              </div>
+            </article>
+
+          </div>
+
+          <div class="content reply-block">
+
+            <h4 class="title is-4">
+              <span class="icon"><i class="fas fa-reply"></i></span>
+              <span>Reply</span>
+            </h4>
+
+            <div class="subtitle is-6">All fields are required</div>
+
+            <form>
+
+              <div class="field">
+                <div class="field-body">
+                  <div class="field">
+                    <p class="control is-expanded has-icons-left">
+                      <input class="input is-medium" type="text" placeholder="Name">
+                      <span class="icon is-small is-left"><i class="fas fa-user"></i></span>
+                    </p>
+                  </div>
+                  <div class="field">
+                    <p class="control is-expanded has-icons-left has-icons-right">
+                      <input class="input is-medium" type="email" placeholder="Email">
+                      <span class="icon is-small is-left"><i class="fas fa-envelope"></i></span>
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="field">
+                <div class="field-body">
+                  <div class="field">
+                    <div class="control">
+                      <textarea class="textarea is-medium" placeholder="I may be able to help!"></textarea>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="field">
+                <div class="field-body">
+                  <div class="field">
+                    <div class="control">
+                      <button class="button is-rounded is-medium is-primary">
+                        <span class="icon"><i class="fas fa-paper-plane"></i></span>
+                        <span>Send message</span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </form>
+
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container has-text-centered">
+
+      <h3 class="title is-3">Share this post</h3>
+
+      <div class="buttons is-centered social-buttons">
+        <button class="button is-rounded is-dark is-medium is-facebook">
+          <span class="icon"><i class="fab fa-facebook-f"></i></span>
+          <span>Share to Facebook</span>
+        </button>
+        <button class="button is-rounded is-dark is-medium is-twitter">
+          <span class="icon"><i class="fab fa-twitter"></i></span>
+          <span>Share to Twitter</span>
+        </button>
+        <button class="button is-rounded is-medium">
+          <span class="icon"><i class="fas fa-envelope"></i></span>
+          <span>Email a friend</span>
+        </button>
+      </div>
+
+    </div>
+  </section>
+
+</main>
