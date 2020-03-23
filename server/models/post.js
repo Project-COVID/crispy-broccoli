@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
+const pointSchema = require('./point');
 
 module.exports = mongoose.model(
     'Post',
@@ -15,6 +15,10 @@ module.exports = mongoose.model(
         type: {
             type: String,
             enum: ['offer', 'request'],
+            required: true,
+        },
+        location: {
+            type : pointSchema,
             required: true,
         },
         tags: {
