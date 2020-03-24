@@ -2,7 +2,7 @@ const Joi = require('joi');
 const Response = require('../response');
 const Post = require('../models/post');
 
-const DEFAULT_RADIUS_KM = 5
+const DEFAULT_RADIUS_KM = 5;
 
 function kmToRadian(km) {
     const earthRadiusInKm = 6371;
@@ -22,12 +22,14 @@ async function getPost(req, postType, params) {
                 status: 'active',
                 location: {
                     $geoWithin: {
-                        $center: [[params.lon, params.lat], kmToRadian(DEFAULT_RADIUS_KM)]
-                      }
-                }
-            }).sort({
-                createdAt: -1
-            }).limit(10);
+                        $center: [[params.lon, params.lat], kmToRadian(DEFAULT_RADIUS_KM)],
+                    },
+                },
+            })
+                .sort({
+                    createdAt: -1,
+                })
+                .limit(10);
         }
 
         // By default just return the 10 latest posts regardless of distance
@@ -35,11 +37,13 @@ async function getPost(req, postType, params) {
             type: postType,
             verified: true,
             status: 'active',
-        }).sort({
-            createdAt: -1
-        }).limit(10);
-    } catch(err) {
-        throw err; 
+        })
+            .sort({
+                createdAt: -1,
+            })
+            .limit(10);
+    } catch (err) {
+        throw err;
     }
 }
 
@@ -53,7 +57,7 @@ module.exports = async function (req) {
         let offersList = await getPost(req, 'offer', req.query);
         let requestsList = await getPost(req, 'request', req.query);
 
-        return Response.OK({offers: offersList, requests: requestsList});
+        return Response.OK({ offers: offersList, requests: requestsList });
     } catch (err) {
         if (err.isJoi) {
             return Response.BadRequest(err.details);

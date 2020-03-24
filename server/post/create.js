@@ -8,7 +8,7 @@ const sendVerifyEmail = require('../mailer/verify');
 async function createPost(data) {
     data.teardownHash = uuidv4();
     data.verifyHash = uuidv4();
-    data.location = {type: 'Point', coordinates: [data.lon, data.lat]}; // NOTE: In GeoJSON coordinates longitude comes first
+    data.location = { type: 'Point', coordinates: [data.lon, data.lat] }; // NOTE: In GeoJSON coordinates longitude comes first
     const post = await new Post(data).save();
     await sendVerifyEmail(data.type, post.id, data.verifyHash, data.name, data.email);
 }
