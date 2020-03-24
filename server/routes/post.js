@@ -4,6 +4,7 @@ const createPost = require('../post/create');
 const verifyPost = require('../post/verify');
 const replyPost = require('../post/reply');
 const teardownPost = require('../post/teardown');
+const reportPost = require('../post/report');
 
 const Response = require('../response');
 
@@ -53,6 +54,16 @@ module.exports = function () {
     router.route('/:id/teardown').post(async (req, res) => {
         try {
             const reply = await teardownPost(req);
+            return reply.send(res);
+        } catch (err) {
+            req.log.error(err);
+            return Response.InternalServerError().send(res);
+        }
+    });
+
+    router.route('/:id/report').post(async (req, res) => {
+        try {
+            const reply = await reportPost(req);
             return reply.send(res);
         } catch (err) {
             req.log.error(err);
