@@ -25,7 +25,7 @@ module.exports = mongoose.model(
             },
             tags: {
                 type: [String],
-                enum: ['food'], // TODO: decide on tags
+                enum: Object.values(constants.tags),
                 required: false,
             },
             name: {
@@ -47,8 +47,8 @@ module.exports = mongoose.model(
             },
             status: {
                 type: String,
-                enum: ['active', 'closed'],
-                default: 'active',
+                enum: Object.values(constants.statuses),
+                default: constants.statuses.active,
                 required: true,
             },
             teardownHash: {
@@ -57,7 +57,7 @@ module.exports = mongoose.model(
             },
             teardownReason: {
                 type: String,
-                enum: ['unavailable'], // TODO: decide on teardown reasons
+                required: false,
             },
         },
         { timestamps: true },

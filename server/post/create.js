@@ -2,7 +2,7 @@ const Joi = require('joi');
 const { v4: uuidv4 } = require('uuid');
 const Response = require('../response');
 const Post = require('../models/post');
-const pointSchema = require('../models/point');
+const constants = require('../models/constants');
 const sendVerifyEmail = require('../mailer/verify');
 
 async function createPost(data) {
@@ -18,11 +18,11 @@ module.exports = async function (req) {
         await Joi.validate(req.body, {
             title: Joi.string().min(1).required(),
             body: Joi.string().min(1).required(),
-            type: Joi.string().valid(['offer', 'request']).required(),
+            type: Joi.string().valid(Object.values(constants.types)).required(),
             lon: Joi.number().required(),
             lat: Joi.number().required(),
             tags: Joi.array()
-                .items(Joi.string().valid(['food']))
+                .items(Joi.string().valid(Object.values(constants.tags)))
                 .min(1),
             name: Joi.string().min(1).required(),
             email: Joi.string().email().required(),

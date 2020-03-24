@@ -1,6 +1,7 @@
 const Joi = require('joi');
 const Response = require('../response');
 const Post = require('../models/post');
+const constants = require('../models/constants');
 
 const DEFAULT_RADIUS_KM = 5;
 
@@ -19,7 +20,7 @@ async function getPost(req, postType, params) {
             return await Post.find({
                 type: postType,
                 verified: true,
-                status: 'active',
+                status: constants.statuses.active,
                 location: {
                     $geoWithin: {
                         $center: [[params.lon, params.lat], kmToRadian(DEFAULT_RADIUS_KM)],
@@ -36,7 +37,7 @@ async function getPost(req, postType, params) {
         return await Post.find({
             type: postType,
             verified: true,
-            status: 'active',
+            status: constants.statuses.active,
         })
             .sort({
                 createdAt: -1,
@@ -54,8 +55,8 @@ module.exports = async function (req) {
             lon: Joi.number(),
         });
 
-        let offersList = await getPost(req, 'offer', req.query);
-        let requestsList = await getPost(req, 'request', req.query);
+        let offersList = await getPost(req, constants.types.offer, req.query);
+        let requestsList = await getPost(req, constants.types.request, req.query);
 
         return Response.OK({ offers: offersList, requests: requestsList });
     } catch (err) {
