@@ -27,23 +27,15 @@ async function replyToPost(id, name, email, body) {
     await sendReplyEmail(post.id, post.name, post.email, name, body, email);
 }
 
-module.exports = async function(req) {
+module.exports = async function (req) {
     try {
         await Joi.validate(req.params, {
-            id: Joi.string()
-                .hex()
-                .required(),
+            id: Joi.string().hex().required(),
         });
         await Joi.validate(req.body, {
-            name: Joi.string()
-                .min(1)
-                .required(),
-            email: Joi.string()
-                .email()
-                .required(),
-            body: Joi.string()
-                .min(1)
-                .required(),
+            name: Joi.string().min(1).required(),
+            email: Joi.string().email().required(),
+            body: Joi.string().min(1).required(),
         });
 
         await replyToPost(req.params.id, req.body.name, req.body.email, req.body.body);

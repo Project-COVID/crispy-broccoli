@@ -5,12 +5,19 @@ tag=v0.0.1
 env=.env
 
 
+# make lint
+.PHONY: lint
+lint:
+	@pushd server; yarn run prettier --write --config .prettierrc .; popd
+
+
 # make clean
 .PHONY: clean
 clean:
 	@rm -rf ./server/node_modules
 
 
+# make mongo
 .PHONY: mongo
 mongo:
 	@-docker stop mongo
@@ -19,9 +26,9 @@ mongo:
 
 # make build
 .PHONY: build
-build:
+build: lint
 	@pushd server; yarn; popd
-	@echo "TODO: Julian to build web app here :)"
+	@pushd web; bower install; popd
 
 
 # make run env={env file}
@@ -29,6 +36,13 @@ build:
 run:
 	@yarn global add pino-pretty
 	@source ./scripts/env.sh $(env) && node ./server/index.js | pino-pretty
+
+
+# make run_watch env={env file}
+.PHONY: run_watch
+run_watch:
+	@yarn global add pino-pretty
+	@source ./scripts/env.sh $(env) && nodemon --watch ./server --watch ./web/dist ./server/index.js | pino-pretty
 
 
 # make docker tag={tag}
@@ -43,12 +57,14 @@ docker_run:
 	@./scripts/docker.sh $(env)	$(service_image) $(tag)
 
 
+# make changelog
 .PHONY: changelog
 changelog:
 	@git-chglog > CHANGELOG.md
 	@echo "Changelog has been updated."
 
 
+# make changelog_release tag={tag}
 .PHONY: changelog_release
 changelog_release:
 	@git-chglog --next-tag $(tag) > CHANGELOG.md
