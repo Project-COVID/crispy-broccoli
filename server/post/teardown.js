@@ -1,6 +1,7 @@
 const Joi = require('joi');
 const Post = require('../models/post');
 const constants = require('../models/constants');
+const sendRemovedPostEmail = require('../mailer/removed');
 const Response = require('../response');
 
 async function teardownPost(id, hash) {
@@ -9,6 +10,7 @@ async function teardownPost(id, hash) {
         post.status = constants.statuses.closed;
         post.updated = new Date();
         await post.save();
+        await sendRemovedPostEmail(id, post.name, post.email);
         return true;
     }
     return false;
