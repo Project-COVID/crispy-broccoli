@@ -1,12 +1,13 @@
 const Joi = require('joi');
 const Post = require('../models/post');
+const constants = require('../models/constants');
 const Response = require('../response');
 const sendReplyEmail = require('../mailer/reply');
 
-class PostClosedError extends Error {
+class PostNotActiveError extends Error {
     constructor(message) {
         super(message);
-        this.name = 'PostClosedError';
+        this.name = 'PostNotActiveError';
     }
 }
 
@@ -19,8 +20,8 @@ class PostNotVerifiedError extends Error {
 
 async function replyToPost(id, name, email, body) {
     const post = await Post.findById(id);
-    if (post.status !== 'active') {
-        throw new PostClosedError();
+    if (post.status !== constants.statuses.active) {
+        throw new PostNotActiveError();
     } else if (!post.verified) {
         throw new PostNotVerifiedError();
     }
@@ -44,9 +45,9 @@ module.exports = async function (req) {
     } catch (err) {
         if (err.isJoi) {
             return Response.BadRequest(err.details);
-        } else if (err instanceof PostClosedError) {
+        } else if (err instanceof PostNotActiveError) {
             return Response.BadRequest({
-                message: 'that post is closed',
+                message: 'that post is not active',
             });
         } else if (err instanceof PostNotVerifiedError) {
             return Response.BadRequest({

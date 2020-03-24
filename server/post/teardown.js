@@ -1,11 +1,12 @@
 const Joi = require('joi');
 const Post = require('../models/post');
+const constants = require('../models/constants');
 const Response = require('../response');
 
 async function teardownPost(id, hash) {
     const post = await Post.findById(id);
     if (post.teardownHash === hash) {
-        post.status = 'closed';
+        post.status = constants.statuses.closed;
         post.updated = new Date();
         await post.save();
         return true;

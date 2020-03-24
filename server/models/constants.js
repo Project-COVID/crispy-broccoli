@@ -6,4 +6,8 @@ module.exports = {
     tags: {
         food: 'food',
     },
+    statuses: {
+        active: 'active',
+        closed: 'closed',
+    },
 };
