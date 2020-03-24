@@ -31,6 +31,7 @@ The following tools need to be installed on your machine and available in your `
 
 - `node` (v10.16.3)
 - `yarn`
+- `bower`
 - `docker`
 - `heroku`
 - `make`

@@ -1,0 +1,6 @@
+{
+    "prettier.configPath": "./server/.prettierrc",
+    "prettier.packageManager": "yarn",
+    "prettier.prettierPath": "./server/node_modules/prettier/index.js",
+    "eslint.format.enable": true
+}
