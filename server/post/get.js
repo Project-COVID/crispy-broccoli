@@ -1,8 +1,10 @@
+const _ = require('lodash');
 const Joi = require('joi');
 const Response = require('../response');
 const Post = require('../models/post');
 const constants = require('../models/constants');
 
+const DEFAULT_LIMIT = 15;
 const DEFAULT_RADIUS_KM = 5;
 
 function kmToRadian(km) {
@@ -10,39 +12,39 @@ function kmToRadian(km) {
     return km / earthRadiusInKm;
 }
 
-async function getPost(req, postType, params) {
-    req.log.info('Get post!', req.query);
+function sanitisePosts(posts) {
+    return posts.map((post) => _.pick(post, ['title', 'body', 'type', 'location', 'tags', 'name', 'email']));
+}
 
-    // Return the 10 most recent posts for the given type
+async function getPosts(type, lat, lon, radius, cursor, limit) {
     try {
-        // If the get request specifies coordinates, filter posts within a given radius of that
-        if (params.lat !== undefined && params.lon !== undefined) {
-            return await Post.find({
-                type: postType,
+        if (lat && lon) {
+            return Post.find({
+                type,
                 verified: true,
                 status: constants.statuses.active,
                 location: {
                     $geoWithin: {
-                        $center: [[params.lon, params.lat], kmToRadian(DEFAULT_RADIUS_KM)],
+                        $center: [[lon, lat], kmToRadian(radius || DEFAULT_RADIUS_KM)],
                     },
                 },
+                ...(cursor && { _id: { $gt: cursor } }),
             })
                 .sort({
                     createdAt: -1,
                 })
-                .limit(10);
+                .limit(limit || DEFAULT_LIMIT);
         }
-
-        // By default just return the 10 latest posts regardless of distance
-        return await Post.find({
-            type: postType,
+        return Post.find({
+            type,
             verified: true,
             status: constants.statuses.active,
+            ...(cursor && { _id: { $gt: cursor } }),
         })
             .sort({
                 createdAt: -1,
             })
-            .limit(10);
+            .limit(limit || DEFAULT_LIMIT);
     } catch (err) {
         throw err;
     }
@@ -51,14 +53,28 @@ async function getPost(req, postType, params) {
 module.exports = async function (req) {
     try {
         await Joi.validate(req.query, {
+            type: Joi.string().valid(Object.values(constants.types)).required(),
             lat: Joi.number(),
             lon: Joi.number(),
+            cursor: Joi.string().hex(),
+            limit: Joi.number(),
+            radius: Joi.number(), // in km
         });
 
-        let offersList = await getPost(req, constants.types.offer, req.query);
-        let requestsList = await getPost(req, constants.types.request, req.query);
+        let posts = await getPosts(
+            req.query.type,
+            req.query.lat,
+            req.query.lon,
+            req.query.radius,
+            req.query.cursor,
+            req.query.limit,
+        );
+        let nextCursor = null;
+        if (posts && posts.length > 0) {
+            nextCursor = posts[posts.length - 1]._id;
+        }
 
-        return Response.OK({ offers: offersList, requests: requestsList });
+        return Response.OK({ posts: sanitisePosts(posts), nextCursor });
     } catch (err) {
         if (err.isJoi) {
             return Response.BadRequest(err.details);
