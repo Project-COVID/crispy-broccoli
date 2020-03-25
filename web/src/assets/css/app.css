@@ -44,8 +44,15 @@ span.is-primary {
   font-weight: 600;
 }
 
-.social-buttons {
-  /*margin-top: 80px;*/
+.post-block .content .title {
+  margin-bottom: 0rem;
+}
+.post-block .content .subtitle {
+  margin-top: 0.25rem;
+}
+
+.footer {
+  margin-top: 3rem;
 }
 
 /* Home styles */
@@ -60,13 +67,17 @@ span.is-primary {
   margin-top: 1rem;
 }
 
+#home .search-bar {
+  width: 100%;
+}
+
 #home .filter-radius button {
   vertical-align: middle;
   margin-left: 0.25em;
 }
 
-#home .search-bar {
-  width: 100%;
+#home .toggle-mode {
+  margin-bottom: 2rem;
 }
 
 #home .post-block .author-block {
@@ -87,9 +98,6 @@ span.is-primary {
   padding-left: 0;
 }
 
-.post-block .content .title {
-  margin-bottom: 0rem;
-}
 #home .post-block .content .title {
   overflow: hidden;
   text-overflow: ellipsis;
@@ -98,15 +106,16 @@ span.is-primary {
   -webkit-line-clamp: 1;
 }
 
-.post-block .content .subtitle {
-  margin-top: 0.25rem;
-}
 #home .post-block .content .subtitle {
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 1;
+}
+
+#home .pagination {
+  margin-top: 3rem;
 }
 
 /* About styles */
