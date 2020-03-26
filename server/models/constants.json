@@ -4,7 +4,19 @@
         "request": "request"
     },
     "tags": {
-        "food": "food"
+        "has_car": "has car",
+        "has_bike": "has bike",
+        "errand": "errand",
+        "collection": "collection",
+        "donation": "donation",
+        "food": "food",
+        "prescription": "prescription",
+        "dog_walk": "dog walk",
+        "pet_care": "pet care",
+        "child_minding": "child minding",
+        "clothes_wash": "clothes wash",
+        "phone_call": "phone call",
+        "post": "post"
     },
     "statuses": {
         "active": "active",
