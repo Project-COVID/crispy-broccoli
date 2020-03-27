@@ -45,7 +45,11 @@ const dbinit = require('./models');
 
     // Handle HTTP OPTIONS
     app.options('/*', (req, res) => {
-        res.header('Access-Control-Allow-Origin', '*');
+        let origin = '*';
+        if (process.env.NODE_ENV === 'production') {
+            origin = 'https://kindnessproject.xyz';
+        }
+        res.header('Access-Control-Allow-Origin', origin);
         res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
         res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
         res.sendStatus(200);
