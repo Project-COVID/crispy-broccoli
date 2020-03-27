@@ -1,5 +1,5 @@
 const express = require('express');
-const getPost = require('../post/get');
+const { getPosts, getPost } = require('../post/get');
 const createPost = require('../post/create');
 const verifyPost = require('../post/verify');
 const replyPost = require('../post/reply');
@@ -13,7 +13,7 @@ module.exports = function () {
 
     router.route('/').get(async (req, res) => {
         try {
-            const reply = await getPost(req);
+            const reply = await getPosts(req);
             return reply.send(res);
         } catch (err) {
             req.log.error(err);
@@ -24,6 +24,16 @@ module.exports = function () {
     router.route('/').post(async (req, res) => {
         try {
             const reply = await createPost(req);
+            return reply.send(res);
+        } catch (err) {
+            req.log.error(err);
+            return Response.InternalServerError().send(res);
+        }
+    });
+
+    router.route('/:id').get(async (req, res) => {
+        try {
+            const reply = await getPost(req);
             return reply.send(res);
         } catch (err) {
             req.log.error(err);

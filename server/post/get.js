@@ -13,7 +13,9 @@ function kmToRadian(km) {
 }
 
 function sanitisePosts(posts) {
-    return posts.map(post => _.pick(post, ['title', 'body', 'type', 'location', 'tags', 'name', 'email']));
+    return posts.map((post) =>
+        _.pick(post, ['title', 'body', 'type', 'location.coordinates', 'location.type', 'tags', 'name', 'email']),
+    );
 }
 
 async function getPosts(type, lat, lon, radius, cursor, limit) {
@@ -41,12 +43,10 @@ async function getPosts(type, lat, lon, radius, cursor, limit) {
     };
 }
 
-module.exports = async function(req) {
+async function getPosts(req) {
     try {
         await Joi.validate(req.query, {
-            type: Joi.string()
-                .valid(Object.values(constants.types))
-                .required(),
+            type: Joi.string().valid(Object.values(constants.types)).required(),
             lat: Joi.number().required(),
             lon: Joi.number().required(),
             cursor: Joi.string().hex(),
@@ -74,4 +74,26 @@ module.exports = async function(req) {
         }
         throw err;
     }
-};
+}
+
+async function getPost(req) {
+    try {
+        await Joi.validate(req.params, {
+            id: Joi.string().hex().required(),
+        });
+
+        let post = await Post.findById(req.params.id);
+        if (post) {
+            post = sanitisePosts([post])[0];
+        }
+
+        return Response.OK(post);
+    } catch (err) {
+        if (err.isJoi) {
+            return Response.BadRequest(err.details);
+        }
+        throw err;
+    }
+}
+
+module.exports = { getPosts, getPost };
