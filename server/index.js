@@ -67,7 +67,7 @@ const dbinit = require('./models');
     var appCwd = process.env.NODE_ENV === 'production' ? 'dist' : 'src';
     app.use(express.static(path.join(__dirname, '../web/' + appCwd)));
     app.get('*', (req, res) => {
-        res.set('Cache-Control', 'public, max-age=604800'); // 7 days
+        res.set('Cache-Control', 'public, max-age=31536000'); // 1 year
         res.sendFile(path.join(__dirname, '../web/' + appCwd + '/index.html'));
     });
 
