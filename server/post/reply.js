@@ -41,7 +41,7 @@ module.exports = async function (req) {
 
         await replyToPost(req.params.id, req.body.name, req.body.email, req.body.body);
 
-        return Response.OK({ hello: 'world' });
+        return Response.OK();
     } catch (err) {
         if (err.isJoi) {
             return Response.BadRequest(err.details);

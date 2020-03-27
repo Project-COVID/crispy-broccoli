@@ -5,6 +5,59 @@
 
 
 
+<a name="v0.0.4"></a>
+## [v0.0.4] - 2020-03-24
+
+### Added
+- Added GeoJSON search for posts
+
+### Added
+- Add post removed confirmation email ([#18](https://github.com/blokur/bk-catalogue/issues/18))
+- Add report post endpoint ([#16](https://github.com/blokur/bk-catalogue/issues/16))
+- Add constants ([#15](https://github.com/blokur/bk-catalogue/issues/15))
+- Add missing semicolons
+- Add missing semicolons
+
+### Check
+- Check that post is verified when getting latest posts
+
+### Constants
+- Constants is a json
+
+### Fixed
+- Fixed webapp config gitignore
+
+### Get
+- Get posts endpoint return 10 latest offers and requests
+- Get posts endpoint return 10 latest offers and requests
+
+### Initial
+- Initial work on home, about, ind post
+- Initial work on webapp MVP
+
+### Let
+- Let mongoose handle _id creation + small type changes
+- Let mongo handle created/updated timestamps
+- Let mongoose handle _id creation + small type changes
+- Let mongo handle created/updated timestamps
+
+### Merged
+- merged latest changes
+
+### Merged
+- Merge pull request [#13](https://github.com/blokur/bk-catalogue/issues/13) from the-kindness-project/feature/get-posts
+- Merge pull request [#12](https://github.com/blokur/bk-catalogue/issues/12) from the-kindness-project/feature/data-model
+
+### Misc
+- Misc updates to get posts endpoint ([#17](https://github.com/blokur/bk-catalogue/issues/17))
+
+### Oops
+- oops remove docker files
+
+### Uncomment
+- Uncomment code
+
+
 <a name="v0.0.3"></a>
 ## [v0.0.3] - 2020-03-22
 
@@ -12,6 +65,9 @@
 - Add reply to post endpoint and linting ([#10](https://github.com/blokur/bk-catalogue/issues/10))
 - Add teardown email ([#9](https://github.com/blokur/bk-catalogue/issues/9))
 - Add post teardown endpoint ([#8](https://github.com/blokur/bk-catalogue/issues/8))
+
+### Update
+- update changelog
 
 ### Use
 - Use POST over GET ([#11](https://github.com/blokur/bk-catalogue/issues/11))
@@ -70,6 +126,7 @@
 
 
 
-[Unreleased]: https://github.com/blokur/bk-catalogue/compare/v0.0.3...HEAD
+[Unreleased]: https://github.com/blokur/bk-catalogue/compare/v0.0.4...HEAD
+[v0.0.4]: https://github.com/blokur/bk-catalogue/compare/v0.0.3...v0.0.4
 [v0.0.3]: https://github.com/blokur/bk-catalogue/compare/v0.0.2...v0.0.3
 [v0.0.2]: https://github.com/blokur/bk-catalogue/compare/v0.0.1...v0.0.2
