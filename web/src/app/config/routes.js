@@ -21,6 +21,14 @@ angular.module('app').config(function ($stateProvider, $urlRouterProvider) {
       templateUrl: 'app/views/post.view.html',
       controller: 'postController',
       controllerAs: 'ctrl'
-    });
+    }).state('create-post', {
+      url: '/post/create',
+      templateUrl: 'app/views/create.post.view.html',
+      controller: 'createPostController',
+      controllerAs: 'ctrl',
+      params: {
+        type: undefined
+      }
+    });;
 
 });

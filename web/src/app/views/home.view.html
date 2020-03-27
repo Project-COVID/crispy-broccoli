@@ -1,6 +1,6 @@
 <main id="home">
 
-  <section class="hero">
+  <section class="hero is-medium">
 
     <div class="hero-head">
       <header class="navbar is-transparent">
@@ -17,32 +17,41 @@
           </div>
           <div class="navbar-menu">
             <div class="navbar-end">
-              <a class="navbar-item" ui-sref="home" ui-sref-active="is-active">Home</a>
-              <a class="navbar-item" ui-sref="about" ui-sref-active="is-active">About</a>
-              <span class="navbar-item social">
-                <a class="button is-rounded is-dark is-facebook">
-                  <span class="icon"><i class="fab fa-facebook-f"></i></span>
-                  <span>Share to Facebook</span>
-                </a>
-              </span>
-              <span class="navbar-item social">
-                <a class="button is-rounded is-dark is-twitter">
-                  <span class="icon"><i class="fab fa-twitter"></i></span>
-                  <span>Share to Twitter</span>
-                </a>
-              </span>
-              <span class="navbar-item social">
-                <a class="button is-rounded">
-                  <span class="icon"><i class="fas fa-envelope"></i></span>
-                  <span>Email a friend</span>
-                </a>
-              </span>
-              <!-- <span class="navbar-item social">
-                <a class="button is-rounded is-danger">
-                  <span class="icon"><i class="fas fa-heart"></i></span>
-                  <span>Donate</span>
-                </a>
-              </span> -->
+              <a class="navbar-item" ui-sref="home" ui-sref-active="is-active">
+                <span class="icon"><i class="fas fa-home"></i></span>
+                <span>Home</span>
+              </a>
+              <a class="navbar-item" ui-sref="about" ui-sref-active="is-active">
+                <span class="icon"><i class="fas fa-heart"></i></span>
+                <span>About</span>
+              </a>
+              <div class="navbar-item">
+                <div class="field is-grouped is-grouped-multiline">
+                  <p class="control">
+                    <a class="button is-rounded is-fullwidth is-dark is-facebook">
+                      <span class="icon"><i class="fab fa-facebook-f"></i></span>
+                      <span>Share to Facebook</span>
+                    </a>
+                  </p>
+                  <p class="control">
+                    <a class="button is-rounded is-fullwidth is-dark is-twitter">
+                      <span class="icon"><i class="fab fa-twitter"></i></span>
+                      <span>Share to Twitter</span>
+                    </a>
+                  </p>
+                  <p class="control">
+                    <a class="button is-rounded is-fullwidth">
+                      <span class="icon"><i class="fas fa-envelope"></i></span>
+                      <span>Email a friend</span>
+                    </a>
+                  </p>
+                  <!-- <p class="control">
+                    <a class="button is-rounded is-fullwidth is-danger">
+                      <span class="icon"><i class="fas fa-heart"></i></span>
+                      <span>Donate</span>
+                    </a>
+                  </p> -->
+                </div>
             </div>
           </div>
         </div>
@@ -52,45 +61,68 @@
     <div class="hero-body">
       <div class="container has-text-centered">
 
-        <div class="columns is-mobile">
-          <div class="column is-8 is-offset-2">
-
-            <h2 class="title is-2">
-              Request or offer help to those in your community affected by the pandemic
-              <span class="icon has-text-danger is-medium"><i class="fas fa-heart"></i></span>
-            </h2>
+        <h2 class="title is-2">
+          Request or offer help to those in your community affected by the pandemic
+          <span class="icon has-text-danger is-medium"><i class="fas fa-heart"></i></span>
+        </h2>
         
-          </div>
+        <div class="buttons is-centered toggle-mode">
+          <button class="button is-large is-rounded">
+            <span class="icon"><i class="fas fa-hands-helping"></i></span>
+            <span>I need help</span>
+          </button>
+          <button class="button is-large is-rounded is-danger">
+            <span class="icon"><i class="fas fa-heart"></i></span>
+            <span>I want to help</span>
+          </button>
         </div>
 
-        <div class="columns is-mobile form-container">
-          <div class="column is-half is-offset-one-quarter">
+        <form>
+          <div class="field has-addons">
+            <div class="control search-bar has-icons-left">
+              <input class="input is-large is-rounded" type="text" placeholder="Enter your location" value="London">
+              <span class="icon is-left">
+                <i class="fas fa-search"></i>
+              </span>
+            </div>
+            <div class="control">
+              <a class="button is-submit is-large is-primary is-rounded">
+                <span>Search</span>
+                <span class="icon"><i class="fas fa-arrow-right"></i></span>
+              </a>
+            </div>
+          </div>
 
-            <form>
-              <div class="field has-addons">
-                <div class="control search-bar has-icons-left">
-                  <input class="input is-large is-rounded" type="text" placeholder="Enter your location">
-                  <span class="icon is-left">
-                    <i class="fas fa-search"></i>
-                  </span>
-                </div>
-                <div class="control">
-                  <a class="button is-large is-primary is-rounded">Search</a>
-                </div>
-              </div>
-
-              <h5 class="subtitle is-5 filter-radius">
-                <span>Search posts within</span>
+          <h5 class="subtitle is-5 filter-radius">
+            <span>Search within</span>
+            
+            <div class="dropdown is-hoverable">
+              <div class="dropdown-trigger">
                 <button class="button is-rounded">
                   <span class="icon"><i class="fas fa-car"></i></span>
                   <span>20 miles</span>
                 </button>
-              </h5>
+              </div>
+              <div class="dropdown-menu is-rounded">
+                <div class="dropdown-content">
+                  <a href="#" class="dropdown-item">
+                    <span class="icon"><i class="fas fa-walking"></i></span>
+                    <span>5 miles</span>
+                  </a>
+                  <a href="#" class="dropdown-item">
+                    <span class="icon"><i class="fas fa-biking"></i></span>
+                    <span>10 miles</span>
+                  </a>
+                  <a href="#" class="dropdown-item">
+                    <span class="icon"><i class="fas fa-car"></i></span>
+                    <span>20 miles</span>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </h5>
 
-            </form>
-
-          </div>
-        </div>
+        </form>
 
       </div>
     </div>
@@ -98,213 +130,73 @@
   </section>
 
   <section class="section">
-    <div class="container">
+    <div class="container has-text-centered">
 
-      <div class="buttons has-addons is-centered toggle-mode">
-        <button class="button is-large is-rounded is-primary">
-          <span class="icon">
-            <i class="fas fa-first-aid"></i>
-          </span>
-          <span>Requests for help</span>
-        </button>
-        <button class="button is-large is-rounded">
-          <span class="icon">
-            <i class="fas fa-heart"></i>
-          </span>
-          <span>Offers to help</span>
-        </button>
-      </div>
+      <h3 class="title is-3">Step 1 &ndash; Check requests for help in your area</h3>
+      <h4 class="subtitle is-4">There are <strong>20 people</strong> near you who need help</h4>
 
-      <div class="columns is-mobile">
+      <a class="box post-block" ui-sref="post({ id: 'test' })">
 
-        <div class="column is-three-fifths is-offset-one-fifth">
+        <article class="media">
+          <div class="media-content">
 
-          <!-- <h3 class="title is-3">Requests for help</h3> -->
+            <div class="tags are-medium">
+              <div class="tag is-rounded">Grocery help</div>
+              <div class="tag is-rounded">Medicine pickup</div>
+              <!-- <div class="tag is-rounded">Errand</div> -->
+              <div class="tag is-rounded">Friendly chat</div>
+              <div class="tag is-white">+2</div>
+            </div>
 
-          <a class="box post-block" ui-sref="post({ id: 'test' })">
+            <div class="content">
+              <h4 class="title is-4 is-spaced">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aliquam tincidunt mauris eu risus. Vestibulum auctor dapibus neque.</h4>
+              <p class="subtitle">Aliquam tincidunt mauris eu risus. Vestibulum auctor dapibus neque. Aliquam tincidunt mauris eu risus. Vestibulum auctor dapibus neque. Aliquam tincidunt mauris eu risus. Vestibulum auctor dapibus neque.</p>
+            </div>
 
-            <article class="media">
-              <div class="media-content">
-
-                <div class="tags">
-                  <div class="tag is-rounded is-medium">Grocery help</div>
-                  <div class="tag is-rounded is-medium">Medicine pickup</div>
-                  <!-- <div class="tag is-rounded is-medium">Errand</div> -->
-                  <div class="tag is-rounded is-medium">Friendly chat</div>
-                  <div class="tag is-medium is-white">+2</div>
-                </div>
-    
-                <div class="content">
-                  <h4 class="title is-4 is-spaced">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aliquam tincidunt mauris eu risus. Vestibulum auctor dapibus neque.</h4>
-                  <p class="subtitle">Aliquam tincidunt mauris eu risus. Vestibulum auctor dapibus neque. Aliquam tincidunt mauris eu risus. Vestibulum auctor dapibus neque. Aliquam tincidunt mauris eu risus. Vestibulum auctor dapibus neque.</p>
-                </div>
-
-                <nav class="level is-mobile author-block">
-                  <div class="level-left">
-                    <div class="level-item subtitle is-grey-light">
-                      <span><strong>Jane</strong></span>&nbsp;in&nbsp;<span>London, UK</span>
-                    </div>
-                  </div>
-                  <div class="level-right">
-                    <div class="level-item">
-                      2 days ago
-                    </div>
-                  </div>
-                </nav>
-
-                <nav class="level is-mobile share-options">
-                  <div class="level-left"></div>
-                  <div class="level-right">
-                    <button class="button level-item is-rounded is-small is-dark is-social is-facebook">
-                      <span class="icon is-small"><i class="fab fa-facebook-f"></i></span>
-                      <span>Share to Facebook</span>
-                    </button>
-                    <button class="button level-item is-rounded is-small is-dark is-social is-twitter">
-                      <span class="icon is-small"><i class="fab fa-twitter"></i></span>
-                      <span>Share to Twitter</span>
-                    </button>
-                    <button class="button level-item is-rounded is-small is-social is-email">
-                      <span class="icon is-small"><i class="fas fa-envelope"></i></span>
-                      <span>Email a friend</span>
-                    </button>
-                    <button class="button level-item is-rounded is-small is-primary">
-                      <span class="icon is-small"><i class="fas fa-reply"></i></span>
-                      <span>Reply</span>
-                    </button>
-                  </div>
-                </nav>
-
+            <div class="author-block clear">
+              <div class="float-left subtitle is-grey-light">
+                <span><strong>Jane Jane Jane Jane</strong></span>&nbsp;near&nbsp;<span>Walthamstow</span>
               </div>
-            </article>
-
-          </a>
-
-          <a class="box post-block" ui-sref="post({ id: 'test' })">
-
-            <article class="media">
-              <div class="media-content">
-
-                <div class="tags">
-                  <div class="tag is-rounded is-medium">Grocery help</div>
-                  <div class="tag is-rounded is-medium">Medicine pickup</div>
-                  <!-- <div class="tag is-rounded is-medium">Errand</div> -->
-                  <div class="tag is-rounded is-medium">Friendly chat</div>
-                  <div class="tag is-medium is-white">+2</div>
-                </div>
-    
-                <div class="content">
-                  <h4 class="title is-4 is-spaced">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aliquam tincidunt mauris eu risus. Vestibulum auctor dapibus neque.</h4>
-                  <p class="subtitle">Aliquam tincidunt mauris eu risus. Vestibulum auctor dapibus neque. Aliquam tincidunt mauris eu risus. Vestibulum auctor dapibus neque. Aliquam tincidunt mauris eu risus. Vestibulum auctor dapibus neque.</p>
-                </div>
-
-                <nav class="level is-mobile author-block">
-                  <div class="level-left">
-                    <div class="level-item subtitle is-grey-light">
-                      <span><strong>Jane</strong></span>&nbsp;in&nbsp;<span>London, UK</span>
-                    </div>
-                  </div>
-                  <div class="level-right">
-                    <div class="level-item">
-                      2 days ago
-                    </div>
-                  </div>
-                </nav>
-
-                <nav class="level is-mobile share-options">
-                  <div class="level-left"></div>
-                  <div class="level-right">
-                    <button class="button level-item is-rounded is-small is-dark is-social is-facebook">
-                      <span class="icon is-small"><i class="fab fa-facebook-f"></i></span>
-                      <span>Share to Facebook</span>
-                    </button>
-                    <button class="button level-item is-rounded is-small is-dark is-social is-twitter">
-                      <span class="icon is-small"><i class="fab fa-twitter"></i></span>
-                      <span>Share to Twitter</span>
-                    </button>
-                    <button class="button level-item is-rounded is-small is-social is-email">
-                      <span class="icon is-small"><i class="fas fa-envelope"></i></span>
-                      <span>Email a friend</span>
-                    </button>
-                    <button class="button level-item is-rounded is-small is-primary">
-                      <span class="icon is-small"><i class="fas fa-reply"></i></span>
-                      <span>Reply</span>
-                    </button>
-                  </div>
-                </nav>
-
+              <div class="float-right">
+                2 days ago
               </div>
-            </article>
+            </div>
 
-          </a>
-
-          <a class="box post-block" ui-sref="post({ id: 'test' })">
-
-            <article class="media">
-              <div class="media-content">
-
-                <div class="tags">
-                  <div class="tag is-rounded is-medium">Grocery help</div>
-                  <div class="tag is-rounded is-medium">Medicine pickup</div>
-                  <!-- <div class="tag is-rounded is-medium">Errand</div> -->
-                  <div class="tag is-rounded is-medium">Friendly chat</div>
-                  <div class="tag is-medium is-white">+2</div>
-                </div>
-    
-                <div class="content">
-                  <h4 class="title is-4 is-spaced">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aliquam tincidunt mauris eu risus. Vestibulum auctor dapibus neque.</h4>
-                  <p class="subtitle">Aliquam tincidunt mauris eu risus. Vestibulum auctor dapibus neque. Aliquam tincidunt mauris eu risus. Vestibulum auctor dapibus neque. Aliquam tincidunt mauris eu risus. Vestibulum auctor dapibus neque.</p>
-                </div>
-
-                <nav class="level is-mobile author-block">
-                  <div class="level-left">
-                    <div class="level-item subtitle is-grey-light">
-                      <span><strong>Jane</strong></span>&nbsp;in&nbsp;<span>London, UK</span>
-                    </div>
-                  </div>
-                  <div class="level-right">
-                    <div class="level-item">
-                      2 days ago
-                    </div>
-                  </div>
-                </nav>
-
-                <nav class="level is-mobile share-options">
-                  <div class="level-left"></div>
-                  <div class="level-right">
-                    <button class="button level-item is-rounded is-small is-dark is-social is-facebook">
-                      <span class="icon is-small"><i class="fab fa-facebook-f"></i></span>
-                      <span>Share to Facebook</span>
-                    </button>
-                    <button class="button level-item is-rounded is-small is-dark is-social is-twitter">
-                      <span class="icon is-small"><i class="fab fa-twitter"></i></span>
-                      <span>Share to Twitter</span>
-                    </button>
-                    <button class="button level-item is-rounded is-small is-social is-email">
-                      <span class="icon is-small"><i class="fas fa-envelope"></i></span>
-                      <span>Email a friend</span>
-                    </button>
-                    <button class="button level-item is-rounded is-small is-primary">
-                      <span class="icon is-small"><i class="fas fa-reply"></i></span>
-                      <span>Reply</span>
-                    </button>
-                  </div>
-                </nav>
-
+            <nav class="level is-mobile share-options">
+              <div class="level-left"></div>
+              <div class="level-right">
+                <button class="button level-item is-rounded is-small is-dark is-social is-facebook">
+                  <span class="icon is-small"><i class="fab fa-facebook-f"></i></span>
+                  <span class="is-collapsible-450">Share<span class="is-collapsible-600"> to Facebook</span></span>
+                </button>
+                <button class="button level-item is-rounded is-small is-dark is-social is-twitter">
+                  <span class="icon is-small"><i class="fab fa-twitter"></i></span>
+                  <span class="is-collapsible-450">Share<span class="is-collapsible-600"> to Twitter</span></span>
+                </button>
+                <button class="button level-item is-rounded is-small is-social is-email">
+                  <span class="icon is-small"><i class="fas fa-envelope"></i></span>
+                  <span class="is-collapsible-450">Email<span class="is-collapsible-600"> a friend</span></span>
+                </button>
+                <button class="button level-item is-rounded is-small is-primary">
+                  <span class="icon is-small"><i class="fas fa-reply"></i></span>
+                  <span>Reply</span>
+                </button>
               </div>
-            </article>
+            </nav>
 
-          </a>
+          </div>
+        </article>
 
-        </div>
-
-      </div>
+      </a>
 
       <nav class="buttons is-centered pagination">
         <button class="button is-medium is-rounded" disabled>
-          Previous
+          <span class="icon"><i class="fas fa-chevron-left"></i></span>
+          <span>Previous</span>
         </button>
         <button class="button is-medium is-rounded">
-          Next page
+          <span>See more</span>
+          <span class="icon"><i class="fas fa-chevron-right"></i></span>
         </button>
       </nav>
 
@@ -314,39 +206,41 @@
   <section class="section">
     <div class="container has-text-centered">
 
-      <div class="columns is-mobile">
-        <div class="column is-three-fifths is-offset-one-fifth">
+      <h4 class="subtitle is-4">There are no current requests for help near you!</h4>
+      <h3 class="title is-3">Post your offer for the community to see</h3>
 
-          <h3 class="title is-3">Help spread the word</h3>
+      <div class="buttons is-centered social-buttons">
+        <a ui-sref="create-post" class="button is-rounded is-large is-danger">
+          <span class="icon"><i class="fas fa-heart"></i></span>
+          <span ui-sref="create-post">Offer your help</span>
+        </a>
+      </div>
 
-          <div class="buttons is-centered social-buttons">
-            <button class="button is-rounded is-dark is-medium is-facebook">
-              <span class="icon">
-                <i class="fab fa-facebook-f"></i>
-              </span>
-              <span>Share to Facebook</span>
-            </button>
-            <button class="button is-rounded is-dark is-medium is-twitter">
-              <span class="icon">
-                <i class="fab fa-twitter"></i>
-              </span>
-              <span>Share to Twitter</span>
-            </button>
-            <button class="button is-rounded is-medium">
-              <span class="icon">
-                <i class="fas fa-envelope"></i>
-              </span>
-              <span>Email a friend</span>
-            </button>
-            <!-- <button class="button is-rounded is-medium is-danger">
-              <span class="icon">
-                <i class="fas fa-heart"></i>
-              </span>
-              <span>Donate</span>
-            </button> -->
-          </div>
+    </div>
+  </section>
 
-        </div>
+  <section class="section">
+    <div class="container has-text-centered">
+
+      <h3 class="title is-3">Help spread the word</h3>
+
+      <div class="buttons is-centered social-buttons">
+        <button class="button is-rounded is-dark is-medium is-facebook">
+          <span class="icon"><i class="fab fa-facebook-f"></i></span>
+          <span>Share to Facebook</span>
+        </button>
+        <button class="button is-rounded is-dark is-medium is-twitter">
+          <span class="icon"><i class="fab fa-twitter"></i></span>
+          <span>Share to Twitter</span>
+        </button>
+        <button class="button is-rounded is-medium">
+          <span class="icon"><i class="fas fa-envelope"></i></span>
+          <span>Email a friend</span>
+        </button>
+        <!-- <button class="button is-rounded is-medium is-danger">
+          <span class="icon"><i class="fas fa-heart"></i></span>
+          <span>Donate</span>
+        </button> -->
       </div>
 
     </div>

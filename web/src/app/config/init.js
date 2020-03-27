@@ -8,7 +8,7 @@ angular.module('app').config(function ($locationProvider) {
   $locationProvider.html5Mode(true);
 });
 
-angular.module('app').run(function ($rootScope, $window) {
+angular.module('app').run(function ($rootScope, $window, $transitions) {
 
   // Configure API host
   $rootScope.apiHost = location.protocol + '//' + location.host;
@@ -19,6 +19,10 @@ angular.module('app').run(function ($rootScope, $window) {
 
   // $rootScope.$on('$stateChangeSuccess', function (e, toState, toParams, fromState, fromParams) {
   //   $document[0].title = $state.current.data.pageTitle + ' | The Kindness Project';
+  // });
+
+  // $transitions.onSuccess({}, function () {
+  //   document.body.scrollTop = document.documentElement.scrollTop = 0;
   // });
     
 });

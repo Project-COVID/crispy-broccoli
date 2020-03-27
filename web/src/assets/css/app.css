@@ -1,13 +1,19 @@
 /* Common styles */
 
-.navbar-item.social {
-  padding-right: 0;
+.clear {
+  clear: both;
+}
+
+.section .container {
+  max-width: 800px;
 }
 
 .navbar-item img {
   max-height: 3.5rem;
 }
-
+.navbar-item > .icon {
+  display: none;
+}
 .navbar-item.is-active {
   font-weight: 600;
 }
@@ -20,6 +26,23 @@
   height: 4px;
   background-color: #00d1b2;
 }
+@media screen and (max-width: 1023px) {
+  .navbar-item.is-active:before {
+    display: none;
+  }
+  .navbar-item > .icon {
+    display: inline-flex;
+  }
+}
+@media screen and (max-width: 600px) {
+  .navbar-item img {
+    max-height: 3rem;
+  }
+  .navbar-item .control {
+    width: 100%;
+  }
+
+}
 
 .button.is-facebook {
   background-color: #3b5998;
@@ -27,12 +50,16 @@
 .button.is-facebook:hover {
   background-color: #2E4C8B;
 }
-
 .button.is-twitter {
   background-color: #4099ff;
 }
 .button.is-twitter:hover {
   background-color: #338CF2;
+}
+@media screen and (min-width: 450px) {
+  .button.is-submit {
+    max-width: 250px;
+  }
 }
 
 span.is-danger {
@@ -44,15 +71,58 @@ span.is-primary {
   font-weight: 600;
 }
 
+.box {
+  /* Override */
+  border-radius: 25px;
+}
+
+.media-content {
+  width: 100%;
+}
+@media screen and (max-width: 768px) { /* Override */
+  .media-content {
+    overflow-x: initial;
+  }
+}
+
+.post-block .tags {
+  margin-bottom: 0rem;
+}
 .post-block .content .title {
   margin-bottom: 0rem;
 }
 .post-block .content .subtitle {
   margin-top: 0.25rem;
 }
+.post-block .author-block {
+  height: 30px;
+}
+.post-block .author-block .float-left {
+  float: left;
+  width: calc(100% - 100px);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-top: -0.2rem;
+  margin-bottom: 0;
+}
+.post-block .author-block .float-right {
+  float: right;
+}
 
 .footer {
   margin-top: 3rem;
+}
+
+@media screen and (max-width: 600px) {
+  .is-collapsible-600 {
+    display: none;
+  }
+}
+@media screen and (max-width: 450px) {
+  .is-collapsible-450 {
+    display: none;
+  }
 }
 
 /* Home styles */
@@ -61,10 +131,33 @@ span.is-primary {
   background-image: url('/assets/img/hero-bg.jpg');
   background-position: center;
   background-size: cover;
+  margin-bottom: 2rem;
+}
+#home .hero .title {
+  max-width: 950px;
+  margin: 0 auto; /* Center */
+}
+#home .hero form {
+  max-width: 600px;
+  margin: 0 auto; /* Center */
+}
+#home .hero form .button.is-submit span:last-child {
+  display: none;
+}
+@media screen and (max-width: 500px) {
+  #home .hero form .button.is-submit {
+    padding-left: 0.5rem;
+  } 
+  #home .hero form .button.is-submit span:first-child {
+    display: none;
+  }
+  #home .hero form .button.is-submit span:last-child {
+    display: block;
+  }
 }
 
-#home .form-container {
-  margin-top: 1rem;
+#home .toggle-mode {
+  margin-top: 2rem;
 }
 
 #home .search-bar {
@@ -75,29 +168,38 @@ span.is-primary {
   vertical-align: middle;
   margin-left: 0.25em;
 }
-
-#home .toggle-mode {
-  margin-bottom: 2rem;
+#home .filter-radius .dropdown {
+  /* Override */
+  vertical-align: middle;
 }
-
-#home .post-block .author-block {
-  margin-bottom: 0.5rem;
+#home .filter-radius .dropdown-content {
+  border-radius: 25px;
+  overflow: hidden;
+  width: 150px;
+}
+#home .filter-radius .dropdown-item {
+  font-size: 1rem;
 }
 
 #home .post-block .share-options {
   margin-bottom: -2.25rem;
 }
+
 #home .post-block .share-options .is-social {
   opacity: 0;
 }
 #home .post-block:hover .share-options .is-social {
   opacity: 1;
 }
+@media screen and (max-width: 450px) {
+  #home .post-block:hover .share-options .is-social {
+    padding-right: 0.5rem;
+  }
+}
 
 #home .post-block .tag.is-white {
   padding-left: 0;
 }
-
 #home .post-block .content .title {
   overflow: hidden;
   text-overflow: ellipsis;
@@ -105,7 +207,6 @@ span.is-primary {
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 1;
 }
-
 #home .post-block .content .subtitle {
   overflow: hidden;
   text-overflow: ellipsis;
@@ -118,22 +219,28 @@ span.is-primary {
   margin-top: 3rem;
 }
 
-/* About styles */
+/* Post / create post styles */
 
-/* Post styles */
+.form-block .subtitle {
+  margin-bottom: 1rem;
+}
+.form-block .field-body .control {
+  margin-bottom: 0;
+}
+.form-block .help {
+  font-size: 1rem;
+}
 
 #post .post-block {
   margin-top: 4rem;
 }
-
 #post .reply-block {
+  margin-top: 3rem;
+}
+
+#create-post .create-post-block {
   margin-top: 4rem;
 }
-
-#post .reply-block .title {
-  margin-bottom: 2rem;
-}
-
-#post .reply-block .subtitle {
-  margin-bottom: 0.5rem;
+#create-post .create-post-block .content {
+  margin-top: 2rem;
 }
