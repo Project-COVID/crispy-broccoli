@@ -2,6 +2,7 @@ const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
 const helmet = require('helmet');
+const compression = require('compression');
 const logger = require('./logger');
 const pino = require('express-pino-logger')({
     logger,
@@ -31,6 +32,9 @@ const dbinit = require('./models');
 
     // Log HTTP requests
     app.use(pino);
+
+    // Compress response bodies
+    app.use(compression());
 
     // Set etag generation
     app.set('etag', false);
@@ -63,6 +67,7 @@ const dbinit = require('./models');
     var appCwd = process.env.NODE_ENV === 'production' ? 'dist' : 'src';
     app.use(express.static(path.join(__dirname, '../web/' + appCwd)));
     app.get('*', (req, res) => {
+        res.set('Cache-Control', 'public, max-age=604800'); // 7 days
         res.sendFile(path.join(__dirname, '../web/' + appCwd + '/index.html'));
     });
 
