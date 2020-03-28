@@ -6,7 +6,7 @@ const sendTeardownEmail = require('../mailer/teardown');
 
 async function verifyPost(id, hash) {
     const post = await Post.findById(id);
-    if (post.verifyHash !== hash) {
+    if (post.verifyHash !== hash || post.verified) {
         return null;
     }
     post.verified = true;
