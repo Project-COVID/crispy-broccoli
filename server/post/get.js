@@ -46,7 +46,7 @@ async function getPosts(type, lat, lon, radius, cursor, limit) {
 async function getPosts(req) {
     try {
         await Joi.validate(req.query, {
-            type: Joi.string().valid(Object.values(constants.types)).required(),
+            type: Joi.string().valid(Object.keys(constants.types)).required(),
             lat: Joi.number().required(),
             lon: Joi.number().required(),
             cursor: Joi.string().hex(),
