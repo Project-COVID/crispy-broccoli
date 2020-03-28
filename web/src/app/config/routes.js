@@ -20,7 +20,15 @@ angular.module('app').config(function ($stateProvider, $urlRouterProvider) {
       url: '/post/:id',
       templateUrl: 'app/views/post.view.html',
       controller: 'postController',
-      controllerAs: 'ctrl'
+      controllerAs: 'ctrl',
+      params: {
+        title: undefined,
+        body: undefined,
+        type: undefined,
+        tags: undefined,
+        name: undefined,
+        email: undefined
+      }
     }).state('create-post', {
       url: '/post/create',
       templateUrl: 'app/views/create.post.view.html',

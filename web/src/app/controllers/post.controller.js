@@ -36,15 +36,26 @@ angular.module('app').controller('postController', function ($http, validationSe
   ctrl.errors = {};
   ctrl.display = {};
 
-  ctrl.display.isLoading = true;
-  $http.get(`/api/v1/post/${$stateParams.id}`, ctrl.data).then(function (res) {
-    ctrl.data.post = res.data;
-  }).catch(function (err) {
-    console.error(err);
-    $state.go('home');
-  }).finally(function () {
-    ctrl.display.isLoading = false;
-  });
+  if ($stateParams.title) {
+    ctrl.data.post = {
+      title: $stateParams.title,
+      body: $stateParams.body,
+      type: $stateParams.type,
+      tags: $stateParams.tags,
+      name: $stateParams.name,
+      email: $stateParams.email
+    };
+  } else {
+    ctrl.display.isLoading = true;
+    $http.get(`/api/v1/post/${$stateParams.id}`, ctrl.data).then(function (res) {
+      ctrl.data.post = res.data;
+    }).catch(function (err) {
+      console.error(err);
+      $state.go('home');
+    }).finally(function () {
+      ctrl.display.isLoading = false;
+    });
+  }
 
   ctrl.validateField = function (field) {
     ctrl.errors[field] = validationService.validateField(ctrl.data[field], schema[field]);
