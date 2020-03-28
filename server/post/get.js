@@ -81,11 +81,11 @@ async function getPost(req) {
         });
 
         let post = await Post.findById(req.params.id);
-        if (post) {
-            post = sanitisePosts([post])[0];
+        if (post && (!post.verified || post.status !== constants.statuses.active)) {
+            return Response.BadRequest('post has not been verified or is not active');
         }
 
-        return Response.OK(post);
+        return Response.OK(sanitise.post(post));
     } catch (err) {
         if (err.isJoi) {
             return Response.BadRequest(err.details);
