@@ -14,17 +14,7 @@ function kmToRadian(km) {
 
 function sanitisePosts(posts) {
     return posts.map((post) =>
-        _.pick(post, [
-            'title',
-            'body',
-            'type',
-            'location.coordinates',
-            'location.type',
-            'tags',
-            'name',
-            'email',
-            'createdAt',
-        ]),
+        _.pick(post, ['title', 'body', 'type', 'location', 'coords', 'tags', 'name', 'email', 'createdAt']),
     );
 }
 
