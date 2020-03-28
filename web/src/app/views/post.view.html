@@ -67,24 +67,23 @@
         <article class="media">
           <div class="media-content">
 
-            <div class="tags are-medium">
-              <div class="tag is-rounded">Grocery help</div>
-              <div class="tag is-rounded">Medicine pickup</div>
-              <div class="tag is-rounded">Friendly chat</div>
-              <div class="tag is-rounded">Important errand</div>
+            <div class="tags are-large">
+              <span class="tag is-rounded" ng-repeat="(tagId, tagText) in ctrl.data.post.tags" ng-class="{ 'is-info': (ctrl.data.tags | contains:tagId) }">
+                {{ :: tagText }}
+              </span>
             </div>
 
             <div class="content">
-              <h4 class="title is-3 is-spaced">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aliquam tincidunt mauris eu risus. Vestibulum auctor dapibus neque.</h4>
-              <p class="subtitle is-4">Aliquam tincidunt mauris eu risus. Vestibulum auctor dapibus neque. Aliquam tincidunt mauris eu risus. Vestibulum auctor dapibus neque. Aliquam tincidunt mauris eu risus. Vestibulum auctor dapibus neque.</p>
+              <h4 class="title is-3 is-spaced">{{ ctrl.data.post.title }}</h4>
+              <p class="subtitle is-4">{{ ctrl.data.post.body }}</p>
             </div>
 
             <div class="author-block clear">
               <div class="float-left subtitle is-grey-light">
-                <span><strong>Jane Jane Jane Jane</strong></span>&nbsp;near&nbsp;<span>Walthamstow</span>
+                <span><strong>{{ ctrl.data.post.name }}</strong></span>&nbsp;near&nbsp;<span>{{ ctrl.data.post.location }}</span>
               </div>
               <div class="float-right">
-                2 days ago
+                {{ ctrl.data.post.createdAt }}
               </div>
             </div>
 

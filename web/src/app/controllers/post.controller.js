@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('app').controller('postController', function ($http, validationService, $stateParams) {
+angular.module('app').controller('postController', function ($http, validationService, $stateParams, $state) {
 
   var ctrl = this;
 
@@ -20,9 +20,31 @@ angular.module('app').controller('postController', function ($http, validationSe
     }
   };
 
-  ctrl.data = {};
+  ctrl.data = {
+    post: {
+      title: '',
+      body: '',
+      type: '',
+      tags: [],
+      name: '',
+      email: '',
+    },
+    name: '',
+    email: '',
+    body: ''
+  };
   ctrl.errors = {};
   ctrl.display = {};
+
+  ctrl.display.isLoading = true;
+  $http.get(`/api/v1/post/${$stateParams.id}`, ctrl.data).then(function (res) {
+    ctrl.data.post = res.data;
+  }).catch(function (err) {
+    console.error(err);
+    $state.go('home');
+  }).finally(function () {
+    ctrl.display.isLoading = false;
+  });
 
   ctrl.validateField = function (field) {
     ctrl.errors[field] = validationService.validateField(ctrl.data[field], schema[field]);
@@ -48,7 +70,11 @@ angular.module('app').controller('postController', function ($http, validationSe
     
     ctrl.display.isLoading = true;
 
-    $http.post(`/api/v1/post/${$stateParams.id}/reply`, ctrl.data).then(function (res) {
+    $http.post(`/api/v1/post/${$stateParams.id}/reply`, {
+      name: ctrl.data.name,
+      email: ctrl.data.email,
+      body: ctrl.data.body
+    }).then(function () {
       ctrl.display.successModalVisible = true;
     }).catch(function (err) {
       ctrl.errors = validationService.parseErrors(err.data, schema);
