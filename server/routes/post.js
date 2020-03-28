@@ -21,7 +21,7 @@ module.exports = function () {
         }
     });
 
-    router.route('/').post(async (req, res) => {
+    router.route('/create').post(async (req, res) => {
         try {
             const reply = await createPost(req);
             return reply.send(res);
@@ -61,7 +61,7 @@ module.exports = function () {
         }
     });
 
-    router.route('/:id/teardown').post(async (req, res) => {
+    router.route('/:id/close').post(async (req, res) => {
         try {
             const reply = await teardownPost(req);
             return reply.send(res);

@@ -23,7 +23,7 @@ async function getPosts(type, lat, lon, radius, cursor, limit) {
         type,
         verified: true,
         status: constants.statuses.active,
-        location: {
+        coords: {
             $geoWithin: {
                 $center: [[lon, lat], kmToRadian(radius || DEFAULT_RADIUS_KM)],
             },

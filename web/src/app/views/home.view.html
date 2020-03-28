@@ -107,11 +107,11 @@
                 <div class="dropdown-content">
                   <a href="#" class="dropdown-item">
                     <span class="icon"><i class="fas fa-walking"></i></span>
-                    <span>5 miles</span>
+                    <span>2 miles</span>
                   </a>
                   <a href="#" class="dropdown-item">
                     <span class="icon"><i class="fas fa-biking"></i></span>
-                    <span>10 miles</span>
+                    <span>5 miles</span>
                   </a>
                   <a href="#" class="dropdown-item">
                     <span class="icon"><i class="fas fa-car"></i></span>
@@ -210,7 +210,7 @@
       <h3 class="title is-3">Post your offer for the community to see</h3>
 
       <div class="buttons is-centered social-buttons">
-        <a ui-sref="create-post" class="button is-rounded is-large is-danger">
+        <a ui-sref="create-post({ type: 'offer', lat: 'test', lon: 'test', location: 'test' })" class="button is-rounded is-large is-danger">
           <span class="icon"><i class="fas fa-heart"></i></span>
           <span ui-sref="create-post">Offer your help</span>
         </a>
