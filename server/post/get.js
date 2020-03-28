@@ -3,6 +3,7 @@ const Joi = require('joi');
 const Response = require('../response');
 const Post = require('../models/post');
 const constants = require('../models/constants');
+const sanitise = require('../models/sanitise');
 
 const DEFAULT_LIMIT = 15;
 const DEFAULT_RADIUS_KM = 5;
@@ -10,12 +11,6 @@ const DEFAULT_RADIUS_KM = 5;
 function kmToRadian(km) {
     const earthRadiusInKm = 6371;
     return km / earthRadiusInKm;
-}
-
-function sanitisePosts(posts) {
-    return posts.map((post) =>
-        _.pick(post, ['title', 'body', 'type', 'location.coordinates', 'location.type', 'tags', 'name', 'email']),
-    );
 }
 
 async function getPosts(type, lat, lon, radius, cursor, limit) {
@@ -70,7 +65,7 @@ async function getPosts(req) {
             nextCursor = result.posts[result.posts.length - 1]._id;
         }
 
-        return Response.OK({ posts: sanitisePosts(result.posts), total: result.total, nextCursor });
+        return Response.OK({ posts: result.posts.map((post) => sanitise.post(post)), total: result.total, nextCursor });
     } catch (err) {
         if (err.isJoi) {
             return Response.BadRequest(err.details);

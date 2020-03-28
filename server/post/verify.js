@@ -1,17 +1,18 @@
 const Joi = require('joi');
 const Response = require('../response');
 const Post = require('../models/post');
+const sanitise = require('../models/sanitise');
 const sendTeardownEmail = require('../mailer/teardown');
 
 async function verifyPost(id, hash) {
     const post = await Post.findById(id);
     if (post.verifyHash !== hash) {
-        return false;
+        return null;
     }
     post.verified = true;
     await post.save();
     await sendTeardownEmail(id, post.teardownHash, post.name, post.email);
-    return true;
+    return post;
 }
 
 module.exports = async function (req) {
@@ -25,13 +26,13 @@ module.exports = async function (req) {
                 .required(),
         });
 
-        const success = await verifyPost(req.params.id, req.body.hash);
-        if (!success) {
+        const post = await verifyPost(req.params.id, req.body.hash);
+        if (!post) {
             return Response.Forbidden({
                 message: 'failed to verify post',
             });
         }
-        return Response.OK();
+        return Response.OK(sanitise.post(post));
     } catch (err) {
         if (err.isJoi) {
             return Response.BadRequest(err.details);
