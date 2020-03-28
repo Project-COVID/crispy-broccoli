@@ -5,6 +5,14 @@ const Post = require('../models/post');
 const constants = require('../models/constants');
 const sendVerifyEmail = require('../mailer/verify');
 
+async function alreadyHasPost(email) {
+    const post = await Post.exists({
+        email,
+        status: constants.statuses.active,
+    });
+    return !!post;
+}
+
 async function createPost(data) {
     data.teardownHash = uuidv4();
     data.verifyHash = uuidv4();
@@ -35,6 +43,10 @@ module.exports = async function (req) {
                 abortEarly: false,
             },
         );
+
+        if (await alreadyHasPost(req.body.email)) {
+            return Response.BadRequest('a user with that email already has an open active post');
+        }
 
         await createPost(req.body);
 
