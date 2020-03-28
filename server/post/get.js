@@ -51,7 +51,10 @@ async function getPosts(req) {
             lon: Joi.number().required(),
             cursor: Joi.string().hex(),
             limit: Joi.number().max(10),
-            radius: Joi.number(), // in km
+            radius: Joi.number() // radius in km
+                // must be between 3 and 30 miles, with room for rounding errors
+                .min(1.60934 * 2.9)
+                .max(1.60934 * 30.1),
         });
 
         let result = await getPosts(
