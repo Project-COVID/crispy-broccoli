@@ -15,21 +15,26 @@ async function createPost(data) {
 
 module.exports = async function (req) {
     try {
-        await Joi.validate(req.body, {
-            title: Joi.string().min(1).max(200).required(),
-            body: Joi.string().min(1).max(500),
-            type: Joi.string().valid(Object.keys(constants.types)).required(),
-            location: Joi.string().min(1).required(),
-            lon: Joi.number().required(),
-            lat: Joi.number().required(),
-            tags: Joi.array()
-                .items(Joi.string().valid(Object.keys(constants.tags)))
-                .min(1).required(),
-            name: Joi.string().min(1).max(20).required(),
-            email: Joi.string().email().required(),
-        }, {
-            abortEarly: false
-        });
+        await Joi.validate(
+            req.body,
+            {
+                title: Joi.string().min(1).max(200).required(),
+                body: Joi.string().min(1).max(500),
+                type: Joi.string().valid(Object.keys(constants.types)).required(),
+                location: Joi.string().min(1).required(),
+                lon: Joi.number().required(),
+                lat: Joi.number().required(),
+                tags: Joi.array()
+                    .items(Joi.string().valid(Object.keys(constants.tags)))
+                    .min(1)
+                    .required(),
+                name: Joi.string().min(1).max(20).required(),
+                email: Joi.string().email().required(),
+            },
+            {
+                abortEarly: false,
+            },
+        );
 
         await createPost(req.body);
 
