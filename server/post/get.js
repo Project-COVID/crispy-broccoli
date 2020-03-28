@@ -15,7 +15,7 @@ function kmToRadian(km) {
 
 async function getPostsInRadius(type, lat, lon, radius, cursor, limit) {
     const query = {
-        type,
+        type: type,
         verified: true,
         status: constants.statuses.active,
         coords: {

@@ -9,13 +9,13 @@
             <a class="navbar-item" ui-sref="home">
               <img src="/assets/img/logo.png" alt="Logo">
             </a>
-            <span class="navbar-burger burger">
+            <span class="navbar-burger burger" ng-class="{ 'is-active': navMenuVisible }" ng-click="navMenuVisible = !navMenuVisible">
               <span></span>
               <span></span>
               <span></span>
             </span>
           </div>
-          <div class="navbar-menu">
+          <div class="navbar-menu" ng-class="{ 'is-active': navMenuVisible }">
             <div class="navbar-end">
               <a class="navbar-item" ui-sref="home" ui-sref-active="is-active">
                 <span class="icon"><i class="fas fa-home"></i></span>
@@ -67,26 +67,26 @@
         </h2>
         
         <div class="buttons is-centered toggle-mode">
-          <button class="button is-large is-rounded">
+          <button class="button is-large is-rounded" ng-click="ctrl.data.type = 'request'" ng-class="{ 'is-primary': ctrl.data.type === 'request' }">
             <span class="icon"><i class="fas fa-hands-helping"></i></span>
             <span>I need help</span>
           </button>
-          <button class="button is-large is-rounded is-danger">
+          <button class="button is-large is-rounded" ng-click="ctrl.data.type = 'offer'" ng-class="{ 'is-danger': ctrl.data.type === 'offer' }">
             <span class="icon"><i class="fas fa-heart"></i></span>
             <span>I want to help</span>
           </button>
         </div>
 
-        <form>
+        <form ng-show="ctrl.data.type !== undefined" ng-submit="ctrl.submit()">
           <div class="field has-addons">
             <div class="control search-bar has-icons-left">
-              <input class="input is-large is-rounded" type="text" placeholder="Enter your location" value="London">
+              <input class="input is-large is-rounded" type="text" placeholder="Enter your location" value="{{ ctrl.data.location }}">
               <span class="icon is-left">
                 <i class="fas fa-search"></i>
               </span>
             </div>
             <div class="control">
-              <a class="button is-submit is-large is-primary is-rounded">
+              <a type="submit" class="button is-submit is-large is-primary is-rounded">
                 <span>Search</span>
                 <span class="icon"><i class="fas fa-arrow-right"></i></span>
               </a>
@@ -100,22 +100,22 @@
               <div class="dropdown-trigger">
                 <button class="button is-rounded">
                   <span class="icon"><i class="fas fa-car"></i></span>
-                  <span>20 miles</span>
+                  <span>{{ ctrl.data.radius }} {{ ctrl.display.radius_unit }}</span>
                 </button>
               </div>
               <div class="dropdown-menu is-rounded">
                 <div class="dropdown-content">
-                  <a href="#" class="dropdown-item">
+                  <a ng-click="ctrl.data.radius = 2" class="dropdown-item" ng-class="{ 'is-active': ctrl.data.radius === 2 }">
                     <span class="icon"><i class="fas fa-walking"></i></span>
-                    <span>2 miles</span>
+                    <span>2 {{ ctrl.display.radius_unit }}</span>
                   </a>
-                  <a href="#" class="dropdown-item">
+                  <a ng-click="ctrl.data.radius = 5" class="dropdown-item" ng-class="{ 'is-active': ctrl.data.radius === 5 }">
                     <span class="icon"><i class="fas fa-biking"></i></span>
-                    <span>5 miles</span>
+                    <span>5 {{ ctrl.display.radius_unit }}</span>
                   </a>
-                  <a href="#" class="dropdown-item">
+                  <a ng-click="ctrl.data.radius = 20" class="dropdown-item" ng-class="{ 'is-active': ctrl.data.radius === 20 }">
                     <span class="icon"><i class="fas fa-car"></i></span>
-                    <span>20 miles</span>
+                    <span>20 {{ ctrl.display.radius_unit }}</span>
                   </a>
                 </div>
               </div>
@@ -129,33 +129,31 @@
 
   </section>
 
-  <section class="section">
+  <section class="section" ng-if="ctrl.display.posts !== undefined && ctrl.display.postQty > 0">
     <div class="container has-text-centered">
 
       <h3 class="title is-3">Step 1 &ndash; Check requests for help in your area</h3>
-      <h4 class="subtitle is-4">There are <strong>20 people</strong> near you who need help</h4>
+      <h4 class="subtitle is-4" ng-if="ctrl.display.postQty === 1">There is <strong>1 person</strong> near you who {{ (ctrl.data.type === 'offer') ? 'needs': 'can' }} help</h4>
+      <h4 class="subtitle is-4" ng-if="ctrl.display.postQty > 1">There are <strong>{{ ctrl.display.postQty}} people</strong> near you who {{ (ctrl.data.type === 'offer') ? 'need': 'can' }} help</h4>
 
-      <a class="box post-block" ui-sref="post({ id: 'test' })">
+      <a class="box post-block" ng-repeat="post in ctrl.display.posts" ui-sref="post(post)">
 
         <article class="media">
           <div class="media-content">
 
-            <div class="tags are-medium">
-              <div class="tag is-rounded">Grocery help</div>
-              <div class="tag is-rounded">Medicine pickup</div>
-              <!-- <div class="tag is-rounded">Errand</div> -->
-              <div class="tag is-rounded">Friendly chat</div>
-              <div class="tag is-white">+2</div>
+            <div class="tags are-medium" ng-repeat="tagId in (post.tags | slice:3)">
+              <div class="tag is-rounded">{{ constants.tags[tagId] }} </div>
+              <div class="tag is-white" ng-if="post.tags.length > 3">+{{ post.tags.length - 3 }}</div>
             </div>
 
             <div class="content">
-              <h4 class="title is-4 is-spaced">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aliquam tincidunt mauris eu risus. Vestibulum auctor dapibus neque.</h4>
-              <p class="subtitle">Aliquam tincidunt mauris eu risus. Vestibulum auctor dapibus neque. Aliquam tincidunt mauris eu risus. Vestibulum auctor dapibus neque. Aliquam tincidunt mauris eu risus. Vestibulum auctor dapibus neque.</p>
+              <h4 class="title is-4 is-spaced">{{ post.title }}</h4>
+              <p class="subtitle">{{ post.body }}</p>
             </div>
 
             <div class="author-block clear">
               <div class="float-left subtitle is-grey-light">
-                <span><strong>Jane Jane Jane Jane</strong></span>&nbsp;near&nbsp;<span>Walthamstow</span>
+                <span><strong>{{ post.name }}</strong></span>&nbsp;near&nbsp;<span>{{ post.location }}</span>
               </div>
               <div class="float-right">
                 2 days ago
@@ -203,16 +201,16 @@
     </div>
   </section>
 
-  <section class="section">
+  <section class="section" ng-if="ctrl.display.posts !== undefined">
     <div class="container has-text-centered">
 
-      <h4 class="subtitle is-4">There are no current requests for help near you!</h4>
-      <h3 class="title is-3">Post your offer for the community to see</h3>
+      <h4 class="subtitle is-4" ng-if="ctrl.display.postQty === 0">There are no current {{ (ctrl.data.type === 'offer') ? 'requests for' : 'offers to' }} help near you!</h4>
+      <h3 class="title is-3">{{ (ctrl.display.postQty > 0) ? 'Step 2 &ndash;' : '' }} Post your {{ ctrl.data.type }} for the community to see</h3>
 
       <div class="buttons is-centered social-buttons">
         <a ui-sref="create-post({ type: 'offer', lat: 0, lon: 0, location: 'test' })" class="button is-rounded is-large is-danger">
           <span class="icon"><i class="fas fa-heart"></i></span>
-          <span ui-sref="create-post">Offer your help</span>
+          <span ui-sref="create-post">{{ (ctrl.data.type === 'offer') ? 'Offer your' : 'Request' }} help</span>
         </a>
       </div>
 
