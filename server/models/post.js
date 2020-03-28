@@ -12,8 +12,7 @@ module.exports = mongoose.model(
             },
             body: {
                 type: String,
-                required: true,
-                default: '',
+                required: false,
             },
             type: {
                 type: String,
@@ -21,13 +20,17 @@ module.exports = mongoose.model(
                 required: true,
             },
             location: {
+                type: String,
+                required: true,
+            },
+            coords: {
                 type: pointSchema,
                 required: true,
             },
             tags: {
                 type: [String],
                 enum: Object.values(constants.tags),
-                required: false,
+                required: true,
             },
             name: {
                 type: String,

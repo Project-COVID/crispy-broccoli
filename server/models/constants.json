@@ -4,19 +4,20 @@
         "request": "request"
     },
     "tags": {
-        "has_car": "has car",
-        "has_bike": "has bike",
-        "errand": "errand",
-        "collection": "collection",
-        "donation": "donation",
-        "food": "food",
-        "prescription": "prescription",
-        "dog_walk": "dog walk",
-        "pet_care": "pet care",
-        "child_minding": "child minding",
-        "clothes_wash": "clothes wash",
-        "phone_call": "phone call",
-        "post": "post"
+        "has_car": "Has car",
+        "has_bike": "Has bike",
+        "errand": "Errand",
+        "collection": "Collection",
+        "donation": "Donation",
+        "food": "Food",
+        "prescription": "Prescription",
+        "dog_walk": "Dog walk",
+        "pet_care": "Pet care",
+        "child_minding": "Child minding",
+        "clothes_wash": "Clothes wash",
+        "phone_call": "Phone call",
+        "post": "Post",
+        "other": "Other"
     },
     "statuses": {
         "active": "active",
