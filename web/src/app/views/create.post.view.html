@@ -172,7 +172,7 @@
 </main>
 
 <div class="modal" ng-class="{ 'is-active': ctrl.display.successModalVisible }">
-  <div class="modal-background" ng-click="ctrl.display.successModalVisible = false"></div>
+  <div class="modal-background"></div>
   <div class="modal-content">
     
     <div class="box has-text-centered">
@@ -184,12 +184,12 @@
         <p>Your post is <strong>not yet public</strong>.</p>
         <p>To publish your post, please check your email and click the verification link.</p>
       </div>
-      <button class="button is-rounded is-large is-primary" ng-click="ctrl.display.successModalVisible = false">
+      <button class="button is-rounded is-large is-primary" ui-sref="home">
         <span class="icon"><i class="fas fa-thumbs-up"></i></span>
         <span>I understand</span>
       </button>
     </div>
 
   </div>
-  <button class="modal-close is-large" ng-click="ctrl.display.successModalVisible = false"></button>
+  <button class="modal-close is-large" ui-sref="home"></button>
 </div>

@@ -35,6 +35,7 @@ angular.module('app').controller('createPostController', function ($rootScope, $
     type: $stateParams.type,
     lat: $stateParams.lat,
     lon: $stateParams.lon,
+    location: $stateParams.location,
     tags: []
   };
   ctrl.errors = {};

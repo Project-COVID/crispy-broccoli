@@ -16,7 +16,7 @@ module.exports = mongoose.model(
             },
             type: {
                 type: String,
-                enum: Object.values(constants.types),
+                enum: Object.keys(constants.types),
                 required: true,
             },
             location: {
@@ -29,7 +29,7 @@ module.exports = mongoose.model(
             },
             tags: {
                 type: [String],
-                enum: Object.values(constants.tags),
+                enum: Object.keys(constants.tags),
                 required: true,
             },
             name: {
@@ -51,7 +51,7 @@ module.exports = mongoose.model(
             },
             status: {
                 type: String,
-                enum: Object.values(constants.statuses),
+                enum: Object.keys(constants.statuses),
                 default: constants.statuses.active,
                 required: true,
             },
