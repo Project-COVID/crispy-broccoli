@@ -69,15 +69,22 @@
           <span>Create a Post</span>
         </h4>
 
-        <form>
+        <form ng-submit="ctrl.submit()">
+
+          <div class="notification-wrapper" ng-show="ctrl.errors.general !== undefined">
+            <div class="notification is-danger">
+              <button type="button" class="delete" ng-click="ctrl.errors.general = undefined"></button>
+              <p class="subtitle">{{ ctrl.errors.general }}</p>
+            </div>
+          </div>
 
           <h5 class="subtitle is-5">Select your post type</h5>
           <div class="buttons">
-            <button class="button is-medium is-rounded">
+            <button type="button" class="button is-medium is-rounded" ng-class="{ 'is-primary': ctrl.data.type === 'request' }" ng-click="ctrl.data.type = 'request'">
               <span class="icon"><i class="fas fa-hands-helping"></i></span>
               <span>I need help</span>
             </button>
-            <button class="button is-medium is-rounded is-danger">
+            <button type="button" class="button is-medium is-rounded" ng-class="{ 'is-danger': ctrl.data.type === 'offer' }" ng-click="ctrl.data.type = 'offer'">
               <span class="icon"><i class="fas fa-heart"></i></span>
               <span>I want to help</span>
             </button>
@@ -86,14 +93,10 @@
           <h5 class="subtitle is-5">Select at least 1 tag</h5>
 
           <div class="tags are-large">
-            <span class="tag is-rounded">
-              All
+            <span class="tag is-rounded" ng-repeat="(tagId, tagText) in constants.tags" ng-class="{ 'is-info': (ctrl.data.tags | contains:tagId) }" ng-click="ctrl.toggleTag(tagId)">
+              {{ :: tagText }}
+              <button type="button" ng-if="ctrl.data.tags | contains:tagId" class="delete"></button>
             </span>
-            <span class="tag is-rounded is-info">
-              Large
-              <button class="delete"></button>
-            </span>
-            <span class="tag is-rounded">Size</span>
           </div>
 
           <h5 class="subtitle is-5">Enter your post details</h5>
@@ -101,35 +104,40 @@
           <div class="field">
             <div class="field-body">
               <div class="field">
-                <p class="control is-expanded has-icons-left">
-                  <input class="input is-medium" type="text" placeholder="First name">
+                <p class="control is-expanded has-icons-left" ng-class="{ 'has-icons-right': ctrl.errors.name !== undefined }">
+                  <input class="input is-medium" type="text" placeholder="First name" ng-model="ctrl.data.name" ng-class="{ 'is-danger': ctrl.errors.name !== undefined }" ng-change="ctrl.validateField('name')" ng-model-options="{ updateOn: 'change' }" ng-trim="false">
                   <span class="icon is-small is-left"><i class="fas fa-user"></i></span>
+                  <span class="icon is-small is-right has-text-danger" ng-if="ctrl.errors.name !== undefined"><i class="fas fa-exclamation-triangle"></i></span>
                 </p>
-                <p class="help">This will be public</p>
+                <p class="help" ng-if="ctrl.errors.name === undefined">This will be public</p>
+                <p class="help is-danger" ng-if="ctrl.errors.name !== undefined">{{ ctrl.errors.name }}</p>
               </div>
               <div class="field">
-                <p class="control is-expanded has-icons-left has-icons-right">
-                  <input class="input is-medium" type="email" placeholder="Email">
+                <p class="control is-expanded has-icons-left" ng-class="{ 'has-icons-right': ctrl.errors.email !== undefined }">
+                  <input class="input is-medium" type="text" placeholder="Email" ng-model="ctrl.data.email" ng-class="{ 'is-danger': ctrl.errors.email !== undefined }" ng-change="ctrl.validateField('email')" ng-model-options="{ updateOn: 'change' }" ng-trim="false">
                   <span class="icon is-small is-left"><i class="fas fa-envelope"></i></span>
+                  <span class="icon is-small is-right has-text-danger" ng-if="ctrl.errors.email !== undefined"><i class="fas fa-exclamation-triangle"></i></span>
                 </p>
-                <p class="help">This will <strong>not</strong> be public</p>
+                <p class="help" ng-if="ctrl.errors.email === undefined">This will <strong>not</strong> be public</p>
+                <p class="help is-danger" ng-if="ctrl.errors.email !== undefined">{{ ctrl.errors.email }}</p>
               </div>
             </div>
           </div>
 
           <div class="field">
-            <div class="control has-icons-left has-icons-right">
-              <input class="input is-medium is-danger" type="text" placeholder="Post title" value="Blah">
+            <div class="control has-icons-left" ng-class="{ 'has-icons-right': ctrl.errors.title !== undefined }">
+              <input class="input is-medium" type="text" placeholder="Post title" ng-model="ctrl.data.title" ng-class="{ 'is-danger': ctrl.errors.title !== undefined }" ng-change="ctrl.validateField('title')" ng-model-options="{ updateOn: 'change' }" ng-trim="false">
               <span class="icon is-small is-left"><i class="fas fa-envelope-open-text"></i></span>
-              <span class="icon is-small is-right"><i class="fas fa-exclamation-triangle"></i></span>
+              <span class="icon is-small is-right has-text-danger" ng-if="ctrl.errors.title !== undefined"><i class="fas fa-exclamation-triangle"></i></span>
             </div>
-            <p class="help is-danger">This is an error message</p>
+            <p class="help is-danger" ng-if="ctrl.errors.title !== undefined">{{ ctrl.errors.title }}</p>
           </div>
 
           <div class="field">
             <div class="control">
-              <textarea class="textarea is-medium" placeholder="Post description (optional)"></textarea>
+              <textarea class="textarea is-medium" placeholder="Post description (optional)" ng-model="ctrl.data.body" ng-class="{ 'is-danger': ctrl.errors.body !== undefined }" ng-change="ctrl.validateField('body')" ng-model-options="{ updateOn: 'change' }" ng-trim="false"></textarea>
             </div>
+            <p class="help is-danger" ng-if="ctrl.errors.body !== undefined">{{ ctrl.errors.body }}</p>
           </div>
 
           <div class="content is-medium">
@@ -147,7 +155,7 @@
 
           <div class="field">
             <div class="control">
-              <button class="button is-rounded is-medium is-primary is-fullwidth is-submit">
+              <button type="submit" class="button is-rounded is-medium is-primary is-fullwidth is-submit" ng-class="{ 'is-loading': ctrl.display.isLoading }">
                 <span class="icon"><i class="fas fa-paper-plane"></i></span>
                 <span>Create my post</span>
               </button>
@@ -161,27 +169,27 @@
     </div>
   </section>
 
-  <!-- <section class="section">
-    <div class="container has-text-centered">
-
-      <h3 class="title is-3">Share this post</h3>
-
-      <div class="buttons is-centered social-buttons">
-        <button class="button is-rounded is-dark is-medium is-facebook">
-          <span class="icon"><i class="fab fa-facebook-f"></i></span>
-          <span>Share to Facebook</span>
-        </button>
-        <button class="button is-rounded is-dark is-medium is-twitter">
-          <span class="icon"><i class="fab fa-twitter"></i></span>
-          <span>Share to Twitter</span>
-        </button>
-        <button class="button is-rounded is-medium">
-          <span class="icon"><i class="fas fa-envelope"></i></span>
-          <span>Email a friend</span>
-        </button>
-      </div>
-
-    </div>
-  </section> -->
-
 </main>
+
+<div class="modal" ng-class="{ 'is-active': ctrl.display.successModalVisible }">
+  <div class="modal-background" ng-click="ctrl.display.successModalVisible = false"></div>
+  <div class="modal-content">
+    
+    <div class="box has-text-centered">
+      <h4 class="title is-3">
+        <span class="icon"><i class="fas fa-check-circle"></i></span>
+        <span>Success!</span> 
+      </h4>
+      <div class="content is-medium">
+        <p>Your post is <strong>not yet public</strong>.</p>
+        <p>To publish your post, please check your email and click the verification link.</p>
+      </div>
+      <button class="button is-rounded is-large is-primary" ng-click="ctrl.display.successModalVisible = false">
+        <span class="icon"><i class="fas fa-thumbs-up"></i></span>
+        <span>I understand</span>
+      </button>
+    </div>
+
+  </div>
+  <button class="modal-close is-large" ng-click="ctrl.display.successModalVisible = false"></button>
+</div>

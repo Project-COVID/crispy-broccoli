@@ -27,7 +27,10 @@ angular.module('app').config(function ($stateProvider, $urlRouterProvider) {
       controller: 'createPostController',
       controllerAs: 'ctrl',
       params: {
-        type: undefined
+        type: undefined,
+        lat: undefined,
+        lon: undefined,
+        location: undefined
       }
     });;
 

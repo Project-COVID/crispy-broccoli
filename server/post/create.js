@@ -8,7 +8,7 @@ const sendVerifyEmail = require('../mailer/verify');
 async function createPost(data) {
     data.teardownHash = uuidv4();
     data.verifyHash = uuidv4();
-    data.location = { type: 'Point', coordinates: [data.lon, data.lat] }; // NOTE: In GeoJSON coordinates longitude comes first
+    data.coords = { type: 'Point', coordinates: [data.lon, data.lat] }; // NOTE: In GeoJSON coordinates longitude comes first
     const post = await new Post(data).save();
     await sendVerifyEmail(data.type, post.id, data.verifyHash, data.name, data.email);
 }
@@ -16,16 +16,19 @@ async function createPost(data) {
 module.exports = async function (req) {
     try {
         await Joi.validate(req.body, {
-            title: Joi.string().min(1).required(),
-            body: Joi.string().min(1),
-            type: Joi.string().valid(Object.values(constants.types)).required(),
+            title: Joi.string().min(1).max(200).required(),
+            body: Joi.string().min(1).max(500),
+            type: Joi.string().valid(Object.keys(constants.types)).required(),
+            location: Joi.string().min(1).required(),
             lon: Joi.number().required(),
             lat: Joi.number().required(),
             tags: Joi.array()
-                .items(Joi.string().valid(Object.values(constants.tags)))
-                .min(1),
-            name: Joi.string().min(1).required(),
+                .items(Joi.string().valid(Object.keys(constants.tags)))
+                .min(1).required(),
+            name: Joi.string().min(1).max(20).required(),
             email: Joi.string().email().required(),
+        }, {
+            abortEarly: false
         });
 
         await createPost(req.body);
