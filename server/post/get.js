@@ -3,6 +3,7 @@ const Joi = require('joi');
 const Response = require('../response');
 const Post = require('../models/post');
 const constants = require('../models/constants');
+const sanitise = require('../models/sanitise');
 
 const DEFAULT_LIMIT = 15;
 const DEFAULT_RADIUS_KM = 5;
@@ -51,7 +52,10 @@ async function getPosts(req) {
             lon: Joi.number().required(),
             cursor: Joi.string().hex(),
             limit: Joi.number().max(10),
-            radius: Joi.number(), // in km
+            radius: Joi.number() // radius in km
+                // must be between 3 and 30 miles, with room for rounding errors
+                .min(1.60934 * 2.9)
+                .max(1.60934 * 30.1),
         });
 
         let result = await getPosts(
@@ -67,7 +71,7 @@ async function getPosts(req) {
             nextCursor = result.posts[result.posts.length - 1]._id;
         }
 
-        return Response.OK({ posts: sanitisePosts(result.posts), total: result.total, nextCursor });
+        return Response.OK({ posts: result.posts.map((post) => sanitise.post(post)), total: result.total, nextCursor });
     } catch (err) {
         if (err.isJoi) {
             return Response.BadRequest(err.details);
@@ -83,11 +87,11 @@ async function getPost(req) {
         });
 
         let post = await Post.findById(req.params.id);
-        if (post) {
-            post = sanitisePosts([post])[0];
+        if (post && (!post.verified || post.status !== constants.statuses.active)) {
+            return Response.BadRequest('post has not been verified or is not active');
         }
 
-        return Response.OK(post);
+        return Response.OK(sanitise.post(post));
     } catch (err) {
         if (err.isJoi) {
             return Response.BadRequest(err.details);
