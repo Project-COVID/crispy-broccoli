@@ -30,7 +30,7 @@ ctrl.data.lon = 0
   // Get posts
   var getPosts = function () {
 
-    $http.get(`/api/v1/post${validationService.encodeQueryParams(ctrl.data)}`).then(function (res) {
+    $http.get(`/api/v1/post${validationService.encodeQueryParams(_.merge(ctrl.data, { limit: 5 })}`).then(function (res) {
 
       console.log(res.data)
 
