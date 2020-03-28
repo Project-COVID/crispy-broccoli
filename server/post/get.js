@@ -13,13 +13,7 @@ function kmToRadian(km) {
     return km / earthRadiusInKm;
 }
 
-function sanitisePosts(posts) {
-    return posts.map((post) =>
-        _.pick(post, ['title', 'body', 'type', 'location', 'coords', 'tags', 'name', 'email', 'createdAt']),
-    );
-}
-
-async function getPosts(type, lat, lon, radius, cursor, limit) {
+async function getPostsInRadius(type, lat, lon, radius, cursor, limit) {
     const query = {
         type,
         verified: true,
@@ -58,7 +52,7 @@ async function getPosts(req) {
                 .max(1.60934 * 30.1),
         });
 
-        let result = await getPosts(
+        let result = await getPostsInRadius(
             req.query.type,
             req.query.lat,
             req.query.lon,
