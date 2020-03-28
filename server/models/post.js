@@ -13,6 +13,7 @@ module.exports = mongoose.model(
             body: {
                 type: String,
                 required: true,
+                default: '',
             },
             type: {
                 type: String,

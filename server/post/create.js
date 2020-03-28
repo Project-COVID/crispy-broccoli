@@ -17,7 +17,7 @@ module.exports = async function (req) {
     try {
         await Joi.validate(req.body, {
             title: Joi.string().min(1).required(),
-            body: Joi.string().min(1).required(),
+            body: Joi.string().min(1),
             type: Joi.string().valid(Object.values(constants.types)).required(),
             lon: Joi.number().required(),
             lat: Joi.number().required(),
