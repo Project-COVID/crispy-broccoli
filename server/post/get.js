@@ -21,7 +21,7 @@ function sanitisePosts(posts) {
 
 async function getPosts(type, lat, lon, radius, cursor, limit) {
     const query = {
-        type,
+        type: type,
         verified: true,
         status: constants.statuses.active,
         coords: {
