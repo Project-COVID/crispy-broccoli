@@ -57,7 +57,11 @@ const dbinit = require('./models');
 
     // CORS
     app.use((req, res, next) => {
-        res.header('Access-Control-Allow-Origin', '*');
+        let origin = '*';
+        if (process.env.NODE_ENV === 'production') {
+            origin = 'https://kindnessproject.xyz';
+        }
+        res.header('Access-Control-Allow-Origin', origin);
         res.header('Access-Control-Allow-Credentials', 'true');
         res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
         res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
@@ -68,7 +72,7 @@ const dbinit = require('./models');
     require('./routes/index')(app);
 
     // Fallback everything else to the React application
-    var appCwd = process.env.NODE_ENV === 'production' ? 'dist' : 'src';
+    const appCwd = process.env.NODE_ENV === 'production' ? 'dist' : 'src';
     app.use(express.static(path.join(__dirname, '../web/' + appCwd)));
     app.get('*', (req, res) => {
         res.set('Cache-Control', 'public, max-age=31536000'); // 1 year
