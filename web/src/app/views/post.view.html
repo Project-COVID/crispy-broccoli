@@ -178,3 +178,26 @@
   </section>
 
 </main>
+
+<div class="modal" ng-class="{ 'is-active': ctrl.display.successModalVisible }">
+  <div class="modal-background"></div>
+  <div class="modal-content">
+    
+    <div class="box has-text-centered">
+      <h4 class="title is-3">
+        <span class="icon"><i class="fas fa-check-circle"></i></span>
+        <span>Success!</span> 
+      </h4>
+      <div class="content is-medium">
+        <p>Your reply has been sent.</p>
+        <p>Keep an eye on your email inbox for a reply from the poster!</p>
+      </div>
+      <button class="button is-rounded is-large is-primary" ui-sref="home">
+        <span class="icon"><i class="fas fa-thumbs-up"></i></span>
+        <span>I understand</span>
+      </button>
+    </div>
+
+  </div>
+  <button class="modal-close is-large" ui-sref="home"></button>
+</div>
