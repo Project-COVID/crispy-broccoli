@@ -42,7 +42,7 @@ run:
 .PHONY: run_watch
 run_watch:
 	@yarn global add pino-pretty
-	@source ./scripts/env.sh $(env) && nodemon --watch ./server --watch ./web/dist ./server/index.js | pino-pretty
+	@source ./scripts/env.sh $(env) && nodemon --watch ./server --watch ./web/src ./server/index.js | pino-pretty
 
 
 # make docker tag={tag}

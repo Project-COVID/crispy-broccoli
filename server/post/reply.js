@@ -34,9 +34,9 @@ module.exports = async function (req) {
             id: Joi.string().hex().required(),
         });
         await Joi.validate(req.body, {
-            name: Joi.string().min(1).required(),
+            name: Joi.string().min(1).max(20).required(),
             email: Joi.string().email().required(),
-            body: Joi.string().min(1).required(),
+            body: Joi.string().min(1).max(2000).required(),
         });
 
         await replyToPost(req.params.id, req.body.name, req.body.email, req.body.body);

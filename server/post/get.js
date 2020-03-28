@@ -13,6 +13,12 @@ function kmToRadian(km) {
     return km / earthRadiusInKm;
 }
 
+function sanitisePosts(posts) {
+    return posts.map((post) =>
+        _.pick(post, ['title', 'body', 'type', 'location', 'coords', 'tags', 'name', 'email', 'createdAt']),
+    );
+}
+
 async function getPosts(type, lat, lon, radius, cursor, limit) {
     const query = {
         type,
