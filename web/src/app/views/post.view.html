@@ -102,36 +102,45 @@
 
         <h5 class="subtitle is-5">All fields are required &middot; Your message will be sent to the poster by email</h5>
 
-        <form>
+        <form ng-submit="ctrl.submit()">
+
+          <div class="notification-wrapper" ng-show="ctrl.errors.general !== undefined">
+            <div class="notification is-danger">
+              <button type="button" class="delete" ng-click="ctrl.errors.general = undefined"></button>
+              <p class="subtitle">{{ ctrl.errors.general }}</p>
+            </div>
+          </div>
 
           <div class="field">
             <div class="field-body">
               <div class="field">
                 <p class="control is-expanded has-icons-left">
-                  <input class="input is-medium" type="text" placeholder="Full name">
+                  <input class="input is-medium" type="text" placeholder="First name" ng-model="ctrl.data.name" ng-class="{ 'is-danger': ctrl.errors.name !== undefined }" ng-change="ctrl.validateField('name')" ng-model-options="{ updateOn: 'change' }" ng-trim="false">
                   <span class="icon is-small is-left"><i class="fas fa-user"></i></span>
                 </p>
+                <p class="help is-danger" ng-if="ctrl.errors.name !== undefined">{{ ctrl.errors.name }}</p>
               </div>
               <div class="field">
-                <p class="control is-expanded has-icons-left has-icons-right">
-                  <input class="input is-medium is-danger" type="email" placeholder="Email">
+                <p class="control is-expanded has-icons-left" ng-class="{ 'has-icons-right': ctrl.errors.email !== undefined }">
+                  <input class="input is-medium" type="email" placeholder="Email" ng-model="ctrl.data.email" ng-class="{ 'is-danger': ctrl.errors.email !== undefined }" ng-change="ctrl.validateField('email')" ng-model-options="{ updateOn: 'change' }" ng-trim="false">
                   <span class="icon is-small is-left"><i class="fas fa-envelope"></i></span>
-                  <span class="icon is-small is-right"><i class="fas fa-exclamation-triangle"></i></span>
+                  <span class="icon is-small is-right has-text-danger" ng-if="ctrl.errors.email !== undefined"><i class="fas fa-exclamation-triangle"></i></span>
                 </p>
-                <p class="help is-danger">This is an error message</p>
+                <p class="help is-danger" ng-if="ctrl.errors.email !== undefined">{{ ctrl.errors.email }}</p>
               </div>
             </div>
           </div>
 
           <div class="field">
             <div class="control">
-              <textarea class="textarea is-medium" placeholder="I may be able to help!"></textarea>
+              <textarea class="textarea is-medium" placeholder="I may be able to help!" ng-model="ctrl.data.body" ng-class="{ 'is-danger': ctrl.errors.body !== undefined }" ng-change="ctrl.validateField('body')" ng-model-options="{ updateOn: 'change' }" ng-trim="false"></textarea>
             </div>
+            <p class="help is-danger" ng-if="ctrl.errors.body !== undefined">{{ ctrl.errors.body }}</p>
           </div>
 
           <div class="field">
             <div class="control">
-              <button class="button is-rounded is-medium is-primary is-fullwidth is-submit">
+              <button type="submit" class="button is-rounded is-medium is-primary is-fullwidth is-submit" ng-class="{ 'is-loading': ctrl.display.isLoading }">
                 <span class="icon"><i class="fas fa-paper-plane"></i></span>
                 <span>Send message</span>
               </button>
