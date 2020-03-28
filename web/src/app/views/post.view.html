@@ -83,7 +83,7 @@
                 <span><strong>{{ ctrl.data.post.name }}</strong></span>&nbsp;near&nbsp;<span>{{ ctrl.data.post.location }}</span>
               </div>
               <div class="float-right">
-                {{ ctrl.data.post.createdAt }}
+                {{ ctrl.data.post.createdAt | date : longDate }}
               </div>
             </div>
 
