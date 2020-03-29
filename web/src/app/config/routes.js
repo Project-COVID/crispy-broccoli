@@ -17,17 +17,13 @@ angular.module('app').config(function ($stateProvider, $urlRouterProvider) {
       templateUrl: 'app/views/about.view.html'
     })
     .state('post', {
-      url: '/post/:id',
+      url: '/post/:postId?teardownHash',
       templateUrl: 'app/views/post.view.html',
       controller: 'postController',
       controllerAs: 'ctrl',
       params: {
-        title: undefined,
-        body: undefined,
-        type: undefined,
-        tags: undefined,
-        name: undefined,
-        email: undefined
+        post: undefined,
+        verified: undefined
       }
     }).state('create-post', {
       url: '/post/create',

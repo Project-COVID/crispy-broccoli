@@ -54,7 +54,7 @@
     </div>
   </header>
 
-  <section class="section">
+  <section class="section" ng-if="ctrl.data !== undefined">
     <div class="container">
 
       <button ui-sref="home" class="button is-rounded is-medium">
@@ -94,7 +94,7 @@
 
           <div class="tags are-large">
             <span class="tag is-rounded" ng-repeat="(tagId, tagText) in constants.tags" ng-class="{ 'is-info': (ctrl.data.tags | contains:tagId) }" ng-click="ctrl.toggleTag(tagId)">
-              {{ :: tagText }}
+              {{ tagText }}
               <button type="button" ng-if="ctrl.data.tags | contains:tagId" class="delete"></button>
             </span>
           </div>

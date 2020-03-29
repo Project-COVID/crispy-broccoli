@@ -1,6 +1,12 @@
 'use strict';
 
-angular.module('app').controller('postController', function ($http, validationService, $stateParams, $state) {
+angular.module('app').controller('postController', function ($http, validationService, $stateParams, $state, displayService) {
+
+  if ($stateParams.postId === undefined || $stateParams.postId === '') {
+    displayService.toast('error', 'Couldn\'t load post');
+    $state.go('home');
+    return;
+  }
 
   var ctrl = this;
 
@@ -16,44 +22,27 @@ angular.module('app').controller('postController', function ($http, validationSe
     },
     body: {
       required: true,
-      max: 2000
+      max: 1000
     }
   };
 
-  ctrl.data = {
-    post: {
-      title: '',
-      body: '',
-      type: '',
-      tags: [],
-      name: '',
-      email: '',
-    },
-    name: '',
-    email: '',
-    body: ''
-  };
+  ctrl.data = {};
   ctrl.errors = {};
-  ctrl.display = {};
+  ctrl.display = {
+    verifiedModalVisible: $stateParams.verified !== undefined,
+    removeModalVisible: $stateParams.teardownHash !== undefined
+  };
 
-  if ($stateParams.title) {
-    ctrl.data.post = {
-      title: $stateParams.title,
-      body: $stateParams.body,
-      type: $stateParams.type,
-      tags: $stateParams.tags,
-      name: $stateParams.name,
-      email: $stateParams.email
-    };
-  } else {
-    ctrl.display.isLoading = true;
-    $http.get(`/api/v1/post/${$stateParams.id}`, ctrl.data).then(function (res) {
-      ctrl.data.post = res.data;
+  if ($stateParams.post !== undefined) {
+    ctrl.display.post = $stateParams.post;
+  }
+  else {
+    $http.get(`/api/v1/post/${$stateParams.postId}`, ).then(function (res) {
+      ctrl.display.post = res.data;
     }).catch(function (err) {
       console.error(err);
+      displayService.toast('error', 'Couldn\'t load post');
       $state.go('home');
-    }).finally(function () {
-      ctrl.display.isLoading = false;
     });
   }
 
@@ -79,19 +68,36 @@ angular.module('app').controller('postController', function ($http, validationSe
       return;
     }
     
-    ctrl.display.isLoading = true;
+    ctrl.display.replyIsLoading = true;
 
-    $http.post(`/api/v1/post/${$stateParams.id}/reply`, {
+    $http.post(`/api/v1/post/${$stateParams.postId}/reply`, {
       name: ctrl.data.name,
       email: ctrl.data.email,
       body: ctrl.data.body
     }).then(function () {
       ctrl.display.successModalVisible = true;
     }).catch(function (err) {
+      console.log(err.data);
       ctrl.errors = validationService.parseErrors(err.data, schema);
       validationService.scrollToError();
     }).finally(function () {
-      ctrl.display.isLoading = false;
+      ctrl.display.replyIsLoading = false;
+    });
+
+  };
+
+  ctrl.removePost = function () {
+
+    ctrl.display.removeIsLoading = true;
+
+    $http.post(`/api/v1/post/${$stateParams.postId}/close`, { hash: $stateParams.teardownHash }).then(function () {
+      displayService.toast('success', 'Post removed successfully');
+      $state.go('home');
+    }).catch(function (err) {
+      console.log(err.data);
+      displayService.toast('error', 'Couldn\'t remove post');
+    }).finally(function () {
+      ctrl.display.removeIsLoading = false;
     });
 
   };

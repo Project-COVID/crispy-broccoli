@@ -29,7 +29,7 @@ module.exports = async function (req) {
         const post = await verifyPost(req.params.id, req.body.hash);
         if (!post) {
             return Response.Forbidden({
-                message: 'failed to verify post',
+                message: 'Couldn\'t verify post',
             });
         }
         return Response.OK(sanitise.post(post));

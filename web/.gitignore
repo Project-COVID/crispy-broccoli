@@ -1,4 +1,5 @@
 src/assets/lib/
+node_modules
 dist/
 
 # Temp - reenable when implementing prod build

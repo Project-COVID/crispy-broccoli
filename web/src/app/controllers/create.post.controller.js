@@ -1,12 +1,11 @@
 'use strict';
 
-angular.module('app').controller('createPostController', function ($rootScope, $http, validationService, $stateParams, $state) {
-
-  console.log($stateParams)
+angular.module('app').controller('createPostController', function ($rootScope, $http, validationService, $stateParams, $state, displayService) {
 
   if ($stateParams.lat === undefined || $stateParams.lon === undefined || $stateParams.location === undefined) {
-    // // TODO: prompt user to enter address first
-    // $state.go('home');
+    displayService.toast('error', 'Please enter an address to continue');
+    $state.go('home');
+    return;
   }
 
   var ctrl = this;
@@ -96,6 +95,7 @@ angular.module('app').controller('createPostController', function ($rootScope, $
     $http.post('/api/v1/post/create', ctrl.data).then(function (res) {
       ctrl.display.successModalVisible = true;
     }).catch(function (err) {
+      console.log(err.data);
       ctrl.errors = validationService.parseErrors(err.data, schema);
       validationService.scrollToError();
     }).finally(function () {

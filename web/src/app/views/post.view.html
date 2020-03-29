@@ -1,3 +1,5 @@
+<div class="pageloader" ng-class="{ 'is-active': ctrl.display.post === undefined }"><span class="title">Loading post</span></div>
+
 <main id="post">
 
   <header class="navbar is-transparent">
@@ -68,22 +70,22 @@
           <div class="media-content">
 
             <div class="tags are-large">
-              <span class="tag is-rounded" ng-repeat="(tagId, tagText) in ctrl.data.post.tags" ng-class="{ 'is-info': (ctrl.data.tags | contains:tagId) }">
-                {{ :: tagText }}
+              <span class="tag is-rounded" ng-repeat="tagId in ctrl.display.post.tags">
+                {{ constants.tags[tagId] }}
               </span>
             </div>
 
             <div class="content">
-              <h4 class="title is-3 is-spaced">{{ ctrl.data.post.title }}</h4>
-              <p class="subtitle is-4">{{ ctrl.data.post.body }}</p>
+              <h4 class="title is-3 is-spaced">{{ ctrl.display.post.title }}</h4>
+              <p class="subtitle is-4" ng-if="ctrl.display.post.body !== undefined && ctrl.display.post.body !== ''">{{ ctrl.display.post.body }}</p>
             </div>
 
             <div class="author-block clear">
               <div class="float-left subtitle is-grey-light">
-                <span><strong>{{ ctrl.data.post.name }}</strong></span>&nbsp;near&nbsp;<span>{{ ctrl.data.post.location }}</span>
+                <span><strong>{{ ctrl.display.post.name }}</strong></span>&nbsp;near&nbsp;<span>{{ ctrl.display.post.location }}</span>
               </div>
               <div class="float-right">
-                {{ ctrl.data.post.createdAt | date : longDate }}
+                {{ ctrl.display.post.createdAt | moment:'timeAgo' }}
               </div>
             </div>
 
@@ -114,7 +116,7 @@
             <div class="field-body">
               <div class="field">
                 <p class="control is-expanded has-icons-left">
-                  <input class="input is-medium" type="text" placeholder="First name" ng-model="ctrl.data.name" ng-class="{ 'is-danger': ctrl.errors.name !== undefined }" ng-change="ctrl.validateField('name')" ng-model-options="{ updateOn: 'change' }" ng-trim="false">
+                  <input class="input is-medium" type="text" placeholder="Full name" ng-model="ctrl.data.name" ng-class="{ 'is-danger': ctrl.errors.name !== undefined }" ng-change="ctrl.validateField('name')" ng-model-options="{ updateOn: 'change' }" ng-trim="false">
                   <span class="icon is-small is-left"><i class="fas fa-user"></i></span>
                   <span class="icon is-small is-right has-text-danger" ng-if="ctrl.errors.name !== undefined"><i class="fas fa-exclamation-triangle"></i></span>
                 </p>
@@ -140,7 +142,7 @@
 
           <div class="field">
             <div class="control">
-              <button type="submit" class="button is-rounded is-medium is-primary is-fullwidth is-submit" ng-class="{ 'is-loading': ctrl.display.isLoading }">
+              <button type="submit" class="button is-rounded is-medium is-primary is-fullwidth is-submit" ng-class="{ 'is-loading': ctrl.display.replyIsLoading }">
                 <span class="icon"><i class="fas fa-paper-plane"></i></span>
                 <span>Send message</span>
               </button>
@@ -200,4 +202,55 @@
 
   </div>
   <button class="modal-close is-large" ui-sref="home"></button>
+</div>
+
+<div class="modal" ng-class="{ 'is-active': ctrl.display.verifiedModalVisible }">
+  <div class="modal-background" ng-click="ctrl.display.verifiedModalVisible = false"></div>
+  <div class="modal-content">
+    
+    <div class="box has-text-centered">
+
+      <h4 class="title is-3">
+        <span class="icon"><i class="fas fa-check-circle"></i></span>
+        <span>Success!</span> 
+      </h4>
+
+      <div class="content is-medium">
+        <p>Your post has been verified.</p>
+      </div>
+
+      <div class="buttons social-buttons">
+        <button class="button is-rounded is-fullwidth is-dark is-medium is-facebook">
+          <span class="icon"><i class="fab fa-facebook-f"></i></span>
+          <span>Share to Facebook</span>
+        </button>
+        <button class="button is-rounded is-fullwidth is-dark is-medium is-twitter">
+          <span class="icon"><i class="fab fa-twitter"></i></span>
+          <span>Share to Twitter</span>
+        </button>
+        <button class="button is-rounded is-fullwidth is-medium">
+          <span class="icon"><i class="fas fa-envelope"></i></span>
+          <span>Email a friend</span>
+        </button>
+      </div>
+
+    </div>
+
+  </div>
+  <button class="modal-close is-large" ng-click="ctrl.display.verifiedModalVisible = false"></button>
+</div>
+
+<div class="modal" ng-class="{ 'is-active': ctrl.display.removeModalVisible }">
+  <div class="modal-background" ng-click="ctrl.display.removeModalVisible = false"></div>
+  <div class="modal-content">
+    
+    <div class="box has-text-centered">
+      <button ng-click="ctrl.removePost()" class="button is-rounded is-large is-danger" ng-class="{ 'is-loading': ctrl.display.removeIsLoading }">
+        <span class="icon"><i class="fas fa-trash"></i></span>
+        <span>Remove post</span>
+      </button>
+    </div>
+
+  </div>
+  <button class="modal-close is-large" ng-click="ctrl.display.removeModalVisible = false"></button>
 </div>

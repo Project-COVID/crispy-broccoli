@@ -15,6 +15,23 @@ angular.module('app').filter('contains', function () {
   };
 });
 
+// Array slice filter
+angular.module('app').filter('slice', function () {
+  return function (array, sliceIndex) {
+    return array.slice(0, sliceIndex);
+  };
+});
+
+// Moment format filter
+angular.module('app').filter('moment', function () {
+  return function (date, format) {
+    if (format === 'timeAgo') {
+      return moment(date).fromNow();
+    }
+    return moment(date).format(format);
+  };
+});
+
 // Validation service
 angular.module('app').service('validationService', function ($timeout) {
   
@@ -59,6 +76,12 @@ angular.module('app').service('validationService', function ($timeout) {
   var parseErrors = function (errors, schema) {
 
     var errObj = {};
+
+    if (errors.message !== undefined) {
+      errObj.general = errors.message;
+      return errObj;
+    }
+
     _.forEach(errors, function (err) {
       // Check for errors in visible schema fields
       var field = err.path[0];
@@ -91,11 +114,65 @@ angular.module('app').service('validationService', function ($timeout) {
     }).join('&');
   };
 
+  var getNearestLocation = function (components) {
+
+    // Iterate in order from smallest to largest component, stop at first important one we see
+    var location;
+    _.forEach(components, function (component) {
+      _.forEach(component.types, function (type) {
+        if (_.includes(['neighborhood', 'sublocality', 'locality', 'colloquial_area', 'administrative_area_level_5', 'administrative_area_level_4', 'administrative_area_level_3', 'postal_town', 'administrative_area_level_2', 'administrative_area_level_1', 'country'], type)) {
+          location = true;
+          return false;
+        }
+      });
+      if (location) {
+        location = component.long_name;
+        return false;
+      }
+    });
+
+    return location;
+
+  };
+
+  var convertToKm = function (value, unit) {
+
+    if (unit === 'km') {
+      return value;
+    }
+
+    return value / 1.60934; // Miles to km
+
+  };
+
   return {
     validateField: validateField,
     parseErrors: parseErrors,
     scrollToError: scrollToError,
-    encodeQueryParams: encodeQueryParams
+    encodeQueryParams: encodeQueryParams,
+    getNearestLocation: getNearestLocation,
+    convertToKm: convertToKm
+  };
+
+});
+
+angular.module('app').service('displayService', function () {
+  
+  var toast = function (type, err) {
+
+    bulmaToast.toast({
+      message: err || 'Oops, something went wrong!',
+      type: (type === 'success') ? 'is-success' : 'is-danger',
+      duration: 10000,
+      position: 'top-center',
+      dismissible: true,
+      pauseOnHover: true
+    });
+
+  };
+
+  return {
+    toast: toast
   };
 
 });

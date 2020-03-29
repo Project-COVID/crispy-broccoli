@@ -26,17 +26,17 @@ module.exports = async function (req) {
         await Joi.validate(
             req.body,
             {
-                title: Joi.string().min(1).max(200).required(),
-                body: Joi.string().min(1).max(500),
+                title: Joi.string().max(200).required(),
+                body: Joi.string().max(500),
                 type: Joi.string().valid(Object.keys(constants.types)).required(),
-                location: Joi.string().min(1).required(),
+                location: Joi.string().required(),
                 lon: Joi.number().required(),
                 lat: Joi.number().required(),
                 tags: Joi.array()
                     .items(Joi.string().valid(Object.keys(constants.tags)))
                     .min(1)
                     .required(),
-                name: Joi.string().min(1).max(20).required(),
+                name: Joi.string().max(20).required(),
                 email: Joi.string().email().required(),
             },
             {
@@ -45,7 +45,9 @@ module.exports = async function (req) {
         );
 
         if (await alreadyHasPost(req.body.email)) {
-            return Response.BadRequest('a user with that email already has an open active post');
+            return Response.BadRequest({
+                message: 'Only one active post per user is allowed'
+            });
         }
 
         await createPost(req.body);

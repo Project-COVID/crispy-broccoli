@@ -5,7 +5,7 @@ const Post = require('../models/post');
 const constants = require('../models/constants');
 const sanitise = require('../models/sanitise');
 
-const DEFAULT_LIMIT = 15;
+const DEFAULT_LIMIT = 3;
 const DEFAULT_RADIUS_KM = 5;
 
 function kmToRadian(km) {
@@ -47,9 +47,8 @@ async function getPosts(req) {
             cursor: Joi.string().hex(),
             limit: Joi.number().max(10),
             radius: Joi.number() // radius in km
-                // must be between 3 and 30 miles, with room for rounding errors
-                .min(1.60934 * 2.9)
-                .max(1.60934 * 30.1),
+                // must be < 20 miles, with room for rounding errors
+                .max(1.60934 * 20.1),
         });
 
         let result = await getPostsInRadius(
@@ -82,7 +81,9 @@ async function getPost(req) {
 
         let post = await Post.findById(req.params.id);
         if (post && (!post.verified || post.status !== constants.statuses.active)) {
-            return Response.BadRequest('post has not been verified or is not active');
+            return Response.BadRequest({
+                message: 'Post has not been verified or is not active'
+            });
         }
 
         return Response.OK(sanitise.post(post));

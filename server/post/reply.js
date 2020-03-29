@@ -34,9 +34,9 @@ module.exports = async function (req) {
             id: Joi.string().hex().required(),
         });
         await Joi.validate(req.body, {
-            name: Joi.string().min(1).max(20).required(),
+            name: Joi.string().max(20).required(),
             email: Joi.string().email().required(),
-            body: Joi.string().min(1).max(2000).required(),
+            body: Joi.string().max(1000).required(),
         });
 
         await replyToPost(req.params.id, req.body.name, req.body.email, req.body.body);
@@ -47,11 +47,11 @@ module.exports = async function (req) {
             return Response.BadRequest(err.details);
         } else if (err instanceof PostNotActiveError) {
             return Response.BadRequest({
-                message: 'that post is not active',
+                message: 'Post is not active',
             });
         } else if (err instanceof PostNotVerifiedError) {
             return Response.BadRequest({
-                message: 'that post has not been verified',
+                message: 'Post has not been verified',
             });
         }
         throw err;
