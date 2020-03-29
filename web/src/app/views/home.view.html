@@ -28,19 +28,19 @@
               <div class="navbar-item">
                 <div class="field is-grouped is-grouped-multiline">
                   <p class="control">
-                    <a href="" target="_blank" class="button is-rounded is-fullwidth is-dark is-facebook">
+                    <a href="{{ shareOption('facebook') }}" target="_blank" class="button is-rounded is-fullwidth is-dark is-facebook">
                       <span class="icon"><i class="fab fa-facebook-f"></i></span>
                       <span>Share to Facebook</span>
                     </a>
                   </p>
-                  <p href="" target="_blank"  class="control">
-                    <a class="button is-rounded is-fullwidth is-dark is-twitter">
+                  <p class="control">
+                    <a href="{{ shareOption('twitter') }}" target="_blank" class="button is-rounded is-fullwidth is-dark is-twitter">
                       <span class="icon"><i class="fab fa-twitter"></i></span>
                       <span>Share to Twitter</span>
                     </a>
                   </p>
-                  <p href="" target="_blank"  class="control">
-                    <a class="button is-rounded is-fullwidth">
+                  <p class="control">
+                    <a href="{{ shareOption('email') }}" target="_blank" class="button is-rounded is-fullwidth">
                       <span class="icon"><i class="fas fa-envelope"></i></span>
                       <span>Email a friend</span>
                     </a>
@@ -134,7 +134,7 @@
       <h4 class="subtitle is-4" ng-if="display.totalPosts === 1">There is <strong>1 person</strong> near you who {{ (data.type === 'offer') ? 'needs': 'can' }} help</h4>
       <h4 class="subtitle is-4" ng-if="display.totalPosts > 1">There are <strong>{{ display.totalPosts }} people</strong> near you who {{ (data.type === 'offer') ? 'need': 'can' }} help</h4>
 
-      <div class="box post-block" ng-repeat="post in display.pages[display.currPage]" ui-sref="post({ postId: post.id, post: post })">
+      <div class="box post-block" ng-repeat="post in display.pages[display.currPage]" ng-click="ctrl.goToPost($event, post)">
 
         <article class="media">
           <div class="media-content">
@@ -161,18 +161,18 @@
             <nav class="level is-mobile share-options">
               <div class="level-left"></div>
               <div class="level-right">
-                <button class="button level-item is-rounded is-small is-dark is-social is-facebook">
+                <a href="{{ shareOption('facebook', post) }}" target="_blank" class="button level-item is-rounded is-small is-dark is-social is-facebook">
                   <span class="icon is-small"><i class="fab fa-facebook-f"></i></span>
-                  <a href="#" target="_blank" class="is-collapsible-450">Share<span class="is-collapsible-600"> to Facebook</span></a>
-                </button>
-                <button class="button level-item is-rounded is-small is-dark is-social is-twitter">
+                  <span class="is-collapsible-450">Share<span class="is-collapsible-600"> to Facebook</span></span>
+                </a>
+                <a href="{{ shareOption('twitter', post) }}" target="_blank" class="button level-item is-rounded is-small is-dark is-social is-twitter">
                   <span class="icon is-small"><i class="fab fa-twitter"></i></span>
-                  <a href="#" target="_blank" class="is-collapsible-450">Share<span class="is-collapsible-600"> to Twitter</span></a>
-                </button>
-                <button class="button level-item is-rounded is-small is-social is-email">
+                  <span class="is-collapsible-450">Share<span class="is-collapsible-600"> to Twitter</span></span>
+                </a>
+                <a href="{{ shareOption('email', post) }}" target="_blank" class="button level-item is-rounded is-small is-social is-email">
                   <span class="icon is-small"><i class="fas fa-envelope"></i></span>
-                  <a href="#" target="_blank" class="is-collapsible-450">Email<span class="is-collapsible-600"> a friend</span></a>
-                </button>
+                  <span class="is-collapsible-450">Email<span class="is-collapsible-600"> a friend</span></span>
+                </a>
                 <button class="button level-item is-rounded is-small is-primary">
                   <span class="icon is-small"><i class="fas fa-reply"></i></span>
                   <span>Reply</span>
@@ -222,15 +222,15 @@
       <h3 class="title is-3">Help spread the word</h3>
 
       <div class="buttons is-centered social-buttons">
-        <a href="#" target="_blank" class="button is-rounded is-dark is-medium is-facebook">
+        <a href="{{ shareOption('facebook') }}" target="_blank" class="button is-rounded is-dark is-medium is-facebook">
           <span class="icon"><i class="fab fa-facebook-f"></i></span>
           <span>Share to Facebook</span>
         </a>
-        <a href="#" target="_blank" class="button is-rounded is-dark is-medium is-twitter">
+        <a href="{{ shareOption('twitter') }}" target="_blank" class="button is-rounded is-dark is-medium is-twitter">
           <span class="icon"><i class="fab fa-twitter"></i></span>
           <span>Share to Twitter</span>
         </a>
-        <a href="#" target="_blank" class="button is-rounded is-medium">
+        <a href="{{ shareOption('email') }}" target="_blank" class="button is-rounded is-medium">
           <span class="icon"><i class="fas fa-envelope"></i></span>
           <span>Email a friend</span>
         </a>

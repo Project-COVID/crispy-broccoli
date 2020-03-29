@@ -37,6 +37,10 @@ angular.module('app').controller('homeController', function ($stateParams, $http
 
   }
 
+  if ($stateParams.q !== undefined) {
+    $rootScope.data.searchQuery = $stateParams.q;
+  }
+
   // Bind Google Maps to search bar
   var autocomplete = new google.maps.places.Autocomplete(document.querySelector('.hero form input'), {
     types: ['geocode'],
@@ -85,7 +89,7 @@ angular.module('app').controller('homeController', function ($stateParams, $http
       }
 
       $http.get(`/api/v1/post${validationService.encodeQueryParams(postPayload)}`).then(function (res) {
-console.log(res.data)
+
         $rootScope.display.pages.push(res.data.posts);
         $rootScope.display.totalPosts = res.data.total;
 
@@ -107,9 +111,20 @@ console.log(res.data)
   };
 
   ctrl.refreshPosts = function () {
-    if ($rootScope.data.location !== undefined) {console.log('Refresh posts')
+    if ($rootScope.data.location !== undefined) {
       getPosts(); // Refresh posts
     }
+  };
+
+  ctrl.goToPost = function (e, post) {
+
+    // Don't interfere with social sharing. Check parent and grandparent if click sub elem
+    if (e.target.className.indexOf('is-social') !== -1 || e.target.parentNode.className.indexOf('is-social') !== -1 || e.target.parentNode.parentNode.className.indexOf('is-social') !== -1) {
+      return;
+    }
+
+    $state.go('post', { postId: post.id, post: post });
+
   };
 
   // Pagination methods

@@ -1,6 +1,6 @@
 <div class="pageloader" ng-class="{ 'is-active': ctrl.display.post === undefined }"><span class="title">Loading post</span></div>
 
-<main id="post">
+<main id="post" ng-if="ctrl.display.post !== undefined">
 
   <header class="navbar is-transparent">
     <div class="container">
@@ -27,19 +27,19 @@
           <div class="navbar-item">
             <div class="field is-grouped is-grouped-multiline">
               <p class="control">
-                <a href="#" target="_blank" class="button is-rounded is-fullwidth is-dark is-facebook">
+                <a href="{{ shareOption('facebook', ctrl.display.post) }}" target="_blank" class="button is-rounded is-fullwidth is-dark is-facebook">
                   <span class="icon"><i class="fab fa-facebook-f"></i></span>
                   <span>Share to Facebook</span>
                 </a>
               </p>
               <p class="control">
-                <a href="#" target="_blank" class="button is-rounded is-fullwidth is-dark is-twitter">
+                <a href="{{ shareOption('twitter', ctrl.display.post) }}" target="_blank" class="button is-rounded is-fullwidth is-dark is-twitter">
                   <span class="icon"><i class="fab fa-twitter"></i></span>
                   <span>Share to Twitter</span>
                 </a>
               </p>
               <p class="control">
-                <a href="#" target="_blank" class="button is-rounded is-fullwidth">
+                <a href="{{ shareOption('email', ctrl.display.post) }}" target="_blank" class="button is-rounded is-fullwidth">
                   <span class="icon"><i class="fas fa-envelope"></i></span>
                   <span>Email a friend</span>
                 </a>
@@ -172,15 +172,15 @@
       <h3 class="title is-3">Share this post</h3>
 
       <div class="buttons is-centered social-buttons">
-        <a href="#" target="_blank" class="button is-rounded is-dark is-medium is-facebook">
+        <a href="{{ shareOption('facebook', ctrl.display.post) }}" target="_blank" class="button is-rounded is-dark is-medium is-facebook">
           <span class="icon"><i class="fab fa-facebook-f"></i></span>
           <span>Share to Facebook</span>
         </a>
-        <a href="#" target="_blank" class="button is-rounded is-dark is-medium is-twitter">
+        <a href="{{ shareOption('twitter', ctrl.display.post) }}" target="_blank" class="button is-rounded is-dark is-medium is-twitter">
           <span class="icon"><i class="fab fa-twitter"></i></span>
           <span>Share to Twitter</span>
         </a>
-        <a href="#" target="_blank" class="button is-rounded is-medium">
+        <a href="{{ shareOption('email', ctrl.display.post) }}" target="_blank" class="button is-rounded is-medium">
           <span class="icon"><i class="fas fa-envelope"></i></span>
           <span>Email a friend</span>
         </a>
@@ -230,15 +230,15 @@
       </div>
 
       <div class="buttons social-buttons">
-        <a href="#" target="_blank" class="button is-rounded is-fullwidth is-dark is-medium is-facebook">
+        <a href="{{ shareOption('facebook', ctrl.display.post) }}" target="_blank" class="button is-rounded is-fullwidth is-dark is-medium is-facebook">
           <span class="icon"><i class="fab fa-facebook-f"></i></span>
           <span>Share to Facebook</span>
         </a>
-        <a href="#" target="_blank" class="button is-rounded is-fullwidth is-dark is-medium is-twitter">
+        <a href="{{ shareOption('twitter', ctrl.display.post) }}" target="_blank" class="button is-rounded is-fullwidth is-dark is-medium is-twitter">
           <span class="icon"><i class="fab fa-twitter"></i></span>
           <span>Share to Twitter</span>
         </a>
-        <a href="#" target="_blank" class="button is-rounded is-fullwidth is-medium">
+        <a href="{{ shareOption('email', ctrl.display.post) }}" target="_blank" class="button is-rounded is-fullwidth is-medium">
           <span class="icon"><i class="fas fa-envelope"></i></span>
           <span>Email a friend</span>
         </a>

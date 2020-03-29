@@ -183,7 +183,7 @@ angular.module('app').service('displayService', function () {
 
 });
 
-angular.module('app').run(function ($rootScope, $window, $transitions, $timeout, $http) {
+angular.module('app').run(function ($rootScope, $window, $transitions, $timeout, $http, validationService) {
 
   // Configure API host
   $rootScope.apiHost = location.protocol + '//' + location.host;
@@ -214,6 +214,83 @@ angular.module('app').run(function ($rootScope, $window, $transitions, $timeout,
       "active": "active",
       "closed": "closed"
     }
+  };
+
+  $rootScope.shareOption = function (type, opt_post) {
+    var queryParams = {};
+    if (type === 'facebook') {
+
+      queryParams = {
+        app_id: '203660581076738',
+        href: 'https://kindnessproject.xyz',
+        hashtag: '#covid_19'
+      };
+
+      if (opt_post === undefined) {
+        queryParams.quote = 'Check out The Kindness Project: request or offer help to those in your community affected by the pandemic';
+      }
+      else {
+        queryParams.href += '/post/' + opt_post.id;
+        if (opt_post.type === 'request') {
+          queryParams.quote = 'Can you help? Someone near ' + opt_post.location + ' is affected by the pandemic';
+        }
+        else {
+          queryParams.quote = 'Do you need help? Someone near ' + opt_post.location + ' is offering help to those affected by the pandemic';
+        }
+      }
+
+      return 'https://www.facebook.com/dialog/share' + validationService.encodeQueryParams(queryParams);
+
+    }
+    else if (type === 'twitter') {
+
+      queryParams = {
+        url: 'https://kindnessproject.xyz',
+        via: 'kindness_xyz',
+        hashtags: 'kindnessproject,covid_19'
+      };
+
+      if (opt_post === undefined) {
+        queryParams.text = '❤ Check out The Kindness Project: request or offer help to those in your community affected by the pandemic';
+      }
+      else {
+        queryParams.url += '/post/' + opt_post.id;
+        if (opt_post.type === 'request') {
+          queryParams.text = '❤ Can you help? Someone near ' + opt_post.location + ' is affected by the pandemic';
+        }
+        else {
+          queryParams.text = '❤ Do you need help? Someone near ' + opt_post.location + ' is offering help to those affected by the pandemic';
+        }
+      }
+
+      return 'https://twitter.com/intent/tweet' + validationService.encodeQueryParams(queryParams);
+    }
+    // Email
+    else {
+
+      if (opt_post === undefined) {
+        queryParams = {
+          subject: '❤ Check out The Kindness Project!',
+          body: 'Request or offer help to those in your community affected by the pandemic: https://kindnessproject.xyz'
+        };
+      }
+      else if (opt_post.type === 'request') {
+        queryParams = {
+          subject: '❤ Can you help? Someone near ' + opt_post.location + ' is affected by the pandemic',
+          body: 'This person in your community is affected by the pandemic: https://kindnessproject.xyz/post/' + opt_post.id
+        };
+      }
+      else {
+        queryParams = {
+          subject: '❤ Do you need help? Someone near ' + opt_post.location + ' is offering help to those affected by the pandemic',
+          body: 'This person in your community is offering help to those affected by the pandemic: https://kindnessproject.xyz/post/' + opt_post.id
+        };
+      }
+
+      return 'mailto:' + validationService.encodeQueryParams(queryParams);
+
+    }
+
   };
 
   // Go back to previous scroll pos when returning to home page from post/create post

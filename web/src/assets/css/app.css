@@ -254,12 +254,6 @@ span.is-primary {
 #home .post-block:hover .share-options .is-social {
   opacity: 1;
 }
-#home .post-block .share-options .is-social.is-dark a {
-  color: #fff;
-}
-#home .post-block .share-options .is-social:not(.is-dark) a {
-  color: #363636;
-}
 @media screen and (max-width: 450px) {
   #home .post-block .share-options .is-social {
     padding-right: 0.25rem;
