@@ -155,7 +155,7 @@
 
           <div class="field">
             <div class="control">
-              <button type="submit" class="button is-rounded is-medium is-primary is-fullwidth is-submit" ng-class="{ 'is-loading': ctrl.display.isLoading }">
+              <button type="submit" class="button is-rounded is-medium is-fullwidth is-submit" ng-class="{ 'is-loading': ctrl.display.isLoading, 'is-primary': ctrl.data.type === 'request', 'is-danger': ctrl.data.type === 'offer' }">
                 <span class="icon"><i class="fas fa-paper-plane"></i></span>
                 <span>Create my post</span>
               </button>

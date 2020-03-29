@@ -208,7 +208,7 @@
       <h3 class="title is-3">{{ (ctrl.display.posts.length > 0) ? 'Step 2 &ndash;' : '' }} Post your {{ ctrl.data.type }} for the community to see</h3>
 
       <div class="buttons is-centered">
-        <a ui-sref="create-post({ type: ctrl.data.type, lat: ctrl.data.lat, lon: ctrl.data.lon, location: ctrl.data.location })" class="button is-rounded is-large is-danger">
+        <a ui-sref="create-post({ type: ctrl.data.type, lat: ctrl.data.lat, lon: ctrl.data.lon, location: ctrl.data.location })" class="button is-rounded is-large" ng-class="{ 'is-primary': ctrl.data.type === 'request', 'is-danger': ctrl.data.type === 'offer' }">
           <span class="icon"><i class="fas fa-heart"></i></span>
           <span ui-sref="create-post">{{ (ctrl.data.type === 'offer') ? 'Offer your' : 'Request' }} help</span>
         </a>
