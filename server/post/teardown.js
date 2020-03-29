@@ -30,7 +30,7 @@ module.exports = async function (req) {
         const success = await teardownPost(req.params.id, req.body.hash);
         if (!success) {
             return Response.Forbidden({
-                message: 'Couldn\'t remove post',
+                message: "Couldn't remove post",
             });
         }
         return Response.OK();

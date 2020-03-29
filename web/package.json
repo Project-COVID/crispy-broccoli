@@ -2,6 +2,7 @@
     "name": "the-kindness-project-webapp-web",
     "version": "1.0.0",
     "author": "The Kindness Project",
+    "license": "MIT",
     "dependencies": {
         "bulma-pageloader": "^0.3.0",
         "bulma-toast": "^1.5.4",

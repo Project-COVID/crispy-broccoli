@@ -115,7 +115,7 @@
           <div class="field">
             <div class="field-body">
               <div class="field">
-                <p class="control is-expanded has-icons-left">
+                <p class="control is-expanded has-icons-left" ng-class="{ 'has-icons-right': ctrl.errors.name !== undefined }">
                   <input class="input is-medium" type="text" placeholder="Full name" ng-model="ctrl.data.name" ng-class="{ 'is-danger': ctrl.errors.name !== undefined }" ng-change="ctrl.validateField('name')" ng-model-options="{ updateOn: 'change' }" ng-trim="false">
                   <span class="icon is-small is-left"><i class="fas fa-user"></i></span>
                   <span class="icon is-small is-right has-text-danger" ng-if="ctrl.errors.name !== undefined"><i class="fas fa-exclamation-triangle"></i></span>

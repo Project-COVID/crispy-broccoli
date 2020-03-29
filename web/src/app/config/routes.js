@@ -7,7 +7,7 @@ angular.module('app').config(function ($stateProvider, $urlRouterProvider) {
 
   $stateProvider
     .state('home', {
-      url: '/?q&verify&verifyHash',
+      url: '/?verify&verifyHash',
       templateUrl: 'app/views/home.view.html',
       controller: 'homeController',
       controllerAs: 'ctrl'

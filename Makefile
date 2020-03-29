@@ -28,7 +28,7 @@ mongo:
 .PHONY: build
 build: lint
 	@pushd server; yarn; popd
-	@pushd web; bower install; popd
+	@pushd web; bower install; yarn; popd
 
 
 # make run env={env file}

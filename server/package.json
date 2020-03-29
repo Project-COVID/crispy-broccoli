@@ -1,6 +1,7 @@
 {
     "name": "the-kindness-project-webapp-server",
     "version": "1.0.0",
+    "author": "The Kindness Project",
     "main": "index.js",
     "license": "MIT",
     "dependencies": {

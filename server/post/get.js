@@ -82,7 +82,7 @@ async function getPost(req) {
         let post = await Post.findById(req.params.id);
         if (post && (!post.verified || post.status !== constants.statuses.active)) {
             return Response.BadRequest({
-                message: 'Post has not been verified or is not active'
+                message: 'Post has not been verified or is not active',
             });
         }
 

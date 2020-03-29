@@ -46,7 +46,7 @@ module.exports = async function (req) {
 
         if (await alreadyHasPost(req.body.email)) {
             return Response.BadRequest({
-                message: 'Only one active post per user is allowed'
+                message: 'Only one active post per user is allowed',
             });
         }
 
