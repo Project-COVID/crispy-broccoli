@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('app').controller('homeController', function ($stateParams, $http, $state, validationService, displayService) {
+angular.module('app').controller('homeController', function ($stateParams, $http, $state, validationService, displayService, $timeout) {
 
   var ctrl = this;
 
@@ -9,7 +9,11 @@ angular.module('app').controller('homeController', function ($stateParams, $http
     radius_unit: (_.includes(['en-GB', 'en-US'], navigator.language)) ? 'miles' : 'km'
   };
 
-  ctrl.display = {};
+  ctrl.display = {
+    postLimit: 1,
+    currPage: 0,
+    pages: []
+  };
 
   if ($stateParams.error !== undefined) {
     displayService.toast('error', $stateParams.error);
@@ -48,23 +52,54 @@ angular.module('app').controller('homeController', function ($stateParams, $http
   });
 
   // Get posts
-  var getPosts = function () {
+  var getPosts = function (opt_cursor) {
 
-    $http.get(`/api/v1/post${validationService.encodeQueryParams({
-      type: (ctrl.data.type === 'offer') ? 'request' : 'offer',
-      lat: ctrl.data.lat,
-      lon: ctrl.data.lon,
-      radius: validationService.convertToKm(ctrl.data.radius, ctrl.data.radius_unit),
-      limit: 3
-    })}`).then(function (res) {
-console.log(res.data.posts)
-      ctrl.display.posts = res.data.posts;
-      ctrl.display.totalPosts = res.data.total;
+    if (opt_cursor === 'prev') {
+      ctrl.display.currPage--;
+    }
+    else if (opt_cursor === 'next' && ctrl.display.currPage < ctrl.display.pages.length - 1) {
+      ctrl.display.currPage++;
+    }
+    // Else need new posts
+    else {
 
-    }).catch(function (err) {
-      console.log(err.data);
-      displayService.toast('error', err.data.message);
-    });
+      var postPayload = {
+        type: (ctrl.data.type === 'offer') ? 'request' : 'offer',
+        lat: ctrl.data.lat,
+        lon: ctrl.data.lon,
+        radius: validationService.convertToKm(ctrl.data.radius, ctrl.data.radius_unit),
+        limit: ctrl.display.postLimit
+      };
+
+      if (opt_cursor === 'next') {
+        postPayload.cursor = _.last(ctrl.display.pages[ctrl.display.currPage]).id;
+      }
+      // Else new query, reset currPage and post cache
+      else {
+        ctrl.display.currPage = 0;
+        ctrl.display.pages = [];
+        ctrl.display.totalPosts = undefined;
+      }
+console.log(postPayload)
+      $http.get(`/api/v1/post${validationService.encodeQueryParams(postPayload)}`).then(function (res) {
+console.log(res.data)
+        ctrl.display.pages.push(res.data.posts);
+        ctrl.display.totalPosts = res.data.total;
+
+        if (opt_cursor === 'next') {
+          ctrl.display.currPage++;
+        }
+
+        $timeout(function () {
+          document.querySelector('.posts-block').scrollIntoView({ behavior: 'smooth' });
+        });
+
+      }).catch(function (err) {
+        console.log(err.data);
+        displayService.toast('error', err.data.message);
+      });
+
+    }
 
   };
 
@@ -72,6 +107,15 @@ console.log(res.data.posts)
     if (ctrl.data.location !== undefined) {console.log('Refresh posts')
       getPosts(); // Refresh posts
     }
+  };
+
+  // Pagination methods
+  ctrl.prevPage = function () {
+    getPosts('prev');
+  };
+
+  ctrl.nextPage = function () {
+    getPosts('next');
   };
 
 });

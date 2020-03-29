@@ -104,7 +104,7 @@ angular.module('app').service('validationService', function ($timeout) {
 
   var scrollToError = function () {
     $timeout(function () {
-      document.querySelector('form .notification-wrapper').scrollIntoView();
+      document.querySelector('form .notification-wrapper').scrollIntoView({ behavior: 'smooth' });
     });
   };
 

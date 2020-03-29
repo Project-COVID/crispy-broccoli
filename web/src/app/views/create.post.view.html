@@ -95,7 +95,7 @@
           <div class="tags are-large">
             <span class="tag is-rounded" ng-repeat="(tagId, tagText) in constants.tags" ng-class="{ 'is-info': (ctrl.data.tags | contains:tagId) }" ng-click="ctrl.toggleTag(tagId)">
               {{ tagText }}
-              <button type="button" ng-if="ctrl.data.tags | contains:tagId" class="delete"></button>
+              <button type="button" ng-show="ctrl.data.tags | contains:tagId" class="delete"></button>
             </span>
           </div>
 
@@ -107,19 +107,19 @@
                 <p class="control is-expanded has-icons-left" ng-class="{ 'has-icons-right': ctrl.errors.name !== undefined }">
                   <input class="input is-medium" type="text" placeholder="First name" ng-model="ctrl.data.name" ng-class="{ 'is-danger': ctrl.errors.name !== undefined }" ng-change="ctrl.validateField('name')" ng-model-options="{ updateOn: 'change' }" ng-trim="false">
                   <span class="icon is-small is-left"><i class="fas fa-user"></i></span>
-                  <span class="icon is-small is-right has-text-danger" ng-if="ctrl.errors.name !== undefined"><i class="fas fa-exclamation-triangle"></i></span>
+                  <span class="icon is-small is-right has-text-danger" ng-show="ctrl.errors.name !== undefined"><i class="fas fa-exclamation-triangle"></i></span>
                 </p>
-                <p class="help" ng-if="ctrl.errors.name === undefined">This will be public</p>
-                <p class="help is-danger" ng-if="ctrl.errors.name !== undefined">{{ ctrl.errors.name }}</p>
+                <p class="help" ng-show="ctrl.errors.name === undefined">This will be public</p>
+                <p class="help is-danger" ng-show="ctrl.errors.name !== undefined">{{ ctrl.errors.name }}</p>
               </div>
               <div class="field">
                 <p class="control is-expanded has-icons-left" ng-class="{ 'has-icons-right': ctrl.errors.email !== undefined }">
                   <input class="input is-medium" type="text" placeholder="Email" ng-model="ctrl.data.email" ng-class="{ 'is-danger': ctrl.errors.email !== undefined }" ng-change="ctrl.validateField('email')" ng-model-options="{ updateOn: 'change' }" ng-trim="false">
                   <span class="icon is-small is-left"><i class="fas fa-envelope"></i></span>
-                  <span class="icon is-small is-right has-text-danger" ng-if="ctrl.errors.email !== undefined"><i class="fas fa-exclamation-triangle"></i></span>
+                  <span class="icon is-small is-right has-text-danger" ng-show="ctrl.errors.email !== undefined"><i class="fas fa-exclamation-triangle"></i></span>
                 </p>
-                <p class="help" ng-if="ctrl.errors.email === undefined">This will <strong>not</strong> be public</p>
-                <p class="help is-danger" ng-if="ctrl.errors.email !== undefined">{{ ctrl.errors.email }}</p>
+                <p class="help" ng-show="ctrl.errors.email === undefined">This will <strong>not</strong> be public</p>
+                <p class="help is-danger" ng-show="ctrl.errors.email !== undefined">{{ ctrl.errors.email }}</p>
               </div>
             </div>
           </div>
@@ -128,16 +128,16 @@
             <div class="control has-icons-left" ng-class="{ 'has-icons-right': ctrl.errors.title !== undefined }">
               <input class="input is-medium" type="text" placeholder="Post title" ng-model="ctrl.data.title" ng-class="{ 'is-danger': ctrl.errors.title !== undefined }" ng-change="ctrl.validateField('title')" ng-model-options="{ updateOn: 'change' }" ng-trim="false">
               <span class="icon is-small is-left"><i class="fas fa-envelope-open-text"></i></span>
-              <span class="icon is-small is-right has-text-danger" ng-if="ctrl.errors.title !== undefined"><i class="fas fa-exclamation-triangle"></i></span>
+              <span class="icon is-small is-right has-text-danger" ng-show="ctrl.errors.title !== undefined"><i class="fas fa-exclamation-triangle"></i></span>
             </div>
-            <p class="help is-danger" ng-if="ctrl.errors.title !== undefined">{{ ctrl.errors.title }}</p>
+            <p class="help is-danger" ng-show="ctrl.errors.title !== undefined">{{ ctrl.errors.title }}</p>
           </div>
 
           <div class="field">
             <div class="control">
               <textarea class="textarea is-medium" placeholder="Post description (optional)" ng-model="ctrl.data.body" ng-class="{ 'is-danger': ctrl.errors.body !== undefined }" ng-change="ctrl.validateField('body')" ng-model-options="{ updateOn: 'change' }" ng-trim="false"></textarea>
             </div>
-            <p class="help is-danger" ng-if="ctrl.errors.body !== undefined">{{ ctrl.errors.body }}</p>
+            <p class="help is-danger" ng-show="ctrl.errors.body !== undefined">{{ ctrl.errors.body }}</p>
           </div>
 
           <div class="content is-medium">

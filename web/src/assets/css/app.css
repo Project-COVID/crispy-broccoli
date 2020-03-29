@@ -215,10 +215,10 @@ span.is-primary {
 #home .filter-radius .dropdown-item {
   font-size: 1rem;
 }
-#home .filter-radius .dropdown-item.is-active {
-  background-color: #00c4a7;
-}
 
+#home .post-block {
+  cursor: pointer;
+}
 #home .post-block .tags {
   margin-bottom: 0rem;
 }
@@ -236,6 +236,12 @@ span.is-primary {
 }
 #home .post-block:hover .share-options .is-social {
   opacity: 1;
+}
+#home .post-block .share-options .is-social.is-dark a {
+  color: #fff;
+}
+#home .post-block .share-options .is-social:not(.is-dark) a {
+  color: #363636;
 }
 @media screen and (max-width: 450px) {
   #home .post-block:hover .share-options .is-social {

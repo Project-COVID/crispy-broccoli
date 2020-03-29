@@ -129,14 +129,14 @@
 
   </section>
 
-  <section class="section" ng-if="ctrl.display.posts !== undefined && ctrl.display.posts.length > 0">
+  <section class="section posts-block" ng-show="ctrl.display.pages[ctrl.display.currPage] !== undefined && ctrl.display.totalPosts > 0">
     <div class="container has-text-centered">
 
       <h3 class="title is-3">Step 1 &ndash; Check requests for help in your area</h3>
-      <h4 class="subtitle is-4" ng-if="ctrl.display.posts.length === 1">There is <strong>1 person</strong> near you who {{ (ctrl.data.type === 'offer') ? 'needs': 'can' }} help</h4>
-      <h4 class="subtitle is-4" ng-if="ctrl.display.posts.length > 1">There are <strong>{{ ctrl.display.totalPosts.length }} people</strong> near you who {{ (ctrl.data.type === 'offer') ? 'need': 'can' }} help</h4>
+      <h4 class="subtitle is-4" ng-if="ctrl.display.totalPosts === 1">There is <strong>1 person</strong> near you who {{ (ctrl.data.type === 'offer') ? 'needs': 'can' }} help</h4>
+      <h4 class="subtitle is-4" ng-if="ctrl.display.totalPosts > 1">There are <strong>{{ ctrl.display.totalPosts }} people</strong> near you who {{ (ctrl.data.type === 'offer') ? 'need': 'can' }} help</h4>
 
-      <a class="box post-block" ng-repeat="post in ctrl.display.posts" ui-sref="post({ postId: post.id, post: post })">
+      <div class="box post-block" ng-repeat="post in ctrl.display.pages[ctrl.display.currPage]" ui-sref="post({ postId: post.id, post: post })">
 
         <article class="media">
           <div class="media-content">
@@ -165,15 +165,15 @@
               <div class="level-right">
                 <button class="button level-item is-rounded is-small is-dark is-social is-facebook">
                   <span class="icon is-small"><i class="fab fa-facebook-f"></i></span>
-                  <span class="is-collapsible-450">Share<span class="is-collapsible-600"> to Facebook</span></span>
+                  <a href="#" class="is-collapsible-450">Share<span class="is-collapsible-600"> to Facebook</span></a>
                 </button>
                 <button class="button level-item is-rounded is-small is-dark is-social is-twitter">
                   <span class="icon is-small"><i class="fab fa-twitter"></i></span>
-                  <span class="is-collapsible-450">Share<span class="is-collapsible-600"> to Twitter</span></span>
+                  <a href="#" class="is-collapsible-450">Share<span class="is-collapsible-600"> to Twitter</span></a>
                 </button>
                 <button class="button level-item is-rounded is-small is-social is-email">
                   <span class="icon is-small"><i class="fas fa-envelope"></i></span>
-                  <span class="is-collapsible-450">Email<span class="is-collapsible-600"> a friend</span></span>
+                  <a href="#" class="is-collapsible-450">Email<span class="is-collapsible-600"> a friend</span></a>
                 </button>
                 <button class="button level-item is-rounded is-small is-primary">
                   <span class="icon is-small"><i class="fas fa-reply"></i></span>
@@ -185,14 +185,14 @@
           </div>
         </article>
 
-      </a>
+      </div>
 
       <nav class="buttons is-centered pagination">
-        <button class="button is-medium is-rounded" disabled>
+        <button class="button is-medium is-rounded" ng-click="ctrl.prevPage()" ng-disabled="ctrl.display.currPage === 0">
           <span class="icon"><i class="fas fa-chevron-left"></i></span>
           <span>Previous</span>
         </button>
-        <button class="button is-medium is-rounded">
+        <button class="button is-medium is-rounded" ng-click="ctrl.nextPage()" ng-disabled="ctrl.display.currPage + 1 >= ctrl.display.totalPosts / ctrl.display.postLimit">
           <span>See more</span>
           <span class="icon"><i class="fas fa-chevron-right"></i></span>
         </button>
@@ -201,11 +201,11 @@
     </div>
   </section>
 
-  <section class="section" ng-if="ctrl.display.posts !== undefined">
+  <section class="section" ng-show="ctrl.display.pages[ctrl.display.currPage] !== undefined">
     <div class="container has-text-centered">
 
-      <h4 class="subtitle is-4" ng-if="ctrl.display.posts.length === 0">There are no current {{ (ctrl.data.type === 'offer') ? 'requests for' : 'offers to' }} help near you!</h4>
-      <h3 class="title is-3">{{ (ctrl.display.posts.length > 0) ? 'Step 2 &ndash;' : '' }} Post your {{ ctrl.data.type }} for the community to see</h3>
+      <h4 class="subtitle is-4" ng-if="ctrl.display.totalPosts === 0">There are no current {{ (ctrl.data.type === 'offer') ? 'requests for' : 'offers to' }} help near you!</h4>
+      <h3 class="title is-3">{{ (ctrl.display.totalPosts > 0) ? 'Step 2 &ndash;' : '' }} Post your {{ ctrl.data.type }} for the community to see</h3>
 
       <div class="buttons is-centered">
         <a ui-sref="create-post({ type: ctrl.data.type, lat: ctrl.data.lat, lon: ctrl.data.lon, location: ctrl.data.location })" class="button is-rounded is-large" ng-class="{ 'is-primary': ctrl.data.type === 'request', 'is-danger': ctrl.data.type === 'offer' }">
