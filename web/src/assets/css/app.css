@@ -218,6 +218,10 @@ span.is-primary {
 
 #home .post-block {
   cursor: pointer;
+  border: 1px solid #fff;
+}
+#home .post-block:hover {
+  border: 1px solid #3273dc;
 }
 #home .post-block .tags {
   margin-bottom: 0rem;
