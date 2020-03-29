@@ -304,6 +304,9 @@ span.is-primary {
 #create-post .create-post-block .content {
   margin-top: 2rem;
 }
+#create-post .create-post-block .title {
+  margin-top: -0.5rem;
+}
 #create-post .tag {
   cursor: pointer;
 }
