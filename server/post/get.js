@@ -53,11 +53,11 @@ async function getPosts(req) {
 
         let result = await getPostsInRadius(
             req.query.type,
-            req.query.lat,
-            req.query.lon,
-            req.query.radius,
+            Number(req.query.lat),
+            Number(req.query.lon),
+            Number(req.query.radius),
             req.query.cursor,
-            req.query.limit,
+            Number(req.query.limit),
         );
         let nextCursor = null;
         if (result && result.posts && result.posts.length > 0) {
