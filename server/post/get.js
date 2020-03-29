@@ -59,12 +59,8 @@ async function getPosts(req) {
             req.query.cursor,
             Number(req.query.limit),
         );
-        let nextCursor = null;
-        if (result && result.posts && result.posts.length > 0) {
-            nextCursor = result.posts[result.posts.length - 1]._id;
-        }
 
-        return Response.OK({ posts: result.posts.map((post) => sanitise.post(post)), total: result.total, nextCursor });
+        return Response.OK({ posts: result.posts.map((post) => sanitise.post(post)), total: result.total });
     } catch (err) {
         if (err.isJoi) {
             return Response.BadRequest(err.details);

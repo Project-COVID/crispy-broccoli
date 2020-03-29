@@ -145,6 +145,12 @@ angular.module('app').service('validationService', function ($timeout) {
 
   };
 
+  var encodeQueryParams = function (obj) {
+    return '?' + _.map(obj, function (value, key) {
+      return key + '=' + encodeURIComponent(value);
+    }).join('&');
+  };
+
   return {
     validateField: validateField,
     parseErrors: parseErrors,
