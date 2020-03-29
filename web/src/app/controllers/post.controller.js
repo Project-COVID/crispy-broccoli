@@ -102,4 +102,20 @@ angular.module('app').controller('postController', function ($http, validationSe
 
   };
 
+  ctrl.reportPost = function () {
+
+    ctrl.display.reportIsLoading = true;
+
+    $http.post(`/api/v1/post/${$stateParams.postId}/report`).then(function () {
+      displayService.toast('success', 'Post reported successfully, thank you! We will review it as soon as possible.');
+      ctrl.display.reportModalVisible = false;
+    }).catch(function (err) {
+      console.log(err.data);
+      displayService.toast('error', 'Couldn\'t report post');
+    }).finally(function () {
+      ctrl.display.reportIsLoading = false;
+    });
+
+  };
+
 });

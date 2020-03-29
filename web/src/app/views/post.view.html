@@ -59,10 +59,20 @@
   <section class="section">
     <div class="container">
 
-      <button ui-sref="home" class="button is-rounded is-medium">
-        <span class="icon"><i class="fas fa-arrow-left"></i></span>
-        <span>Back</span>
-      </button>
+      <nav class="level is-mobile">
+        <div class="level-left">
+          <button ui-sref="home" class="button is-rounded is-medium">
+            <span class="icon"><i class="fas fa-arrow-left"></i></span>
+            <span>Back</span>
+          </button>
+        </div>
+        <div class="level-right">
+          <button ng-click="ctrl.display.reportModalVisible = true" class="button is-rounded is-small">
+            <span class="icon"><i class="fas fa-flag"></i></span>
+            <span>Report post</span>
+          </button>
+        </div>
+      </nav>
 
       <div class="content post-block">
 
@@ -253,4 +263,27 @@
 
   </div>
   <button class="modal-close is-large" ng-click="ctrl.display.removeModalVisible = false"></button>
+</div>
+
+<div class="modal" ng-class="{ 'is-active': ctrl.display.reportModalVisible }">
+  <div class="modal-background" ng-click="ctrl.display.reportModalVisible = false"></div>
+  <div class="modal-content">
+    
+    <div class="box has-text-centered">
+      <h4 class="title is-3">
+        <span class="icon"><i class="fas fa-check-circle"></i></span>
+        <span>Report</span> 
+      </h4>
+      <div class="content is-medium">
+        <p>Please report this post if it is offensive or misleading.</p>
+        <p>Our team will review it as soon as possible.</p>
+      </div>
+      <button ng-click="ctrl.reportPost()" class="button is-rounded is-large is-danger" ng-class="{ 'is-loading': ctrl.display.reportIsLoading }">
+        <span class="icon"><i class="fas fa-flag"></i></span>
+        <span>Report post</span>
+      </button>
+    </div>
+
+  </div>
+  <button class="modal-close is-large" ng-click="ctrl.display.reportModalVisible = false"></button>
 </div>
