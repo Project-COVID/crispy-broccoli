@@ -141,7 +141,9 @@
 
             <div class="tags are-medium">
               <div class="tag is-rounded" ng-repeat="tagId in (post.tags | slice:3)">{{ constants.tags[tagId] }} </div>
-              <div class="tag is-white" ng-if="post.tags.length > 3">+{{ post.tags.length - 3 }}</div>
+              <div class="tag is-white is-visible-350" ng-if="post.tags.length > 1">+{{ post.tags.length - 1 }}</div>
+              <div class="tag is-white is-visible-500 is-collapsible-350" ng-if="post.tags.length > 2">+{{ post.tags.length - 2 }}</div>
+              <div class="tag is-white is-collapsible-500" ng-if="post.tags.length > 3">+{{ post.tags.length - 3 }}</div>
             </div>
 
             <div class="content">

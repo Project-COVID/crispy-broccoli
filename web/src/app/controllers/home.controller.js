@@ -12,7 +12,7 @@ angular.module('app').controller('homeController', function ($stateParams, $http
     $rootScope.display = {
       radius: 5, // Default
       radius_unit: (_.includes(['en-GB', 'en-US'], navigator.language)) ? 'miles' : 'km',
-      postLimit: 1,
+      postLimit: 3,
       currPage: 0,
       pages: []
     };
