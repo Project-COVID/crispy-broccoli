@@ -20,7 +20,7 @@ async function getPostsInRadius(type, lat, lon, radius, cursor, limit) {
         status: constants.statuses.active,
         coords: {
             $geoWithin: {
-                $center: [[lon, lat], kmToRadian(radius || DEFAULT_RADIUS_KM)],
+                $centerSphere: [[lon, lat], kmToRadian(radius || DEFAULT_RADIUS_KM)],
             },
         },
     };

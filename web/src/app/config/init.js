@@ -141,7 +141,7 @@ angular.module('app').service('validationService', function ($timeout) {
       return value;
     }
 
-    return value / 1.60934; // Miles to km
+    return value * 1.60934; // Miles to km
 
   };
 
