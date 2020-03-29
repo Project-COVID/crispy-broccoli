@@ -26,7 +26,7 @@ async function getPostsInRadius(type, lat, lon, radius, cursor, limit) {
     };
     const pagination = {};
     if (cursor) {
-        pagination._id = { $gt: cursor };
+        pagination._id = { $lt: cursor };
     }
     return {
         total: await Post.count(query),
