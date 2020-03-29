@@ -67,17 +67,17 @@
         </h2>
         
         <div class="buttons is-centered toggle-mode">
-          <button class="button is-large is-rounded" ng-click="ctrl.data.type = 'request'; ctrl.refreshPosts()" ng-class="{ 'is-primary': ctrl.data.type === 'request' }">
+          <button class="button is-large is-rounded" ng-click="data.type = 'request'; ctrl.refreshPosts()" ng-class="{ 'is-primary': data.type === 'request' }">
             <span class="icon"><i class="fas fa-hands-helping"></i></span>
             <span>I need help</span>
           </button>
-          <button class="button is-large is-rounded" ng-click="ctrl.data.type = 'offer'; ctrl.refreshPosts()" ng-class="{ 'is-danger': ctrl.data.type === 'offer' }">
+          <button class="button is-large is-rounded" ng-click="data.type = 'offer'; ctrl.refreshPosts()" ng-class="{ 'is-danger': data.type === 'offer' }">
             <span class="icon"><i class="fas fa-heart"></i></span>
             <span>I want to help</span>
           </button>
         </div>
 
-        <form ng-show="ctrl.data.type !== undefined">
+        <form ng-show="data.type !== undefined">
           <div class="field has-addons">
             <div class="control search-bar has-icons-left">
               <input class="input is-large is-rounded" type="text" placeholder="Enter your location">
@@ -99,23 +99,23 @@
             <div class="dropdown is-hoverable">
               <div class="dropdown-trigger">
                 <button class="button is-rounded">
-                  <span class="icon"><i class="fas" ng-class="{ 'fa-walking': ctrl.display.radius === 2, 'fa-biking': ctrl.display.radius === 5, 'fa-car': ctrl.display.radius === 20 }"></i></span>
-                  <span>{{ ctrl.display.radius }} {{ ctrl.display.radius_unit }}</span>
+                  <span class="icon"><i class="fas" ng-class="{ 'fa-walking': display.radius === 2, 'fa-biking': display.radius === 5, 'fa-car': display.radius === 20 }"></i></span>
+                  <span>{{ display.radius }} {{ display.radius_unit }}</span>
                 </button>
               </div>
               <div class="dropdown-menu is-rounded">
                 <div class="dropdown-content">
-                  <a ng-click="ctrl.display.radius = 2; ctrl.refreshPosts()" class="dropdown-item" ng-class="{ 'is-active': ctrl.display.radius === 2 }">
+                  <a ng-click="display.radius = 2; ctrl.refreshPosts()" class="dropdown-item" ng-class="{ 'is-active': display.radius === 2 }">
                     <span class="icon"><i class="fas fa-walking"></i></span>
-                    <span>2 {{ ctrl.display.radius_unit }}</span>
+                    <span>2 {{ display.radius_unit }}</span>
                   </a>
-                  <a ng-click="ctrl.display.radius = 5; ctrl.refreshPosts()" class="dropdown-item" ng-class="{ 'is-active': ctrl.display.radius === 5 }">
+                  <a ng-click="display.radius = 5; ctrl.refreshPosts()" class="dropdown-item" ng-class="{ 'is-active': display.radius === 5 }">
                     <span class="icon"><i class="fas fa-biking"></i></span>
-                    <span>5 {{ ctrl.display.radius_unit }}</span>
+                    <span>5 {{ display.radius_unit }}</span>
                   </a>
-                  <a ng-click="ctrl.display.radius = 20; ctrl.refreshPosts()" class="dropdown-item" ng-class="{ 'is-active': ctrl.display.radius === 20 }">
+                  <a ng-click="display.radius = 20; ctrl.refreshPosts()" class="dropdown-item" ng-class="{ 'is-active': display.radius === 20 }">
                     <span class="icon"><i class="fas fa-car"></i></span>
-                    <span>20 {{ ctrl.display.radius_unit }}</span>
+                    <span>20 {{ display.radius_unit }}</span>
                   </a>
                 </div>
               </div>
@@ -129,14 +129,14 @@
 
   </section>
 
-  <section class="section posts-block" ng-show="ctrl.display.pages[ctrl.display.currPage] !== undefined && ctrl.display.totalPosts > 0">
+  <section class="section posts-block" ng-show="display.pages[display.currPage] !== undefined && display.totalPosts > 0">
     <div class="container has-text-centered">
 
       <h3 class="title is-3">Step 1 &ndash; Check requests for help in your area</h3>
-      <h4 class="subtitle is-4" ng-if="ctrl.display.totalPosts === 1">There is <strong>1 person</strong> near you who {{ (ctrl.data.type === 'offer') ? 'needs': 'can' }} help</h4>
-      <h4 class="subtitle is-4" ng-if="ctrl.display.totalPosts > 1">There are <strong>{{ ctrl.display.totalPosts }} people</strong> near you who {{ (ctrl.data.type === 'offer') ? 'need': 'can' }} help</h4>
+      <h4 class="subtitle is-4" ng-if="display.totalPosts === 1">There is <strong>1 person</strong> near you who {{ (data.type === 'offer') ? 'needs': 'can' }} help</h4>
+      <h4 class="subtitle is-4" ng-if="display.totalPosts > 1">There are <strong>{{ display.totalPosts }} people</strong> near you who {{ (data.type === 'offer') ? 'need': 'can' }} help</h4>
 
-      <div class="box post-block" ng-repeat="post in ctrl.display.pages[ctrl.display.currPage]" ui-sref="post({ postId: post.id, post: post })">
+      <div class="box post-block" ng-repeat="post in display.pages[display.currPage]" ui-sref="post({ postId: post.id, post: post })">
 
         <article class="media">
           <div class="media-content">
@@ -188,11 +188,11 @@
       </div>
 
       <nav class="buttons is-centered pagination">
-        <button class="button is-medium is-rounded" ng-click="ctrl.prevPage()" ng-disabled="ctrl.display.currPage === 0">
+        <button class="button is-medium is-rounded" ng-click="ctrl.prevPage()" ng-disabled="display.currPage === 0">
           <span class="icon"><i class="fas fa-chevron-left"></i></span>
           <span>Previous</span>
         </button>
-        <button class="button is-medium is-rounded" ng-click="ctrl.nextPage()" ng-disabled="ctrl.display.currPage + 1 >= ctrl.display.totalPosts / ctrl.display.postLimit">
+        <button class="button is-medium is-rounded" ng-click="ctrl.nextPage()" ng-disabled="display.currPage + 1 >= display.totalPosts / display.postLimit">
           <span>See more</span>
           <span class="icon"><i class="fas fa-chevron-right"></i></span>
         </button>
@@ -201,17 +201,17 @@
     </div>
   </section>
 
-  <section class="section" ng-show="ctrl.display.pages[ctrl.display.currPage] !== undefined">
+  <section class="section" ng-show="display.pages[display.currPage] !== undefined">
     <div class="container has-text-centered">
 
-      <h4 class="subtitle is-4" ng-if="ctrl.display.totalPosts === 0">There are no current {{ (ctrl.data.type === 'offer') ? 'requests for' : 'offers to' }} help near you!</h4>
-      <h3 class="title is-3" ng-if="ctrl.display.totalPosts === 0">{{ (ctrl.display.radius !== 20) ? 'Expand your search, or post' : 'Post' }} your {{ ctrl.data.type }} for the community to see</h3>
-      <h3 class="title is-3" ng-if="ctrl.display.totalPosts > 0">Step 2 &ndash; Post your {{ ctrl.data.type }} for the community to see</h3>
+      <h4 class="subtitle is-4" ng-if="display.totalPosts === 0">There are no current {{ (data.type === 'offer') ? 'requests for' : 'offers to' }} help near you!</h4>
+      <h3 class="title is-3" ng-if="display.totalPosts === 0">{{ (display.radius !== 20) ? 'Expand your search, or post' : 'Post' }} your {{ data.type }} for the community to see</h3>
+      <h3 class="title is-3" ng-if="display.totalPosts > 0">Step 2 &ndash; Post your {{ data.type }} for the community to see</h3>
 
       <div class="buttons is-centered">
-        <a ui-sref="create-post({ type: ctrl.data.type, lat: ctrl.data.lat, lon: ctrl.data.lon, location: ctrl.data.location })" class="button is-rounded is-large" ng-class="{ 'is-primary': ctrl.data.type === 'request', 'is-danger': ctrl.data.type === 'offer' }">
+        <a ui-sref="create-post({ type: data.type, lat: data.lat, lon: data.lon, location: data.location })" class="button is-rounded is-large" ng-class="{ 'is-primary': data.type === 'request', 'is-danger': data.type === 'offer' }">
           <span class="icon"><i class="fas fa-heart"></i></span>
-          <span ui-sref="create-post">{{ (ctrl.data.type === 'offer') ? 'Offer your' : 'Request' }} help</span>
+          <span ui-sref="create-post">{{ (data.type === 'offer') ? 'Offer your' : 'Request' }} help</span>
         </a>
       </div>
 

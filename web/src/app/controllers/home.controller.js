@@ -1,18 +1,22 @@
 'use strict';
 
-angular.module('app').controller('homeController', function ($stateParams, $http, $state, validationService, displayService, $timeout) {
+angular.module('app').controller('homeController', function ($stateParams, $http, $state, validationService, displayService, $timeout, $rootScope) {
 
   var ctrl = this;
 
-  ctrl.data = {};
+  if ($rootScope.data === undefined) {
+    $rootScope.data = {};
+  }
 
-  ctrl.display = {
-    radius: 5, // Default
-    radius_unit: (_.includes(['en-GB', 'en-US'], navigator.language)) ? 'miles' : 'km',
-    postLimit: 1,
-    currPage: 0,
-    pages: []
-  };
+  if ($rootScope.display === undefined) {
+    $rootScope.display = {
+      radius: 5, // Default
+      radius_unit: (_.includes(['en-GB', 'en-US'], navigator.language)) ? 'miles' : 'km',
+      postLimit: 1,
+      currPage: 0,
+      pages: []
+    };
+  }
 
   if ($stateParams.error !== undefined) {
     displayService.toast('error', $stateParams.error);
@@ -42,9 +46,9 @@ angular.module('app').controller('homeController', function ($stateParams, $http
 
     var selectedPlace = autocomplete.getPlace();
 
-    ctrl.data.lat = selectedPlace.geometry.location.lat();
-    ctrl.data.lon = selectedPlace.geometry.location.lng();
-    ctrl.data.location = validationService.getNearestLocation(selectedPlace.address_components);
+    $rootScope.data.lat = selectedPlace.geometry.location.lat();
+    $rootScope.data.lon = selectedPlace.geometry.location.lng();
+    $rootScope.data.location = validationService.getNearestLocation(selectedPlace.address_components);
 
     getPosts();
 
@@ -54,39 +58,39 @@ angular.module('app').controller('homeController', function ($stateParams, $http
   var getPosts = function (opt_cursor) {
 
     if (opt_cursor === 'prev') {
-      ctrl.display.currPage--;
+      $rootScope.display.currPage--;
     }
-    else if (opt_cursor === 'next' && ctrl.display.currPage < ctrl.display.pages.length - 1) {
-      ctrl.display.currPage++;
+    else if (opt_cursor === 'next' && $rootScope.display.currPage < $rootScope.display.pages.length - 1) {
+      $rootScope.display.currPage++;
     }
     // Else need new posts
     else {
 
       var postPayload = {
-        type: (ctrl.data.type === 'offer') ? 'request' : 'offer',
-        lat: ctrl.data.lat,
-        lon: ctrl.data.lon,
-        radius: validationService.convertToKm(ctrl.display.radius, ctrl.display.radius_unit),
-        limit: ctrl.display.postLimit
+        type: ($rootScope.data.type === 'offer') ? 'request' : 'offer',
+        lat: $rootScope.data.lat,
+        lon: $rootScope.data.lon,
+        radius: validationService.convertToKm($rootScope.display.radius, $rootScope.display.radius_unit),
+        limit: $rootScope.display.postLimit
       };
 
       if (opt_cursor === 'next') {
-        postPayload.cursor = _.last(ctrl.display.pages[ctrl.display.currPage]).id;
+        postPayload.cursor = _.last($rootScope.display.pages[$rootScope.display.currPage]).id;
       }
       // Else new query, reset currPage and post cache
       else {
-        ctrl.display.currPage = 0;
-        ctrl.display.pages = [];
-        ctrl.display.totalPosts = undefined;
+        $rootScope.display.currPage = 0;
+        $rootScope.display.pages = [];
+        $rootScope.display.totalPosts = undefined;
       }
 
       $http.get(`/api/v1/post${validationService.encodeQueryParams(postPayload)}`).then(function (res) {
 console.log(res.data)
-        ctrl.display.pages.push(res.data.posts);
-        ctrl.display.totalPosts = res.data.total;
+        $rootScope.display.pages.push(res.data.posts);
+        $rootScope.display.totalPosts = res.data.total;
 
         if (opt_cursor === 'next') {
-          ctrl.display.currPage++;
+          $rootScope.display.currPage++;
         }
 
         $timeout(function () {
@@ -103,7 +107,7 @@ console.log(res.data)
   };
 
   ctrl.refreshPosts = function () {
-    if (ctrl.data.location !== undefined) {console.log('Refresh posts')
+    if ($rootScope.data.location !== undefined) {console.log('Refresh posts')
       getPosts(); // Refresh posts
     }
   };
