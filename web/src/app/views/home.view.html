@@ -80,10 +80,8 @@
         <form ng-show="data.type !== undefined">
           <div class="field has-addons">
             <div class="control search-bar has-icons-left">
-              <input class="input is-large is-rounded" type="text" placeholder="Enter your location">
-              <span class="icon is-left">
-                <i class="fas fa-search"></i>
-              </span>
+              <input class="input is-large is-rounded" type="text" placeholder="Enter your location" ng-model="data.searchQuery">
+              <span class="icon is-left"><i class="fas fa-search"></i></span>
             </div>
             <div class="control">
               <button class="button is-submit is-large is-primary is-rounded">
