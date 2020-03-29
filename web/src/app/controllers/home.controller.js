@@ -4,12 +4,11 @@ angular.module('app').controller('homeController', function ($stateParams, $http
 
   var ctrl = this;
 
-  ctrl.data = {
-    radius: 5, // Default
-    radius_unit: (_.includes(['en-GB', 'en-US'], navigator.language)) ? 'miles' : 'km'
-  };
+  ctrl.data = {};
 
   ctrl.display = {
+    radius: 5, // Default
+    radius_unit: (_.includes(['en-GB', 'en-US'], navigator.language)) ? 'miles' : 'km',
     postLimit: 1,
     currPage: 0,
     pages: []
@@ -67,7 +66,7 @@ angular.module('app').controller('homeController', function ($stateParams, $http
         type: (ctrl.data.type === 'offer') ? 'request' : 'offer',
         lat: ctrl.data.lat,
         lon: ctrl.data.lon,
-        radius: validationService.convertToKm(ctrl.data.radius, ctrl.data.radius_unit),
+        radius: validationService.convertToKm(ctrl.display.radius, ctrl.display.radius_unit),
         limit: ctrl.display.postLimit
       };
 
@@ -80,7 +79,7 @@ angular.module('app').controller('homeController', function ($stateParams, $http
         ctrl.display.pages = [];
         ctrl.display.totalPosts = undefined;
       }
-console.log(postPayload)
+
       $http.get(`/api/v1/post${validationService.encodeQueryParams(postPayload)}`).then(function (res) {
 console.log(res.data)
         ctrl.display.pages.push(res.data.posts);
