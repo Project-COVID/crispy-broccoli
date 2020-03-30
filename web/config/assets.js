@@ -11,7 +11,7 @@ module.exports = {
     js: [
       'angular/angular.min.js',
       'angular-ui-router/release/angular-ui-router.min.js',
-      'validator-js/src/validator.js',
+      'validator/validator.min.js',
       'lodash/lodash.min.js',
       'bulma-toast/dist/bulma-toast.min.js',
       'moment/min/moment.min.js'
