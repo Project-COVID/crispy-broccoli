@@ -71,12 +71,11 @@ const dbinit = require('./models');
     logger.info('Initializing routes');
     require('./routes/index')(app);
 
-    // Fallback everything else to the React application
-    const appCwd = process.env.NODE_ENV === 'production' ? 'dist' : 'src';
-    app.use(express.static(path.join(__dirname, '../web/' + appCwd)));
+    // Fallback everything else to the Angular application
+    app.use(express.static(path.join(__dirname, '../web/dist')));
     app.get('*', (req, res) => {
         res.set('Cache-Control', 'public, max-age=31536000'); // 1 year
-        res.sendFile(path.join(__dirname, '../web/' + appCwd + '/index.html'));
+        res.sendFile(path.join(__dirname, '../web/dist/index.html'));
     });
 
     if (!process.env.PORT) {

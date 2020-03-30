@@ -145,12 +145,6 @@ angular.module('app').service('validationService', function ($timeout) {
 
   };
 
-  var encodeQueryParams = function (obj) {
-    return '?' + _.map(obj, function (value, key) {
-      return key + '=' + encodeURIComponent(value);
-    }).join('&');
-  };
-
   return {
     validateField: validateField,
     parseErrors: parseErrors,
@@ -189,32 +183,7 @@ angular.module('app').run(function ($rootScope, $window, $transitions, $timeout,
   $rootScope.apiHost = location.protocol + '//' + location.host;
 
   // Get constants
-  $rootScope.constants = {
-    "types": {
-      "offer": "offer",
-      "request": "request"
-    },
-    "tags": {
-      "has_car": "Has car",
-      "has_bike": "Has bike",
-      "errand": "Errand",
-      "collection": "Collection",
-      "donation": "Donation",
-      "food": "Food",
-      "prescription": "Prescription",
-      "dog_walk": "Dog walk",
-      "pet_care": "Pet care",
-      "child_minding": "Child minding",
-      "clothes_wash": "Clothes wash",
-      "phone_call": "Phone call",
-      "post": "Post",
-      "other": "Other"
-    },
-    "statuses": {
-      "active": "active",
-      "closed": "closed"
-    }
-  };
+  $rootScope.constants = JSON.parse('@@CONSTANTS');
 
   $rootScope.shareOption = function (type, opt_post) {
     var queryParams = {};

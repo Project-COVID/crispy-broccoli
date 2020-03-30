@@ -37,7 +37,7 @@ angular.module('app').controller('postController', function ($http, validationSe
     ctrl.display.post = $stateParams.post;
   }
   else {
-    $http.get(`/api/v1/post/${$stateParams.postId}`, ).then(function (res) {
+    $http.get(`/api/v1/post/${$stateParams.postId}`).then(function (res) {
       ctrl.display.post = res.data;
     }).catch(function (err) {
       console.error(err);
