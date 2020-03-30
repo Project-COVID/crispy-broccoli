@@ -139,7 +139,7 @@ module.exports = function (grunt) {
       options: {
         singleQuotes: true
       },
-      dist: {
+      appJS: {
         files: {
           'dist/assets/js/app.js': ['dist/assets/js/app.js']
         }
@@ -148,7 +148,7 @@ module.exports = function (grunt) {
 
     // Copy root files not covered by other tasks
     copy: {
-      vendor: {
+      vendorFonts: {
         files: [{
           expand: true,
           flatten: true,
@@ -158,7 +158,7 @@ module.exports = function (grunt) {
           dest: 'dist/assets/webfonts'
         }]
       },
-      dist: {
+      appAssets: {
         files: [{
           cwd: 'src',
           dest: 'dist',
@@ -172,7 +172,7 @@ module.exports = function (grunt) {
     },
 
     replace: {
-      dist: {
+      appJS: {
         options: {
           patterns: [{
             match: 'CONSTANTS',
@@ -213,12 +213,16 @@ module.exports = function (grunt) {
     // },
 
     uglify: {
-      dist: {
+      vendorJS: {
         files: [{
-          expand: true,
-          cwd: 'dist/assets/js',
-          src: '**/*.js',
-          dest: 'dist/assets/js'
+          src: 'dist/assets/js/vendor.js',
+          dest: 'dist/assets/js/vendor.js'
+        }]
+      },
+      appJS: {
+        files: [{
+          src: 'dist/assets/js/app.js',
+          dest: 'dist/assets/js/app.js'
         }]
       }
     },
@@ -269,17 +273,38 @@ module.exports = function (grunt) {
   // grunt.registerTask('security', ['retire']); // 'exec:audit'
 
   // Build dev files
-  grunt.registerTask('build', [ // 'ngtemplates',
+  grunt.registerTask('build', [
     'lint',
-    'clean',
-    'imagemin',
-    'htmlmin',
-    'copy',
-    'concat',
-    'postcss',
-    'ngAnnotate',
-    'replace',
-    'uglify'
+    'clean:dist', // Empty dist
+    'concat:vendorCSS', // Concat vendor CSS & copy to dist
+    'postcss:vendor', // Autoprefix & minify vendor CSS
+    'postcss:dist', // Copy app CSS to dist, autoprefix & minify
+    'concat:vendorJS', // Concat vendor JS & copy to dist
+    'concat:appJS', // Concat app JS & copy to dist
+    'replace:appJS', // Copy server constants to app JS
+    'htmlmin', // Minify HTML & copy to dist
+    'imagemin', // Minify images & copy to dist
+    'copy:vendorFonts', // Copy vendor fonts
+    'copy:appAssets' // Copy assets not covered by other tasks
+  ]);
+
+  // Build prod files
+  grunt.registerTask('build:prod', [ // 'ngtemplates'
+    'lint',
+    'clean:dist', // Empty dist
+    'concat:vendorCSS', // Concat vendor CSS & copy to dist
+    'postcss:vendor', // Autoprefix & minify vendor CSS
+    'postcss:dist', // Copy app CSS to dist, autoprefix & minify
+    'concat:vendorJS', // Concat vendor JS & copy to dist
+    'uglify:vendorJS', // Minify vendor JS
+    'concat:appJS', // Concat app JS & copy to dist
+    'ngAnnotate:appJS', // Annotate Angular before minifying app JS
+    'replace:appJS', // Copy server constants to app JS
+    'uglify:appJS', // Minify app JS
+    'htmlmin', // Minify HTML & copy to dist
+    'imagemin', // Minify images & copy to dist
+    'copy:vendorFonts', // Copy vendor fonts
+    'copy:appAssets' // Copy assets not covered by other tasks
   ]);
 
   // Build production files
