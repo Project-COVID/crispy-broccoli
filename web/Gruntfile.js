@@ -5,23 +5,7 @@
  */
 var _ = require('lodash');
 var devAssets = require('./config/assets');
-// var configUtils = require('./config/config.utils');
 var CONSTANTS = require('../server/models/constants');
-
-var fs = require('fs');
-var path = require('path');
-
-// Helpers for build tasks that require array of static routes
-// devAssets.concat = {
-//   js: {
-//     site: configUtils.getGlobbedPaths(_.concat(devAssets.lib.js.site, devAssets.js.site), 'src/'),
-//     app: configUtils.getGlobbedPaths(_.concat(devAssets.lib.js.app, devAssets.js.app), 'src/')
-//   },
-//   css: {
-//     site: configUtils.getGlobbedPaths(_.concat(devAssets.lib.css.site, devAssets.css.site), 'src/'),
-//     app: configUtils.getGlobbedPaths(_.concat(devAssets.lib.css.app, devAssets.css.app), 'src/')
-//   }
-// };
 
 module.exports = function (grunt) {
 
@@ -30,15 +14,6 @@ module.exports = function (grunt) {
 
   // Project Configuration
   grunt.initConfig({
-
-    // env: {
-    //   dev: {
-    //     NODE_ENV: 'development'
-    //   },
-    //   prod: {
-    //     NODE_ENV: 'production'
-    //   }
-    // },
 
     /* Security tasks */
 
@@ -77,25 +52,19 @@ module.exports = function (grunt) {
     concat: {
       vendorCSS: {
         files: [{
-          src: _.map(devAssets.vendor.css, function (d) {
-            return 'node_modules/' + d;
-          }),
+          src: devAssets.vendor.css,
           dest: 'dist/assets/css/vendor.css'
         }]
       },
       vendorJS: {
         files: [{
-          src: _.map(devAssets.vendor.js, function (d) {
-            return 'node_modules/' + d;
-          }),
+          src: devAssets.vendor.js,
           dest: 'dist/assets/js/vendor.js'
         }]
       },
       appJS: {
         files: [{
-          src: _.map(devAssets.js, function (d) {
-            return 'src/' + d;
-          }),
+          src: devAssets.js,
           dest: 'dist/assets/js/app.js'
         }]
       },
@@ -152,9 +121,7 @@ module.exports = function (grunt) {
         files: [{
           expand: true,
           flatten: true,
-          src: _.map(devAssets.vendor.fonts, function (d) {
-            return 'node_modules/' + d;
-          }),
+          src: devAssets.vendor.fonts,
           dest: 'dist/assets/webfonts'
         }]
       },
@@ -182,35 +149,30 @@ module.exports = function (grunt) {
         files: {
           'dist/assets/js/app.js': 'dist/assets/js/app.js'
         }
+      },
+      heapDev: {
+        options: {
+          patterns: [{
+            match: 'HEAP_APP_ID',
+            replacement: '1494439898'
+          }]
+        },
+        files: {
+          'dist/assets/js/vendor.js': 'dist/assets/js/vendor.js'
+        }
+      },
+      heapDist: {
+        options: {
+          patterns: [{
+            match: 'HEAP_APP_ID',
+            replacement: '2459629627'
+          }]
+        },
+        files: {
+          'dist/assets/js/vendor.js': 'dist/assets/js/vendor.js'
+        }
       }
     },
-
-    // Renames files for browser caching purposes
-    // filerev: {
-    //   assetsDist: {
-    //     src: [
-    //       'dist/assets/**/*.*',
-    //       '!dist/assets/scripts/**/*.*', // Separate filerev
-    //       '!dist/assets/fonts/**/*.*', // Fonts don't change
-    //       '!dist/assets/mediakit/**/*.*', // Mediakit
-    //       '!dist/assets/data/**/*.*',
-    //       '!dist/assets/images/app/graph/{basal,bolus,carbs,exercise,note,sleep}-icon.png',
-    //       '!dist/assets/images/app/feeling/*.svg',
-    //       '!dist/assets/images/emoji/*.*',
-    //       '!dist/assets/images/social/share-widget-card*.png' // For sharing to social media
-    //     ]
-    //   },
-    //   jsDist: {
-    //     src: [
-    //       'dist/assets/scripts/**/*.*'
-    //     ]
-    //   },
-    //   cssDist: {
-    //     src: [
-    //       'dist/assets/styles/**/*.*'
-    //     ]
-    //   }
-    // },
 
     uglify: {
       vendorJS: {
@@ -250,6 +212,33 @@ module.exports = function (grunt) {
       }
     },
 
+    // Renames files for browser caching purposes
+    // filerev: {
+    //   assetsDist: {
+    //     src: [
+    //       'dist/assets/**/*.*',
+    //       '!dist/assets/scripts/**/*.*', // Separate filerev
+    //       '!dist/assets/fonts/**/*.*', // Fonts don't change
+    //       '!dist/assets/mediakit/**/*.*', // Mediakit
+    //       '!dist/assets/data/**/*.*',
+    //       '!dist/assets/images/app/graph/{basal,bolus,carbs,exercise,note,sleep}-icon.png',
+    //       '!dist/assets/images/app/feeling/*.svg',
+    //       '!dist/assets/images/emoji/*.*',
+    //       '!dist/assets/images/social/share-widget-card*.png' // For sharing to social media
+    //     ]
+    //   },
+    //   jsDist: {
+    //     src: [
+    //       'dist/assets/scripts/**/*.*'
+    //     ]
+    //   },
+    //   cssDist: {
+    //     src: [
+    //       'dist/assets/styles/**/*.*'
+    //     ]
+    //   }
+    // },
+
     // Performs rewrites based on rev
     // usemin: {
     //   options: {
@@ -282,6 +271,7 @@ module.exports = function (grunt) {
     'concat:vendorJS', // Concat vendor JS & copy to dist
     'concat:appJS', // Concat app JS & copy to dist
     'replace:appJS', // Copy server constants to app JS
+    'replace:heapDev', // Copy dev Heap app ID
     'htmlmin', // Minify HTML & copy to dist
     'imagemin', // Minify images & copy to dist
     'copy:vendorFonts', // Copy vendor fonts
@@ -300,6 +290,7 @@ module.exports = function (grunt) {
     'concat:appJS', // Concat app JS & copy to dist
     'ngAnnotate:appJS', // Annotate Angular before minifying app JS
     'replace:appJS', // Copy server constants to app JS
+    'replace:heapDist', // Copy production Heap app ID
     'uglify:appJS', // Minify app JS
     'htmlmin', // Minify HTML & copy to dist
     'imagemin', // Minify images & copy to dist
