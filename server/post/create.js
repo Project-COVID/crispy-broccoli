@@ -5,9 +5,10 @@ const Post = require('../models/post');
 const constants = require('../models/constants');
 const sendVerifyEmail = require('../mailer/verify');
 
-async function alreadyHasPost(email) {
+async function alreadyHasPost(email, type) {
     const post = await Post.exists({
         email,
+        type,
         status: constants.statuses.active,
     });
     return !!post;
@@ -44,7 +45,7 @@ module.exports = async function (req) {
             },
         );
 
-        if (await alreadyHasPost(req.body.email)) {
+        if (await alreadyHasPost(req.body.email, req.body.type)) {
             return Response.BadRequest({
                 message: 'Only one active post per user is allowed',
             });
