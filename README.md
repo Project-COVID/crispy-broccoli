@@ -59,6 +59,7 @@ The following tools need to be installed on your machine and available in your `
 
 - `node` (v10.16.3)
 - `yarn`
+- [`concurrently`](https://www.npmjs.com/package/concurrently)
 - `docker`
 - `heroku`
 - `make`

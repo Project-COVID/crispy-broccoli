@@ -24,11 +24,16 @@ mongo:
 	@docker run -d -it --rm --name mongo -p 27017:27017 mongo:3.6
 
 
+# make build_client
+.PHONY: build_client
+build_client:
+	@pushd web; yarn; grunt build; popd
+
+
 # make build
 .PHONY: build
-build: lint
+build: lint build_client
 	@pushd server; yarn; popd
-	@pushd web; yarn; grunt build; popd
 
 
 # make run env={env file}
@@ -42,7 +47,9 @@ run:
 .PHONY: run_watch
 run_watch:
 	@yarn global add pino-pretty
-	@source ./scripts/env.sh $(env) && nodemon --watch ./server --watch ./web/src ./server/index.js | pino-pretty
+	@source ./scripts/env.sh $(env) && concurrently \
+"nodemon --watch ./server --watch ./web/dist ./server/index.js | pino-pretty" \
+"nodemon --watch ./web/src --ext html,js,css,png,jpg --exec \"make build_client\""
 
 
 # make docker tag={tag}
