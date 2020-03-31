@@ -80,7 +80,10 @@ changelog_release:
 
 # make release tag={tag}
 .PHONY: release
-release: build docker
+release: lint
+	@pushd server; yarn; popd
+	@pushd web; yarn; grunt build:prod; popd
+	@docker build -t $(service_image):$(tag) .
 	@git tag -s $(tag) -m "Release $(tag)"
 	@git push --tags
 	@heroku login
