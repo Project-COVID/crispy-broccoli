@@ -15,7 +15,7 @@
     "bulma-toast": "^1.5.4",
     "components-font-awesome": "^5.9.0",
     "lodash": "^4.17.15",
-    "moment": "^2.24.0",
+    "moment": "^2.29.4",
     "normalize.css": "^8.0.1",
     "validator": "^13.0.0"
   },
